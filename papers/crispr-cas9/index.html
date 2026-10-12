@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="No Fear Research Papers: CRISPR-Cas9, translated">
+<meta property="og:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. The 2012 paper that started gene editing.">
+<meta property="og:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-crispr.jpg">
+<meta property="og:url" content="https://danieljordanviray.github.io/no-fear-research-papers/papers/crispr-cas9/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="No Fear Research Papers: CRISPR-Cas9, translated">
+<meta name="twitter:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. The 2012 paper that started gene editing.">
+<meta name="twitter:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-crispr.jpg">
+<title>No Fear Research Papers: CRISPR-Cas9, translated — demo</title>
+<style>
+  :root{
+    --ink:#1d2430; --muted:#5b6572; --line:#e4e8ee; --bg:#f7f9fb;
+    --card:#ffffff; --accent:#0b6e4f; --accent-soft:#e3f2ea;
+    --paper:#fbf7ef; --paper-line:#e8ddc4;
+    --warn:#b7791f; --bad:#b3362b; --blue:#1d5fb8; --blue-soft:#e8f0fd;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65;font-size:17px}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+  header.hero{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:28px 30px;margin-bottom:26px}
+  .kicker{display:inline-block;background:var(--accent-soft);color:var(--accent);
+    font-weight:700;font-size:13px;letter-spacing:.4px;text-transform:uppercase;
+    padding:4px 12px;border-radius:999px;margin-bottom:12px}
+  h1{font-size:30px;line-height:1.25;margin:6px 0 10px}
+  h2{font-size:22px;margin:38px 0 6px;padding-top:8px;border-top:2px solid var(--line)}
+  .paper-meta{color:var(--muted);font-size:15px}
+  .paper-meta a{color:var(--blue)}
+  .backlink{margin:0 0 14px;font-size:15px}
+  .backlink a{color:var(--muted);text-decoration:none}
+  .backlink a:hover{text-decoration:underline}
+  .howto{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 20px;margin:18px 0;font-size:16px;color:var(--muted)}
+  .howto b{color:var(--ink)}
+  .pitch{background:var(--accent-soft);border:1px solid #bfe3cf;border-radius:12px;
+    padding:20px 22px;margin:18px 0;font-size:18px}
+  .pair{margin:22px 0}
+  .pair-tag{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:1px;
+    text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .pair-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);
+    border-radius:14px;overflow:hidden}
+  .orig{background:var(--paper);border-right:1px solid var(--paper-line);padding:22px 24px}
+  .orig h3,.trans h3{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;
+    margin:0 0 12px;color:var(--muted)}
+  .orig blockquote{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:18.5px;
+    line-height:1.6;color:#3a3226}
+  .orig blockquote::before{content:"\201C"}
+  .orig blockquote::after{content:"\201D"}
+  .orig .cite{margin-top:12px;font-size:13.5px;color:var(--muted)}
+  .trans{background:var(--card);padding:22px 24px}
+  .trans p{margin:8px 0;font-size:16.5px}
+  .trans p:first-of-type{margin-top:0}
+  .dataslide{border:2px solid var(--ink);border-radius:14px;background:var(--card);
+    margin:26px 0;overflow:hidden}
+  .dataslide-head{background:var(--ink);color:#fff;padding:10px 22px;font-size:13px;
+    font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+  .dataslide-body{padding:20px 22px}
+  .dataslide-cap{font-size:15.5px;color:var(--muted);margin:0 0 12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:20px 22px;margin:16px 0}
+  .hint{font-size:14px;color:var(--muted)}
+  textarea{width:100%;min-height:90px;padding:12px;font-size:15px;font-family:ui-monospace,Menlo,Consolas,monospace;
+    border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);line-height:1.7}
+  button{background:var(--accent);color:#fff;border:none;border-radius:8px;
+    padding:11px 20px;font-size:16px;font-weight:700;cursor:pointer;margin-top:10px}
+  button:hover{filter:brightness(1.08)}
+  #pamOut{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14.5px;line-height:2;
+    word-break:break-all;background:#f4f6f8;border:1px solid var(--line);border-radius:8px;
+    padding:14px 16px;margin-top:12px}
+  .pam{background:#0b6e4f;color:#fff;border-radius:3px;padding:1px 2px}
+  .cutmark{color:var(--bad);font-weight:800}
+  .seedrow{display:flex;flex-wrap:wrap;gap:4px;margin:10px 0;align-items:center}
+  .seedbox{width:34px;height:44px;border:1px solid var(--line);border-radius:6px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-family:ui-monospace,Menlo,Consolas,monospace;font-size:16px;font-weight:700;
+    cursor:pointer;background:#fff;user-select:none}
+  .seedbox small{font-size:9px;color:var(--muted);font-weight:400}
+  .seedbox.mm{background:var(--bad-soft,#fbe9e7);border-color:var(--bad);color:var(--bad)}
+  .seedbox.guide{background:var(--blue-soft);border-color:var(--blue);cursor:default}
+  .seedpam{display:flex;align-items:center;gap:2px;margin-left:6px}
+  .seedpam span{background:#0b6e4f;color:#fff;border-radius:6px;width:34px;height:44px;
+    display:flex;align-items:center;justify-content:center;font-weight:700;
+    font-family:ui-monospace,Menlo,Consolas,monospace}
+  #seedVerdict{margin-top:10px}
+  .gloss{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  .gloss div{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:12px 16px;font-size:15.5px}
+  .gloss b{color:var(--accent)}
+  .verdict{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0}
+  .verdict div{border-radius:10px;padding:14px 16px;font-size:15px}
+  .v-read{background:var(--accent-soft);border:1px solid #bfe3cf}
+  .v-skim{background:var(--blue-soft);border:1px solid #bcd4f5}
+  .v-skip{background:#f1f2f4;border:1px solid var(--line)}
+  .verdict b{display:block;margin-bottom:4px}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:13.5px}
+  @media(max-width:760px){
+    .pair-grid{grid-template-columns:1fr}
+    .orig{border-right:none;border-bottom:1px solid var(--paper-line)}
+    .verdict{grid-template-columns:1fr}
+    .gloss{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="backlink"><a href="../../">← No Fear Research Papers</a></p>
+
+<header class="hero">
+  <span class="kicker">No Fear Research Papers · demo</span>
+  <h1>CRISPR-Cas9, translated</h1>
+  <p class="paper-meta">
+    Jinek et al., <em>Science</em> 337 (6096): 816–821, 2012 ·
+    <a href="https://www.science.org/doi/10.1126/science.1225829">science.org/doi/10.1126/science.1225829</a><br>
+    Senior authors Jennifer Doudna &amp; Emmanuelle Charpentier — Nobel Prize in Chemistry, 2020.
+  </p>
+</header>
+
+<div class="howto">
+  <b>How to read this page:</b> on the left, the paper's own words — short excerpts, exactly as written.
+  On the right, the same idea in everyday English. Data slides appear where the paper makes a claim,
+  so you can try the mechanism yourself instead of taking its word for it.
+</div>
+
+<h2>The whole paper in 60 seconds</h2>
+<div class="pitch">
+  Bacteria have an immune system. When a virus attacks, they file away a mugshot of its DNA — and if it ever
+  comes back, they send out molecular scissors to cut the invader's DNA. In 2012, Doudna, Charpentier and
+  colleagues worked out exactly how the scissors operate: a protein called <b>Cas9</b>, guided by <b>two small
+  RNA molecules</b> — one is the address matching the target, the other is the handle Cas9 grips. They showed
+  Cas9 only cuts next to a short DNA "password" (<b>NGG</b>), snipping both strands 3 letters before it.
+  Then the famous trick: <b>fuse the two RNAs into one</b>, and you can reprogram the scissors to cut any DNA
+  sequence — just change the address. That single insight became the CRISPR gene-editing revolution.
+</div>
+
+<h2>The translation</h2>
+
+<div class="pair">
+  <span class="pair-tag">1 · The setup — from the Introduction</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>adaptive immunity against viruses</blockquote>
+      <p class="cite">Jinek et al., <em>Science</em> 2012 — on what CRISPR does for bacteria</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Bacteria get sick too — viruses attack them. So bacteria evolved an immune system <b>with a memory</b>:
+      when a virus invades, they file away a short mugshot of its DNA (called a <b>spacer</b>).</p>
+      <p>If that virus ever returns, the mugshot guides the defense to recognize and destroy it.
+      <b>CRISPR</b> is that filing system. <b>Cas9</b> is the enforcer.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">2 · The scissors need two handles — from the Results</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>forms a two-RNA structure that directs the CRISPR-associated protein Cas9 to introduce double-stranded breaks in target DNA</blockquote>
+      <p class="cite">Jinek et al., <em>Science</em> 2012</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Cas9 is the scissors, but it can't work alone — it needs <b>two RNA molecules</b>.
+      One (<b>crRNA</b>) carries the 20-letter address matching the target.
+      The other (<b>tracrRNA</b>) is the handle Cas9 grips.</p>
+      <p>The paper proved the handle is non-negotiable: crRNA alone does nothing, but add tracrRNA and Cas9
+      starts cutting. Together they form a two-RNA homing device that directs Cas9 to snap both strands
+      of the matching DNA.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">3 · The password — from the Results</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>the PAM conforms to an NGG consensus sequence</blockquote>
+      <p class="cite">Jinek et al., <em>Science</em> 2012</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Cas9 doesn't cut everywhere the address matches — it also demands a <b>password</b> next to the target:
+      the letters <b>NGG</b> (any letter, then two G's), called the <b>PAM</b>.</p>
+      <p>No password, no cut — the paper showed mutating either G kills the cutting. This is also how bacteria
+      avoid shredding their own DNA: their filing cabinet stores mugshots <em>without</em> the password next to them.</p>
+    </div>
+  </div>
+</div>
+
+<div class="dataslide">
+  <div class="dataslide-head">Data slide · try the password rule</div>
+  <div class="dataslide-body">
+    <p class="dataslide-cap">Paste any DNA sequence. The tool scans both strands for the NGG password and marks where Cas9 would cut — 3 letters before it, exactly as the paper mapped it. Green = password, red bar = cut.</p>
+    <textarea id="dnaInput">ATGCGTACGTTAGCCGGATCGTACGATCGTTGGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGCCAACTAGCTAGCTAG</textarea>
+    <button id="pamGo">Find cut sites</button>
+    <div id="pamOut"></div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">4 · The cut — from the Results</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>blunt ends at a position three base pairs upstream of the PAM</blockquote>
+      <p class="cite">Jinek et al., <em>Science</em> 2012</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>When address and password both check out, Cas9 snips <b>both DNA strands 3 letters before the password</b>,
+      leaving clean <b>blunt ends</b> (no overhangs).</p>
+      <p>Two separate blades do the work: the <b>HNH</b> domain cuts the strand matching the address, the
+      <b>RuvC</b> domain cuts the opposite strand. The paper proved it by disabling each blade — the DNA only
+      got nicked on one side. And it's fast: about as quick as the restriction enzymes labs already used.</p>
+    </div>
+  </div>
+</div>
+
+<div class="dataslide">
+  <div class="dataslide-head">Data slide · the seed rule</div>
+  <div class="dataslide-body">
+    <p class="dataslide-cap">The paper's mismatch experiments, simplified: click letters in the target row to introduce mismatches against the guide. Break the ~13 letters next to the password (the <b>seed</b>) and cutting dies; mismatches far from the password are tolerated. Illustrative sequence.</p>
+    <div class="seedrow" id="seedGuideRow"></div>
+    <div class="seedrow" id="seedTargetRow"></div>
+    <div id="seedVerdict"></div>
+    <p class="hint">Rule of thumb from the paper: the 13 password-adjacent letters must match; up to 6 contiguous mismatches at the far end are tolerated.</p>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">5 · The payoff — from the Conclusions</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>potential to exploit the system for RNA-programmable genome editing</blockquote>
+      <p class="cite">Jinek et al., <em>Science</em> 2012</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Then the famous trick: <b>fuse the two RNAs into a single "guide RNA"</b> — address at the front,
+      handle at the back — and it cuts just as well.</p>
+      <p>Now reprogramming the scissors means changing just 20 letters of RNA. They proved it by aiming it at
+      five different spots in a jellyfish glow gene — all five cut exactly where intended. The authors saw it
+      clearly: a simple, versatile, <b>RNA-programmed</b> system for editing genomes. Within a year, labs worldwide
+      had it working in human cells.</p>
+    </div>
+  </div>
+</div>
+
+<h2>Key terms, in one line each</h2>
+<div class="gloss">
+  <div><b>CRISPR</b> — the bacterium's filing system: mugshots of past viral invaders stored in its DNA.</div>
+  <div><b>Cas9</b> — the protein scissors that cut DNA where the guide RNA points.</div>
+  <div><b>crRNA</b> — the address label: 20 letters matching the target DNA.</div>
+  <div><b>tracrRNA</b> — the handle: the RNA piece Cas9 grips to become active.</div>
+  <div><b>sgRNA</b> — "single guide RNA": the two RNAs fused into one programmable molecule.</div>
+  <div><b>PAM</b> — the password (NGG): a short DNA motif that must sit next to the target for cutting.</div>
+</div>
+
+<h2>Fine print (what the translation shouldn't hide)</h2>
+<div class="card">
+  <p style="margin-top:0">This was a <b>test-tube</b> study — purified Cas9 cutting DNA in a dish. Making it work inside
+  human cells came the next year (2013). Also: this is <em>S. pyogenes</em> Cas9 with its NGG password;
+  other bacteria's versions use different passwords. And the paper is about the cutting mechanism, not a
+  how-to for editing — the Nobel Prize (2020, Doudna &amp; Charpentier) was for the discovery.</p>
+</div>
+
+<h2>Should you read the full paper?</h2>
+<div class="verdict">
+  <div class="v-read"><b>Read it if…</b>you want the experimental logic — the mutant-Cas9 blade tests and the PAM-hunting assays are a masterclass in biochemistry reasoning.</div>
+  <div class="v-skim"><b>Skim is enough if…</b>you just needed the mechanism and the evidence bar — the five translations above plus the data slides carry ~90% of it.</div>
+  <div class="v-skip"><b>Skip it if…</b>you only care about using CRISPR as a tool — modern guide-design tools and protocols have absorbed all of this.</div>
+</div>
+
+<footer>
+  Demo of the "No Fear Research Papers" concept · Built from Jinek et al., <em>Science</em> 337 (6096), 2012.
+  Brief excerpts quoted for commentary; full text at the publisher link above.
+</footer>
+
+</div>
+<script>
+/* ---------- Data slide 1: PAM finder ---------- */
+const COMP = {A:"T", T:"A", C:"G", G:"C"};
+function cleanDNA(s){ return s.toUpperCase().replace(/[^ACGT]/g,""); }
+function findSites(seq){
+  const sites = [];
+  for(let i=0;i<=seq.length-3;i++){
+    if(seq[i+1]==="G" && seq[i+2]==="G" && i>=3){
+      sites.push({pamStart:i, strand:"+", cut:i-3});           // 5'...|NGG...3', cut 3bp upstream
+    }
+    if(seq[i]==="C" && seq[i+1]==="C" && i+6<=seq.length){
+      sites.push({pamStart:i, strand:"−", cut:i+6});           // 5'...CCN|...3' on top = NGG on bottom
+    }
+  }
+  return sites;
+}
+function renderPAM(){
+  const seq = cleanDNA(document.getElementById("dnaInput").value);
+  const out = document.getElementById("pamOut");
+  if(seq.length < 10){ out.innerHTML = "<span class='hint'>Enter at least 10 DNA letters (A, C, G, T).</span>"; return; }
+  const sites = findSites(seq);
+  const pamAt = {}, cutAt = {};
+  sites.forEach(s=>{ for(let k=0;k<3;k++) pamAt[s.strand==="+"?s.pamStart+k:s.pamStart+k]=s.strand; cutAt[s.cut]=true; });
+  let html = "";
+  for(let i=0;i<seq.length;i++){
+    if(cutAt[i]) html += '<span class="cutmark">|</span>';
+    const st = pamAt[i];
+    html += st ? '<span class="pam" title="PAM ('+st+' strand)">'+seq[i]+'</span>' : seq[i];
+  }
+  if(cutAt[seq.length]) html += '<span class="cutmark">|</span>';
+  const plus = sites.filter(s=>s.strand==="+").length, minus = sites.length-plus;
+  out.innerHTML = html + "<div class='hint' style='margin-top:8px'>"+sites.length+" cut site"+(sites.length===1?"":"s")+
+    " found ("+plus+" on the top strand, "+minus+" on the bottom). Red bars mark where Cas9 snips — 3 letters before each green password.</div>";
+}
+document.getElementById("pamGo").addEventListener("click", renderPAM);
+renderPAM();
+
+/* ---------- Data slide 2: seed rule ---------- */
+const GUIDE = "ACGTACGTACGTACGTACGT"; // illustrative 20-nt guide, 5'→3', position 20 next to PAM
+const SEED_FROM = 8; // positions 8–20 (1-indexed from 5' end) must match per the paper's ~13bp rule
+let mism = new Array(20).fill(false);
+const gRow = document.getElementById("seedGuideRow");
+const tRow = document.getElementById("seedTargetRow");
+const ALT = {A:"C", C:"A", G:"T", T:"G"};
+GUIDE.split("").forEach((b,i)=>{
+  const g = document.createElement("div");
+  g.className = "seedbox guide";
+  g.innerHTML = b+"<small>"+(i+1)+"</small>";
+  g.title = "Guide position "+(i+1);
+  gRow.appendChild(g);
+  const t = document.createElement("div");
+  t.className = "seedbox";
+  t.dataset.i = i;
+  t.title = "Target position "+(i+1)+" — click to toggle a mismatch";
+  tRow.appendChild(t);
+});
+const pamLab = document.createElement("div");
+pamLab.className = "seedpam";
+pamLab.innerHTML = "<span>N</span><span>G</span><span>G</span>";
+pamLab.title = "PAM";
+tRow.appendChild(pamLab);
+function drawSeed(){
+  [...tRow.querySelectorAll(".seedbox")].forEach((t,i)=>{
+    if(mism[i]){ t.classList.add("mm"); t.innerHTML = ALT[GUIDE[i]]+"<small>"+(i+1)+"</small>"; }
+    else { t.classList.remove("mm"); t.innerHTML = GUIDE[i]+"<small>"+(i+1)+"</small>"; }
+  });
+  const bad = mism.map((m,i)=>m?i+1:null).filter(x=>x!==null);
+  const seedBroken = bad.some(p=>p>=SEED_FROM);
+  const box = document.getElementById("seedVerdict");
+  if(seedBroken){
+    box.innerHTML = '<div class="card" style="border-left:5px solid var(--bad)"><p style="margin:0"><b>NO CUT.</b> '+
+      "Mismatch at position "+bad.filter(p=>p>=SEED_FROM).join(", ")+" — inside the seed. The paper found the ~13 password-adjacent letters must match; break them and cutting dies.</p></div>";
+  } else if(bad.length){
+    box.innerHTML = '<div class="card" style="border-left:5px solid var(--accent)"><p style="margin:0"><b>CUTS.</b> '+
+      "Mismatches only at positions "+bad.join(", ")+" — far from the password. The paper: up to 6 contiguous distal mismatches are tolerated.</p></div>";
+  } else {
+    box.innerHTML = '<div class="card" style="border-left:5px solid var(--accent)"><p style="margin:0"><b>CUTS.</b> Perfect match — Cas9 snips 3 letters before the NGG password.</p></div>';
+  }
+}
+tRow.addEventListener("click", e=>{
+  const t = e.target.closest(".seedbox");
+  if(!t || t.classList.contains("guide")) return;
+  const i = +t.dataset.i;
+  mism[i] = !mism[i];
+  drawSeed();
+});
+drawSeed();
+</script>
+</body>
+</html>
