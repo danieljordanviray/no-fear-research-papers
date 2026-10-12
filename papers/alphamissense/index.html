@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="No Fear Research Papers: AlphaMissense, translated">
+<meta property="og:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. In short: a spell-checker for DNA typos.">
+<meta property="og:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-image.jpg">
+<meta property="og:url" content="https://danieljordanviray.github.io/no-fear-research-papers/papers/alphamissense/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="No Fear Research Papers: AlphaMissense, translated">
+<meta name="twitter:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. In short: a spell-checker for DNA typos.">
+<meta name="twitter:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-image.jpg">
+<title>No Fear Research Papers: AlphaMissense, translated — demo</title>
+<style>
+  :root{
+    --ink:#1d2430; --muted:#5b6572; --line:#e4e8ee; --bg:#f7f9fb;
+    --card:#ffffff; --accent:#0b6e4f; --accent-soft:#e3f2ea;
+    --paper:#fbf7ef; --paper-line:#e8ddc4;
+    --warn:#b7791f; --bad:#b3362b; --blue:#1d5fb8; --blue-soft:#e8f0fd;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65;font-size:17px}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+  header.hero{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:28px 30px;margin-bottom:26px}
+  .kicker{display:inline-block;background:var(--accent-soft);color:var(--accent);
+    font-weight:700;font-size:13px;letter-spacing:.4px;text-transform:uppercase;
+    padding:4px 12px;border-radius:999px;margin-bottom:12px}
+  h1{font-size:30px;line-height:1.25;margin:6px 0 10px}
+  h2{font-size:22px;margin:38px 0 6px;padding-top:8px;border-top:2px solid var(--line)}
+  .paper-meta{color:var(--muted);font-size:15px}
+  .paper-meta a{color:var(--blue)}
+  .howto{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 20px;margin:18px 0;font-size:16px;color:var(--muted)}
+  .howto b{color:var(--ink)}
+  .pitch{background:var(--accent-soft);border:1px solid #bfe3cf;border-radius:12px;
+    padding:20px 22px;margin:18px 0;font-size:18px}
+  /* ---- facing-page pairs ---- */
+  .pair{margin:22px 0}
+  .pair-tag{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:1px;
+    text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .pair-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);
+    border-radius:14px;overflow:hidden}
+  .orig{background:var(--paper);border-right:1px solid var(--paper-line);padding:22px 24px}
+  .orig h3,.trans h3{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;
+    margin:0 0 12px;color:var(--muted)}
+  .orig blockquote{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:18.5px;
+    line-height:1.6;color:#3a3226}
+  .orig blockquote::before{content:"\201C"}
+  .orig blockquote::after{content:"\201D"}
+  .orig .cite{margin-top:12px;font-size:13.5px;color:var(--muted)}
+  .trans{background:var(--card);padding:22px 24px}
+  .trans p{margin:8px 0;font-size:16.5px}
+  .trans p:first-of-type{margin-top:0}
+  /* ---- data slides ---- */
+  .dataslide{border:2px solid var(--ink);border-radius:14px;background:var(--card);
+    margin:26px 0;overflow:hidden}
+  .dataslide-head{background:var(--ink);color:#fff;padding:10px 22px;font-size:13px;
+    font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+  .dataslide-body{padding:20px 22px}
+  .dataslide-cap{font-size:15.5px;color:var(--muted);margin:0 0 12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:20px 22px;margin:16px 0}
+  .bench{margin:14px 0}
+  .bench-row{display:grid;grid-template-columns:170px 1fr;gap:12px;align-items:center;
+    padding:12px 0;border-bottom:1px solid var(--line)}
+  .bench-row:last-child{border-bottom:none}
+  .bench-name{font-weight:700;font-size:15px}
+  .bench-name small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+  .bars{display:flex;flex-direction:column;gap:6px}
+  .bar-line{display:flex;align-items:center;gap:8px;font-size:14px}
+  .bar-label{width:128px;flex:none;color:var(--muted)}
+  .bar-track{flex:1;background:#eef1f5;border-radius:6px;height:22px;position:relative;overflow:hidden}
+  .bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;
+    padding-right:8px;color:#fff;font-weight:700;font-size:13px;min-width:52px}
+  .fill-am{background:var(--accent)}
+  .fill-other{background:#9aa5b1}
+  .tip{display:none;background:#222c3a;color:#f2f5f9;border-radius:10px;padding:12px 14px;
+    font-size:14.5px;margin-top:8px;line-height:1.55}
+  .bench-row.open .tip{display:block}
+  .bench-row.open{background:#fafbfc;border-radius:8px}
+  .hint{font-size:14px;color:var(--muted)}
+  #dangerMap{display:flex;flex-wrap:wrap;gap:2px;margin:12px 0}
+  #dangerMap span{width:11px;height:26px;border-radius:3px;background:#dfe5ec;cursor:pointer}
+  .legend{display:flex;gap:14px;font-size:13px;color:var(--muted);margin:6px 0 12px;flex-wrap:wrap}
+  .swatch{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px}
+  .lookup{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end;margin:14px 0}
+  .lookup label{font-size:14px;color:var(--muted);display:block;margin-bottom:4px}
+  .lookup input,.lookup select{width:100%;padding:10px 12px;font-size:16px;border:1px solid var(--line);
+    border-radius:8px;background:#fff;color:var(--ink)}
+  button{background:var(--accent);color:#fff;border:none;border-radius:8px;
+    padding:11px 20px;font-size:16px;font-weight:700;cursor:pointer}
+  button:hover{filter:brightness(1.08)}
+  #hist{display:flex;align-items:flex-end;gap:2px;height:120px;margin:12px 0 4px}
+  #hist div{flex:1;background:var(--accent);opacity:.75;border-radius:2px 2px 0 0;min-height:2px}
+  .gloss{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  .gloss div{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:12px 16px;font-size:15.5px}
+  .gloss b{color:var(--accent)}
+  .verdict{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0}
+  .verdict div{border-radius:10px;padding:14px 16px;font-size:15px}
+  .v-read{background:var(--accent-soft);border:1px solid #bfe3cf}
+  .v-skim{background:var(--blue-soft);border:1px solid #bcd4f5}
+  .v-skip{background:#f1f2f4;border:1px solid var(--line)}
+  .verdict b{display:block;margin-bottom:4px}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:13.5px}
+  @media(max-width:760px){
+    .pair-grid{grid-template-columns:1fr}
+    .orig{border-right:none;border-bottom:1px solid var(--paper-line)}
+    .bench-row{grid-template-columns:1fr}
+    .lookup{grid-template-columns:1fr}
+    .verdict{grid-template-columns:1fr}
+    .gloss{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p style="margin:0 0 14px;font-size:15px"><a href="../" style="color:var(--muted);text-decoration:none">← No Fear Research Papers</a></p>
+
+<header class="hero">
+  <span class="kicker">No Fear Research Papers · demo</span>
+  <h1>AlphaMissense, translated</h1>
+  <p class="paper-meta">
+    Cheng et al., <em>Science</em> 381 (6664), 2023 ·
+    <a href="https://www.science.org/doi/10.1126/science.adg7492">science.org/doi/10.1126/science.adg7492</a> ·
+    code: <a href="https://github.com/deepmind/alphamissense">github.com/deepmind/alphamissense</a>
+  </p>
+</header>
+
+<div class="howto">
+  <b>How to read this page:</b> on the left, the paper's own words — short excerpts, exactly as written.
+  On the right, the same idea in everyday English. Data slides appear where the paper makes a claim,
+  so you can see the evidence instead of taking its word for it.
+</div>
+
+<h2>The whole paper in 60 seconds</h2>
+<div class="pitch">
+  Your DNA is a recipe book, and proteins are the machines built from the recipes.
+  A <b>missense variant</b> is a one-letter typo that swaps one building block of a protein for a different one.
+  Some typos are harmless; some break the machine and cause disease.
+  Doctors have found over 4 million such typos — but for <b>98% of them, nobody knows</b> whether they're harmful.
+  Those mysteries are the biggest bottleneck in genetic diagnosis.
+  <b>AlphaMissense is a spell-checker for these typos.</b> It learned which typos nature tolerates
+  (typos common in healthy people and primates) versus typos never seen anywhere (suspicious),
+  combined with AlphaFold's knowledge of protein shapes — and now scores all 71 million possible typos.
+  On every independent test, it beat the previous best methods.
+</div>
+
+<h2>The translation</h2>
+
+<div class="pair">
+  <span class="pair-tag">1 · The problem — from the Introduction</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>only an estimated 2% have been clinically classified as pathogenic or benign</blockquote>
+      <p class="cite">Cheng et al., <em>Science</em> 2023 — on the 4M+ observed missense variants</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Scientists have spotted <b>4 million+</b> one-letter typos in human DNA. For only <b>2 in 100</b> can doctors say
+      "this one causes disease" (<b>pathogenic</b>) or "this one's harmless" (<b>benign</b>).</p>
+      <p>The other 98 are mysteries — officially <b>"variants of uncertain significance" (VUS)</b>. When a genetic test
+      finds one in you, the doctor has to shrug. That pile of mysteries is the single biggest bottleneck in genetic diagnosis.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">2 · The trick — from the Methods</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>fine-tuned AlphaFold on human and primate variant population frequency data</blockquote>
+      <p class="cite">Cheng et al., <em>Science</em> 2023</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>They took <b>AlphaFold</b> — the AI that predicts a protein's 3D shape — and retrained it on a clever,
+      completely free signal.</p>
+      <p>A typo that shows up <b>often in healthy humans and primates</b> is almost certainly harmless — its carriers
+      lived fine. A typo <b>never observed anywhere</b> is suspicious. That's millions of training labels from an experiment
+      <b>evolution already ran</b> — no doctor's opinions, no answer key, no circularity.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">3 · The result — from the Results</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>area under the receiver operator curve (auROC) of 0.940 on 18,924 ClinVar test variants</blockquote>
+      <p class="cite">Cheng et al., <em>Science</em> 2023</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Time for the fair exam: <b>18,924 typos</b> doctors had already classified — which the model <b>never trained on</b>.
+      It ranked the harmful typo above the harmless one <b>94% of the time</b>, beating every previous method.</p>
+      <p>(That 0.940 is the score: 0.50 is a coin flip, 1.00 is perfect. And because the model never saw the answer key,
+      this isn't cheating — most competitors can't say that.)</p>
+    </div>
+  </div>
+</div>
+
+<div class="dataslide">
+  <div class="dataslide-head">Data slide · the report card</div>
+  <div class="dataslide-body">
+    <p class="dataslide-cap">Every row is an independent exam the paper ran. Click a row for the plain-English version of what that test was.</p>
+    <div class="bench" id="bench"></div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">4 · The payoff — the community resource</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>classify 32% of all missense variants as likely pathogenic and 57% as likely benign</blockquote>
+      <p class="cite">Cheng et al., <em>Science</em> 2023</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>They then scored <b>every possible typo</b> in the human genome — <b>71 million</b> of them — and gave the answers
+      away free: roughly a <b>third look harmful</b>, over <b>half look harmless</b>.</p>
+      <p>The 98% mystery pile becomes a searchable database any clinic or lab can use. That's the product, not just the paper.</p>
+    </div>
+  </div>
+</div>
+
+<div class="dataslide">
+  <div class="dataslide-head">Data slide · touch the actual data</div>
+  <div class="dataslide-body">
+    <p class="dataslide-cap">A real slice of the paper's 71M predictions: every possible typo in <b>PTEN</b>, a well-known
+    tumor-suppressor gene (403 building blocks). Research use only — predictions, not medical advice.</p>
+    <div class="legend">
+      <span><span class="swatch" style="background:#1d5fb8"></span>likely benign</span>
+      <span><span class="swatch" style="background:#b7791f"></span>uncertain</span>
+      <span><span class="swatch" style="background:#b3362b"></span>likely pathogenic</span>
+    </div>
+    <div id="dangerMap"></div>
+    <p class="hint">Each bar is one position, colored by its average danger score. Click a bar to jump to it.</p>
+    <h3 style="font-size:16px;margin:18px 0 4px">Score distribution across all 2,391 PTEN typos</h3>
+    <div id="hist"></div>
+    <p class="hint">Most typos score near 0 (harmless) or near 1 (harmful) — the model is usually confident.</p>
+    <h3 style="font-size:16px;margin:18px 0 4px">Look up a typo</h3>
+    <div class="lookup">
+      <div><label>Position (1–403)</label><input id="pos" type="number" min="1" max="403" value="130"></div>
+      <div><label>Swap to (amino acid)</label><select id="alt"></select></div>
+      <div><button id="go">Score it</button></div>
+    </div>
+    <div id="lookupResult"></div>
+    <p class="hint">The default, R130Q, is a well-known cancer mutation in PTEN's catalytic core — note the near-1.0 score.</p>
+  </div>
+</div>
+
+<h2>Key terms, in one line each</h2>
+<div class="gloss">
+  <div><b>Missense variant</b> — a one-letter DNA typo that swaps one protein building block for another.</div>
+  <div><b>Pathogenic / benign</b> — the typo causes disease / the typo is harmless.</div>
+  <div><b>VUS</b> — "variant of uncertain significance": a typo nobody has classified yet.</div>
+  <div><b>auROC</b> — how often the model ranks a harmful typo above a harmless one; 0.5 = coin flip, 1.0 = perfect.</div>
+  <div><b>ClinVar</b> — the public answer key: typos doctors have already classified.</div>
+  <div><b>MAVE</b> — lab experiments that build thousands of mutated proteins and measure what breaks.</div>
+</div>
+
+<h2>Fine print (what the translation shouldn't hide)</h2>
+<div class="card">
+  <p style="margin-top:0">Weaker on floppy, unstructured protein regions. Scores in the middle (0.2–0.8) are less reliable
+  than the extremes. DeepMind released the 71M predictions but <b>not</b> the model weights — you get the answers, not the machine.</p>
+</div>
+
+<h2>Should you read the full paper?</h2>
+<div class="verdict">
+  <div class="v-read"><b>Read it if…</b>you work on variant interpretation, precision medicine, or protein ML — the training-label design (weak labels from population frequency, self-distillation) is the transferable idea.</div>
+  <div class="v-skim"><b>Skim is enough if…</b>you just needed the idea and the evidence bar — the four translations above plus the data slides carry ~90% of it.</div>
+  <div class="v-skip"><b>Skip it if…</b>you don't touch genetics. The architecture details only matter if you're building on it.</div>
+</div>
+
+<footer>
+  Demo of the "No Fear Research Papers" concept · Built from Cheng et al., <em>Science</em> 381 (6664), 2023.
+  Brief excerpts quoted for commentary; full text at the publisher link above.
+  Benchmark numbers are the paper's reported values. Variant scores come from DeepMind's public release
+  (research use) and are predictions, not medical advice.
+</footer>
+
+</div>
+<script>const PTEN_DATA = [[2,"T","A",499,1],[2,"T","I",8445,0],[2,"T","K",7785,0],[2,"T","P",2732,1],[2,"T","R",7058,0],[2,"T","S",1373,1],[3,"A","D",6560,0],[3,"A","G",1780,1],[3,"A","P",7497,0],[3,"A","S",970,1],[3,"A","T",1824,1],[3,"A","V",4860,2],[4,"I","F",703,1],[4,"I","L",851,1],[4,"I","M",860,1],[4,"I","N",6037,0],[4,"I","S",4729,2],[4,"I","T",3353,1],[4,"I","V",676,1],[5,"I","F",2708,1],[5,"I","L",1345,1],[5,"I","M",3657,2],[5,"I","N",9964,0],[5,"I","S",9830,0],[5,"I","T",9691,0],[5,"I","V",3498,2],[6,"K","E",9903,0],[6,"K","I",9975,0],[6,"K","N",9988,0],[6,"K","Q",9593,0],[6,"K","R",1927,1],[6,"K","T",9894,0],[7,"E","A",3666,2],[7,"E","D",3682,2],[7,"E","G",1898,1],[7,"E","K",6870,0],[7,"E","Q",3100,1],[7,"E","V",6916,0],[8,"I","F",602,1],[8,"I","L",1060,1],[8,"I","M",648,1],[8,"I","N",9365,0],[8,"I","S",8588,0],[8,"I","T",7007,0],[8,"I","V",1105,1],[9,"V","A",9979,0],[9,"V","D",9999,0],[9,"V","F",9881,0],[9,"V","G",9953,0],[9,"V","I",7603,0],[9,"V","L",9975,0],[10,"S","C",9948,0],[10,"S","G",9544,0],[10,"S","I",9991,0],[10,"S","N",9991,0],[10,"S","R",9993,0],[10,"S","T",9859,0],[11,"R","G",8159,0],[11,"R","I",9947,0],[11,"R","K",3731,2],[11,"R","S",9925,0],[11,"R","T",9924,0],[12,"N","D",6543,0],[12,"N","H",2792,1],[12,"N","I",9727,0],[12,"N","K",5145,2],[12,"N","S",4493,2],[12,"N","T",8218,0],[12,"N","Y",6836,0],[13,"K","E",9997,0],[13,"K","I",9996,0],[13,"K","N",9999,0],[13,"K","Q",9992,0],[13,"K","R",6956,0],[13,"K","T",9988,0],[14,"R","G",9936,0],[14,"R","K",6688,0],[14,"R","M",9865,0],[14,"R","S",9981,0],[14,"R","T",9912,0],[14,"R","W",9705,0],[15,"R","G",9994,0],[15,"R","I",9995,0],[15,"R","K",9964,0],[15,"R","S",9999,0],[15,"R","T",9999,0],[16,"Y","C",9898,0],[16,"Y","D",9988,0],[16,"Y","F",1704,1],[16,"Y","H",9914,0],[16,"Y","N",9952,0],[16,"Y","S",9975,0],[17,"Q","E",4333,2],[17,"Q","H",9434,0],[17,"Q","K",3608,2],[17,"Q","L",7928,0],[17,"Q","P",9946,0],[17,"Q","R",4280,2],[18,"E","A",7187,0],[18,"E","D",5789,0],[18,"E","G",7968,0],[18,"E","K",8717,0],[18,"E","Q",5772,0],[18,"E","V",8730,0],[19,"D","A",9593,0],[19,"D","E",8888,0],[19,"D","G",7633,0],[19,"D","H",9891,0],[19,"D","N",8441,0],[19,"D","V",9893,0],[19,"D","Y",9596,0],[20,"G","A",9740,0],[20,"G","E",9908,0],[20,"G","R",9943,0],[20,"G","V",9934,0],[21,"F","C",9985,0],[21,"F","I",9975,0],[21,"F","L",9998,0],[21,"F","S",9998,0],[21,"F","V",9967,0],[21,"F","Y",7733,0],[22,"D","A",9959,0],[22,"D","E",9972,0],[22,"D","G",9980,0],[22,"D","H",9976,0],[22,"D","N",8555,0],[22,"D","V",9963,0],[22,"D","Y",9937,0],[23,"L","F",9991,0],[23,"L","I",9687,0],[23,"L","S",9999,0],[23,"L","V",9813,0],[24,"D","A",9997,0],[24,"D","E",9998,0],[24,"D","G",9998,0],[24,"D","H",9999,0],[24,"D","N",9997,0],[24,"D","V",9999,0],[24,"D","Y",9995,0],[25,"L","F",9978,0],[25,"L","M",9441,0],[25,"L","S",9998,0],[25,"L","V",9728,0],[25,"L","W",9998,0],[26,"T","A",8225,0],[26,"T","I",9990,0],[26,"T","N",9861,0],[26,"T","P",9965,0],[26,"T","S",7697,0],[27,"Y","C",9817,0],[27,"Y","D",9937,0],[27,"Y","F",8094,0],[27,"Y","H",9987,0],[27,"Y","N",9923,0],[27,"Y","S",9872,0],[28,"I","F",9989,0],[28,"I","L",9736,0],[28,"I","M",9950,0],[28,"I","N",9998,0],[28,"I","S",9995,0],[28,"I","T",9989,0],[28,"I","V",5532,2],[29,"Y","C",2288,1],[29,"Y","D",9094,0],[29,"Y","F",1535,1],[29,"Y","H",5918,0],[29,"Y","N",7565,0],[29,"Y","S",5122,2],[30,"P","A",8753,0],[30,"P","L",9839,0],[30,"P","Q",8285,0],[30,"P","R",8423,0],[30,"P","S",8550,0],[30,"P","T",9428,0],[31,"N","D",7690,0],[31,"N","H",5590,2],[31,"N","I",9929,0],[31,"N","K",9712,0],[31,"N","S",3467,2],[31,"N","T",8092,0],[31,"N","Y",9077,0],[32,"I","F",9947,0],[32,"I","L",7199,0],[32,"I","M",9336,0],[32,"I","N",9995,0],[32,"I","S",9992,0],[32,"I","T",9971,0],[32,"I","V",3378,1],[33,"I","F",9975,0],[33,"I","L",8466,0],[33,"I","M",9654,0],[33,"I","N",9999,0],[33,"I","S",9995,0],[33,"I","T",9984,0],[33,"I","V",6551,0],[34,"A","D",10000,0],[34,"A","G",9680,0],[34,"A","P",9995,0],[34,"A","S",9566,0],[34,"A","T",9980,0],[34,"A","V",9986,0],[35,"M","I",9993,0],[35,"M","K",9996,0],[35,"M","L",9581,0],[35,"M","R",9995,0],[35,"M","T",9971,0],[35,"M","V",9682,0],[36,"G","A",9867,0],[36,"G","E",9999,0],[36,"G","R",9999,0],[36,"G","V",9995,0],[37,"F","C",9985,0],[37,"F","I",9986,0],[37,"F","L",9998,0],[37,"F","S",9995,0],[37,"F","V",9984,0],[37,"F","Y",6323,0],[38,"P","A",9980,0],[38,"P","H",9999,0],[38,"P","L",9992,0],[38,"P","R",9995,0],[38,"P","S",9998,0],[38,"P","T",9996,0],[39,"A","E",9991,0],[39,"A","G",8814,0],[39,"A","P",9992,0],[39,"A","S",5989,0],[39,"A","T",9959,0],[39,"A","V",9987,0],[40,"E","A",6692,0],[40,"E","D",2539,1],[40,"E","G",6236,0],[40,"E","K",8949,0],[40,"E","Q",5724,0],[40,"E","V",8585,0],[41,"R","G",4551,2],[41,"R","I",8929,0],[41,"R","K",1488,1],[41,"R","S",7452,0],[41,"R","T",6853,0],[42,"L","F",6423,0],[42,"L","H",9945,0],[42,"L","I",3224,1],[42,"L","P",9799,0],[42,"L","R",9784,0],[42,"L","V",4130,2],[43,"E","A",9912,0],[43,"E","D",9982,0],[43,"E","G",9917,0],[43,"E","K",9989,0],[43,"E","Q",9923,0],[43,"E","V",9984,0],[44,"G","A",5911,0],[44,"G","C",9895,0],[44,"G","D",9982,0],[44,"G","R",9952,0],[44,"G","S",8329,0],[44,"G","V",9921,0],[45,"V","A",9446,0],[45,"V","E",9974,0],[45,"V","G",9595,0],[45,"V","I",1978,1],[45,"V","L",7439,0],[46,"Y","C",9919,0],[46,"Y","D",9999,0],[46,"Y","F",3438,2],[46,"Y","H",9993,0],[46,"Y","N",9995,0],[46,"Y","S",9977,0],[47,"R","G",9997,0],[47,"R","K",9980,0],[47,"R","M",10000,0],[47,"R","S",10000,0],[47,"R","T",10000,0],[47,"R","W",9990,0],[48,"N","D",9998,0],[48,"N","H",9996,0],[48,"N","I",9997,0],[48,"N","K",9999,0],[48,"N","S",9981,0],[48,"N","T",9992,0],[48,"N","Y",9991,0],[49,"N","D",7065,0],[49,"N","H",1633,1],[49,"N","I",9768,0],[49,"N","K",9628,0],[49,"N","S",2740,1],[49,"N","T",8238,0],[49,"N","Y",8056,0],[50,"I","F",8584,0],[50,"I","L",5681,0],[50,"I","M",4359,2],[50,"I","N",9954,0],[50,"I","S",9796,0],[50,"I","T",9498,0],[50,"I","V",3794,2],[51,"D","A",9090,0],[51,"D","E",6722,0],[51,"D","G",8988,0],[51,"D","H",9601,0],[51,"D","N",7099,0],[51,"D","V",9616,0],[51,"D","Y",9568,0],[52,"D","A",9648,0],[52,"D","E",7723,0],[52,"D","G",9929,0],[52,"D","H",9909,0],[52,"D","N",9624,0],[52,"D","V",9900,0],[52,"D","Y",9918,0],[53,"V","A",9956,0],[53,"V","E",9994,0],[53,"V","G",9953,0],[53,"V","I",7657,0],[53,"V","L",9990,0],[54,"V","A",6946,0],[54,"V","E",9107,0],[54,"V","G",7608,0],[54,"V","I",2185,1],[54,"V","L",8134,0],[55,"R","G",9296,0],[55,"R","K",4070,2],[55,"R","M",9768,0],[55,"R","S",9723,0],[55,"R","T",9632,0],[55,"R","W",9387,0],[56,"F","C",9971,0],[56,"F","I",9965,0],[56,"F","L",9906,0],[56,"F","S",9999,0],[56,"F","V",9950,0],[56,"F","Y",9232,0],[57,"L","F",7744,0],[57,"L","M",6746,0],[57,"L","S",9996,0],[57,"L","V",9644,0],[57,"L","W",9916,0],[58,"D","A",9437,0],[58,"D","E",4619,2],[58,"D","G",9366,0],[58,"D","H",9635,0],[58,"D","N",5254,2],[58,"D","V",9680,0],[58,"D","Y",9711,0],[59,"S","A",1018,1],[59,"S","L",1843,1],[59,"S","P",9965,0],[59,"S","T",1086,1],[60,"K","E",9834,0],[60,"K","M",9579,0],[60,"K","N",9923,0],[60,"K","Q",8409,0],[60,"K","R",1375,1],[60,"K","T",9825,0],[61,"H","D",9996,0],[61,"H","L",9971,0],[61,"H","N",9977,0],[61,"H","P",9972,0],[61,"H","Q",9990,0],[61,"H","R",9987,0],[61,"H","Y",9897,0],[62,"K","E",3918,2],[62,"K","I",7802,0],[62,"K","N",7052,0],[62,"K","Q",1675,1],[62,"K","R",790,1],[62,"K","T",5075,2],[63,"N","D",971,1],[63,"N","H",1400,1],[63,"N","I",6481,0],[63,"N","K",5388,2],[63,"N","S",980,1],[63,"N","T",2069,1],[63,"N","Y",2824,1],[64,"H","D",8233,0],[64,"H","L",8362,0],[64,"H","N",3609,2],[64,"H","P",9895,0],[64,"H","Q",5419,2],[64,"H","R",2947,1],[64,"H","Y",5657,0],[65,"Y","C",9369,0],[65,"Y","D",9993,0],[65,"Y","F",3928,2],[65,"Y","H",9945,0],[65,"Y","N",9960,0],[65,"Y","S",9913,0],[66,"K","E",9937,0],[66,"K","M",9071,0],[66,"K","N",9979,0],[66,"K","Q",8458,0],[66,"K","R",1623,1],[66,"K","T",9880,0],[67,"I","K",9997,0],[67,"I","L",8604,0],[67,"I","M",9692,0],[67,"I","R",9995,0],[67,"I","T",9980,0],[67,"I","V",2433,1],[68,"Y","C",9913,0],[68,"Y","D",9999,0],[68,"Y","F",3873,2],[68,"Y","H",9987,0],[68,"Y","N",9992,0],[68,"Y","S",9982,0],[69,"N","D",9949,0],[69,"N","H",9836,0],[69,"N","I",9979,0],[69,"N","K",9997,0],[69,"N","S",9302,0],[69,"N","T",9944,0],[69,"N","Y",9939,0],[70,"L","F",9945,0],[70,"L","H",9996,0],[70,"L","I",9714,0],[70,"L","P",10000,0],[70,"L","R",9984,0],[70,"L","V",9669,0],[71,"C","F",9992,0],[71,"C","G",9953,0],[71,"C","R",9992,0],[71,"C","S",9986,0],[71,"C","W",9998,0],[71,"C","Y",9998,0],[72,"A","D",9573,0],[72,"A","G",6656,0],[72,"A","P",9817,0],[72,"A","S",2162,1],[72,"A","T",5788,0],[72,"A","V",7164,0],[73,"E","A",9982,0],[73,"E","D",9983,0],[73,"E","G",9914,0],[73,"E","K",9990,0],[73,"E","Q",9961,0],[73,"E","V",9993,0],[74,"R","G",9965,0],[74,"R","I",9988,0],[74,"R","K",9253,0],[74,"R","S",9996,0],[74,"R","T",9993,0],[75,"H","D",3377,1],[75,"H","L",2076,1],[75,"H","N",792,1],[75,"H","P",5751,0],[75,"H","Q",1910,1],[75,"H","R",1814,1],[75,"H","Y",1688,1],[76,"Y","C",9944,0],[76,"Y","D",9983,0],[76,"Y","F",8724,0],[76,"Y","H",9991,0],[76,"Y","N",9952,0],[76,"Y","S",9949,0],[77,"D","A",7393,0],[77,"D","E",6404,0],[77,"D","G",8925,0],[77,"D","H",8693,0],[77,"D","N",2136,1],[77,"D","V",8201,0],[77,"D","Y",9168,0],[78,"T","A",591,1],[78,"T","I",2050,1],[78,"T","N",1474,1],[78,"T","P",713,1],[78,"T","S",945,1],[79,"A","D",2827,1],[79,"A","G",1065,1],[79,"A","P",6891,0],[79,"A","S",668,1],[79,"A","T",682,1],[79,"A","V",1276,1],[80,"K","E",9812,0],[80,"K","I",9652,0],[80,"K","N",9876,0],[80,"K","Q",8508,0],[80,"K","R",1219,1],[80,"K","T",9466,0],[81,"F","C",9992,0],[81,"F","I",9982,0],[81,"F","L",9994,0],[81,"F","S",9997,0],[81,"F","V",9984,0],[81,"F","Y",9663,0],[82,"N","D",1324,1],[82,"N","H",788,1],[82,"N","I",4920,2],[82,"N","K",4215,2],[82,"N","S",629,1],[82,"N","T",1925,1],[82,"N","Y",2016,1],[83,"C","F",1730,1],[83,"C","G",887,1],[83,"C","R",2755,1],[83,"C","S",1451,1],[83,"C","W",4355,2],[83,"C","Y",1918,1],[84,"R","G",6423,0],[84,"R","I",7700,0],[84,"R","K",2109,1],[84,"R","S",7184,0],[84,"R","T",6446,0],[85,"V","A",9679,0],[85,"V","D",9986,0],[85,"V","F",9815,0],[85,"V","G",9530,0],[85,"V","I",5957,0],[85,"V","L",9937,0],[86,"A","E",9132,0],[86,"A","G",5590,2],[86,"A","P",9987,0],[86,"A","S",2547,1],[86,"A","T",6252,0],[86,"A","V",6830,0],[87,"Q","E",1190,1],[87,"Q","H",3020,1],[87,"Q","K",2506,1],[87,"Q","L",2077,1],[87,"Q","P",4670,2],[87,"Q","R",2477,1],[88,"Y","C",9893,0],[88,"Y","D",9994,0],[88,"Y","F",1644,1],[88,"Y","H",9952,0],[88,"Y","N",9962,0],[88,"Y","S",9979,0],[89,"P","A",7226,0],[89,"P","H",9927,0],[89,"P","L",9865,0],[89,"P","R",9868,0],[89,"P","S",9516,0],[89,"P","T",9867,0],[90,"F","C",9984,0],[90,"F","I",9900,0],[90,"F","L",9996,0],[90,"F","S",9992,0],[90,"F","V",9913,0],[90,"F","Y",9852,0],[91,"E","A",7986,0],[91,"E","D",4769,2],[91,"E","G",8854,0],[91,"E","K",9278,0],[91,"E","Q",7738,0],[91,"E","V",9032,0],[92,"D","A",9998,0],[92,"D","E",9997,0],[92,"D","G",9998,0],[92,"D","H",9999,0],[92,"D","N",9993,0],[92,"D","V",9999,0],[92,"D","Y",9994,0],[93,"H","D",9999,0],[93,"H","L",9997,0],[93,"H","N",9995,0],[93,"H","P",9998,0],[93,"H","Q",10000,0],[93,"H","R",9997,0],[93,"H","Y",9993,0],[94,"N","D",9881,0],[94,"N","H",7360,0],[94,"N","I",9807,0],[94,"N","K",9975,0],[94,"N","S",4908,2],[94,"N","T",8706,0],[94,"N","Y",9045,0],[95,"P","A",9255,0],[95,"P","L",9984,0],[95,"P","Q",9998,0],[95,"P","R",9996,0],[95,"P","S",9971,0],[95,"P","T",9967,0],[96,"P","A",9924,0],[96,"P","L",9983,0],[96,"P","Q",9999,0],[96,"P","R",9998,0],[96,"P","S",9995,0],[96,"P","T",9994,0],[97,"Q","E",3887,2],[97,"Q","H",7487,0],[97,"Q","K",4523,2],[97,"Q","L",4571,2],[97,"Q","P",3575,2],[97,"Q","R",4660,2],[98,"L","I",4712,2],[98,"L","P",9981,0],[98,"L","Q",9980,0],[98,"L","R",9980,0],[98,"L","V",6574,0],[99,"E","A",9182,0],[99,"E","D",8753,0],[99,"E","G",9355,0],[99,"E","K",9919,0],[99,"E","Q",8782,0],[99,"E","V",9755,0],[100,"L","F",9398,0],[100,"L","H",9713,0],[100,"L","I",5829,0],[100,"L","P",9996,0],[100,"L","R",9399,0],[100,"L","V",5660,0],[101,"I","F",9085,0],[101,"I","L",5321,2],[101,"I","M",3957,2],[101,"I","N",9989,0],[101,"I","S",9965,0],[101,"I","T",9953,0],[101,"I","V",4944,2],[102,"K","E",6698,0],[102,"K","I",8322,0],[102,"K","N",9419,0],[102,"K","Q",2420,1],[102,"K","R",980,1],[102,"K","T",6987,0],[103,"P","A",6519,0],[103,"P","H",9176,0],[103,"P","L",8897,0],[103,"P","R",8832,0],[103,"P","S",8559,0],[103,"P","T",8476,0],[104,"F","C",9914,0],[104,"F","I",9955,0],[104,"F","L",9982,0],[104,"F","S",9993,0],[104,"F","V",9888,0],[104,"F","Y",9496,0],[105,"C","F",9998,0],[105,"C","G",9953,0],[105,"C","R",9999,0],[105,"C","S",9960,0],[105,"C","W",9999,0],[105,"C","Y",10000,0],[106,"E","A",3323,1],[106,"E","D",2638,1],[106,"E","G",5608,2],[106,"E","K",3658,2],[106,"E","Q",1966,1],[106,"E","V",3574,2],[107,"D","A",9891,0],[107,"D","E",9742,0],[107,"D","G",9921,0],[107,"D","H",9857,0],[107,"D","N",9096,0],[107,"D","V",9967,0],[107,"D","Y",9951,0],[108,"L","F",9917,0],[108,"L","H",9993,0],[108,"L","I",4686,2],[108,"L","P",9999,0],[108,"L","R",9973,0],[108,"L","V",2630,1],[109,"D","A",9445,0],[109,"D","E",8677,0],[109,"D","G",9400,0],[109,"D","H",8278,0],[109,"D","N",7879,0],[109,"D","V",9904,0],[109,"D","Y",9624,0],[110,"Q","E",915,1],[110,"Q","H",1146,1],[110,"Q","K",779,1],[110,"Q","L",901,1],[110,"Q","P",9517,0],[110,"Q","R",810,1],[111,"W","C",9995,0],[111,"W","G",9975,0],[111,"W","L",9963,0],[111,"W","R",9997,0],[111,"W","S",9991,0],[112,"L","I",8593,0],[112,"L","P",9999,0],[112,"L","Q",9964,0],[112,"L","R",9951,0],[112,"L","V",9234,0],[113,"S","C",1264,1],[113,"S","G",851,1],[113,"S","I",4549,2],[113,"S","N",2269,1],[113,"S","R",5155,2],[113,"S","T",1217,1],[114,"E","A",1095,1],[114,"E","D",1638,1],[114,"E","G",1671,1],[114,"E","K",1184,1],[114,"E","Q",885,1],[114,"E","V",2253,1],[115,"D","A",5156,2],[115,"D","E",5109,2],[115,"D","G",3837,2],[115,"D","H",3944,2],[115,"D","N",1299,1],[115,"D","V",7874,0],[115,"D","Y",7144,0],[116,"D","A",1053,1],[116,"D","E",675,1],[116,"D","G",1023,1],[116,"D","H",1984,1],[116,"D","N",884,1],[116,"D","V",1547,1],[116,"D","Y",2840,1],[117,"N","D",931,1],[117,"N","H",543,1],[117,"N","I",1668,1],[117,"N","K",1242,1],[117,"N","S",558,1],[117,"N","T",763,1],[117,"N","Y",1274,1],[118,"H","D",8744,0],[118,"H","L",8690,0],[118,"H","N",2173,1],[118,"H","P",9765,0],[118,"H","Q",8077,0],[118,"H","R",6558,0],[118,"H","Y",6391,0],[119,"V","A",9907,0],[119,"V","D",9998,0],[119,"V","F",9962,0],[119,"V","G",9957,0],[119,"V","I",2101,1],[119,"V","L",9920,0],[120,"A","E",9998,0],[120,"A","G",7326,0],[120,"A","P",9985,0],[120,"A","S",8860,0],[120,"A","T",9756,0],[120,"A","V",9038,0],[121,"A","E",9998,0],[121,"A","G",9351,0],[121,"A","P",9991,0],[121,"A","S",8351,0],[121,"A","T",9510,0],[121,"A","V",6796,0],[122,"I","F",9959,0],[122,"I","L",9268,0],[122,"I","M",9775,0],[122,"I","N",9998,0],[122,"I","S",9993,0],[122,"I","T",9980,0],[122,"I","V",1838,1],[123,"H","D",9998,0],[123,"H","L",9982,0],[123,"H","N",9951,0],[123,"H","P",9989,0],[123,"H","Q",9997,0],[123,"H","R",9998,0],[123,"H","Y",9988,0],[124,"C","F",9998,0],[124,"C","G",9978,0],[124,"C","R",9999,0],[124,"C","S",9995,0],[124,"C","W",9999,0],[124,"C","Y",9999,0],[125,"K","E",9997,0],[125,"K","I",9995,0],[125,"K","N",9999,0],[125,"K","Q",9987,0],[125,"K","R",9063,0],[125,"K","T",9990,0],[126,"A","D",9993,0],[126,"A","G",9682,0],[126,"A","P",9994,0],[126,"A","S",9736,0],[126,"A","T",9995,0],[126,"A","V",9997,0],[127,"G","A",9997,0],[127,"G","E",10000,0],[127,"G","R",10000,0],[127,"G","V",9999,0],[128,"K","E",9997,0],[128,"K","M",9993,0],[128,"K","N",9999,0],[128,"K","Q",9996,0],[128,"K","R",9615,0],[128,"K","T",9995,0],[129,"G","A",9996,0],[129,"G","E",9999,0],[129,"G","R",10000,0],[129,"G","V",9998,0],[130,"R","G",9999,0],[130,"R","L",9997,0],[130,"R","P",9998,0],[130,"R","Q",9996,0],[131,"T","A",9961,0],[131,"T","I",9999,0],[131,"T","N",9992,0],[131,"T","P",9972,0],[131,"T","S",9938,0],[132,"G","A",9972,0],[132,"G","C",9999,0],[132,"G","D",10000,0],[132,"G","R",10000,0],[132,"G","S",9994,0],[132,"G","V",9999,0],[133,"V","A",9903,0],[133,"V","E",9987,0],[133,"V","G",9708,0],[133,"V","I",5679,0],[133,"V","L",9674,0],[134,"M","I",9985,0],[134,"M","K",9998,0],[134,"M","L",9312,0],[134,"M","R",9999,0],[134,"M","T",9989,0],[134,"M","V",9721,0],[135,"I","K",9999,0],[135,"I","L",9371,0],[135,"I","M",9754,0],[135,"I","R",9998,0],[135,"I","T",9945,0],[135,"I","V",4377,2],[136,"C","F",9996,0],[136,"C","G",9637,0],[136,"C","R",9998,0],[136,"C","S",9224,0],[136,"C","W",9999,0],[136,"C","Y",9999,0],[137,"A","E",9995,0],[137,"A","G",7833,0],[137,"A","P",9995,0],[137,"A","S",3048,1],[137,"A","T",8866,0],[137,"A","V",9521,0],[138,"Y","C",9578,0],[138,"Y","D",9997,0],[138,"Y","F",4028,2],[138,"Y","H",9979,0],[138,"Y","N",9982,0],[138,"Y","S",9931,0],[139,"L","F",9394,0],[139,"L","I",8336,0],[139,"L","S",9979,0],[139,"L","V",8859,0],[140,"L","F",9915,0],[140,"L","I",4669,2],[140,"L","S",9960,0],[140,"L","V",5381,2],[141,"H","D",9968,0],[141,"H","L",9814,0],[141,"H","N",9765,0],[141,"H","P",9995,0],[141,"H","Q",9839,0],[141,"H","R",9530,0],[141,"H","Y",6826,0],[142,"R","G",8683,0],[142,"R","L",8852,0],[142,"R","P",9980,0],[142,"R","Q",3225,1],[142,"R","W",9070,0],[143,"G","A",3641,2],[143,"G","C",4070,2],[143,"G","D",3881,2],[143,"G","R",2137,1],[143,"G","S",1865,1],[143,"G","V",8245,0],[144,"K","E",7237,0],[144,"K","I",6453,0],[144,"K","N",8616,0],[144,"K","Q",3185,1],[144,"K","R",840,1],[144,"K","T",6548,0],[145,"F","C",7670,0],[145,"F","I",9498,0],[145,"F","L",9965,0],[145,"F","S",9847,0],[145,"F","V",9149,0],[145,"F","Y",4330,2],[146,"L","F",1159,1],[146,"L","I",855,1],[146,"L","S",797,1],[146,"L","V",704,1],[147,"K","E",974,1],[147,"K","M",2069,1],[147,"K","N",2338,1],[147,"K","Q",847,1],[147,"K","R",802,1],[147,"K","T",1104,1],[148,"A","E",9814,0],[148,"A","G",5007,2],[148,"A","P",5832,0],[148,"A","S",3258,1],[148,"A","T",8895,0],[148,"A","V",9334,0],[149,"Q","E",1054,1],[149,"Q","H",3864,2],[149,"Q","K",1491,1],[149,"Q","L",3545,2],[149,"Q","P",3586,2],[149,"Q","R",1799,1],[150,"E","A",2676,1],[150,"E","D",1219,1],[150,"E","G",3984,2],[150,"E","K",5595,2],[150,"E","Q",2790,1],[150,"E","V",6115,0],[151,"A","D",9995,0],[151,"A","G",8589,0],[151,"A","P",9989,0],[151,"A","S",4938,2],[151,"A","T",9537,0],[151,"A","V",9360,0],[152,"L","I",8383,0],[152,"L","P",9999,0],[152,"L","Q",9957,0],[152,"L","R",9954,0],[152,"L","V",8711,0],[153,"D","A",4798,2],[153,"D","E",3071,1],[153,"D","G",6346,0],[153,"D","H",6309,0],[153,"D","N",2352,1],[153,"D","V",6059,0],[153,"D","Y",6358,0],[154,"F","C",8864,0],[154,"F","I",9495,0],[154,"F","L",9963,0],[154,"F","S",9898,0],[154,"F","V",9270,0],[154,"F","Y",1814,1],[155,"Y","C",9967,0],[155,"Y","D",9991,0],[155,"Y","F",6723,0],[155,"Y","H",9990,0],[155,"Y","N",9987,0],[155,"Y","S",9959,0],[156,"G","A",7853,0],[156,"G","E",9989,0],[156,"G","R",9988,0],[156,"G","V",9992,0],[156,"G","W",9994,0],[157,"E","A",2558,1],[157,"E","D",1943,1],[157,"E","G",4147,2],[157,"E","K",3815,2],[157,"E","Q",2064,1],[157,"E","V",3675,2],[158,"V","A",5854,0],[158,"V","E",7825,0],[158,"V","G",7815,0],[158,"V","I",2362,1],[158,"V","L",8872,0],[159,"R","G",9997,0],[159,"R","K",9976,0],[159,"R","M",10000,0],[159,"R","S",9999,0],[159,"R","T",9999,0],[159,"R","W",9991,0],[160,"T","A",9759,0],[160,"T","I",9990,0],[160,"T","N",9958,0],[160,"T","P",9953,0],[160,"T","S",9888,0],[161,"R","G",6090,0],[161,"R","I",5577,2],[161,"R","K",1162,1],[161,"R","S",7566,0],[161,"R","T",4950,2],[162,"D","A",9987,0],[162,"D","E",9980,0],[162,"D","G",9927,0],[162,"D","H",9992,0],[162,"D","N",8520,0],[162,"D","V",9985,0],[162,"D","Y",9965,0],[163,"K","E",4904,2],[163,"K","I",9107,0],[163,"K","N",7357,0],[163,"K","Q",1594,1],[163,"K","R",787,1],[163,"K","T",5808,0],[164,"K","E",9800,0],[164,"K","M",9568,0],[164,"K","N",9852,0],[164,"K","Q",8473,0],[164,"K","R",3163,1],[164,"K","T",9758,0],[165,"G","A",9952,0],[165,"G","E",9999,0],[165,"G","R",9999,0],[165,"G","V",9994,0],[166,"V","A",9994,0],[166,"V","E",9998,0],[166,"V","G",9978,0],[166,"V","I",6637,0],[166,"V","L",9969,0],[167,"T","A",9974,0],[167,"T","I",9996,0],[167,"T","N",9962,0],[167,"T","P",9985,0],[167,"T","S",9922,0],[168,"I","F",9986,0],[168,"I","L",9878,0],[168,"I","M",9954,0],[168,"I","N",9997,0],[168,"I","S",9995,0],[168,"I","T",9993,0],[168,"I","V",9446,0],[169,"P","A",9904,0],[169,"P","H",9998,0],[169,"P","L",9992,0],[169,"P","R",9994,0],[169,"P","S",9990,0],[169,"P","T",9994,0],[170,"S","C",9924,0],[170,"S","G",9873,0],[170,"S","I",9998,0],[170,"S","N",9996,0],[170,"S","R",9999,0],[170,"S","T",9865,0],[171,"Q","E",9765,0],[171,"Q","H",9999,0],[171,"Q","K",9988,0],[171,"Q","L",9988,0],[171,"Q","P",9993,0],[171,"Q","R",9993,0],[172,"R","G",9900,0],[172,"R","K",6408,0],[172,"R","M",9727,0],[172,"R","S",9970,0],[172,"R","T",9873,0],[172,"R","W",9665,0],[173,"R","C",9981,0],[173,"R","G",9995,0],[173,"R","H",9951,0],[173,"R","L",9980,0],[173,"R","P",9999,0],[173,"R","S",9999,0],[174,"Y","C",9985,0],[174,"Y","D",9996,0],[174,"Y","F",6944,0],[174,"Y","H",9995,0],[174,"Y","N",9985,0],[174,"Y","S",9967,0],[175,"V","A",9951,0],[175,"V","E",9997,0],[175,"V","G",9944,0],[175,"V","L",9929,0],[175,"V","M",9964,0],[176,"Y","C",758,1],[176,"Y","D",3472,2],[176,"Y","F",609,1],[176,"Y","H",1428,1],[176,"Y","N",1273,1],[176,"Y","S",1487,1],[177,"Y","C",9912,0],[177,"Y","D",9983,0],[177,"Y","F",7372,0],[177,"Y","H",9969,0],[177,"Y","N",9887,0],[177,"Y","S",9853,0],[178,"Y","C",9883,0],[178,"Y","D",9995,0],[178,"Y","F",3980,2],[178,"Y","H",9947,0],[178,"Y","N",9976,0],[178,"Y","S",9940,0],[179,"S","C",2382,1],[179,"S","G",1389,1],[179,"S","I",9545,0],[179,"S","N",2831,1],[179,"S","R",9645,0],[179,"S","T",5283,2],[180,"Y","C",1289,1],[180,"Y","D",4443,2],[180,"Y","F",649,1],[180,"Y","H",1024,1],[180,"Y","N",2288,1],[180,"Y","S",2390,1],[181,"L","M",4129,2],[181,"L","P",9997,0],[181,"L","Q",9732,0],[181,"L","R",9823,0],[181,"L","V",6102,0],[182,"L","F",9254,0],[182,"L","I",1913,1],[182,"L","S",9470,0],[182,"L","V",1713,1],[183,"K","E",1492,1],[183,"K","M",3339,1],[183,"K","N",4046,2],[183,"K","Q",852,1],[183,"K","R",656,1],[183,"K","T",2097,1],[184,"N","D",5550,2],[184,"N","H",505,1],[184,"N","I",6532,0],[184,"N","K",3311,1],[184,"N","S",1956,1],[184,"N","T",3511,2],[184,"N","Y",1748,1],[185,"H","D",879,1],[185,"H","L",1496,1],[185,"H","N",613,1],[185,"H","P",3260,1],[185,"H","Q",677,1],[185,"H","R",645,1],[185,"H","Y",1516,1],[186,"L","M",1812,1],[186,"L","P",9790,0],[186,"L","Q",4034,2],[186,"L","R",4733,2],[186,"L","V",1776,1],[187,"D","A",1317,1],[187,"D","E",835,1],[187,"D","G",2024,1],[187,"D","H",1992,1],[187,"D","N",939,1],[187,"D","V",1131,1],[187,"D","Y",2385,1],[188,"Y","C",9803,0],[188,"Y","D",9989,0],[188,"Y","F",6278,0],[188,"Y","H",9973,0],[188,"Y","N",9928,0],[188,"Y","S",9916,0],[189,"R","G",5899,0],[189,"R","I",4851,2],[189,"R","K",758,1],[189,"R","S",6118,0],[189,"R","T",3538,2],[190,"P","A",5056,2],[190,"P","L",9455,0],[190,"P","Q",8372,0],[190,"P","R",9262,0],[190,"P","S",8426,0],[190,"P","T",8494,0],[191,"V","A",5279,2],[191,"V","E",7887,0],[191,"V","G",8224,0],[191,"V","L",6091,0],[191,"V","M",3672,2],[192,"A","E",9861,0],[192,"A","G",7526,0],[192,"A","P",4939,2],[192,"A","S",3888,2],[192,"A","T",6329,0],[192,"A","V",7902,0],[193,"L","M",5204,2],[193,"L","P",9999,0],[193,"L","Q",9885,0],[193,"L","R",9859,0],[193,"L","V",3420,2],[194,"L","F",8710,0],[194,"L","M",6610,0],[194,"L","S",9900,0],[194,"L","V",7765,0],[194,"L","W",9740,0],[195,"F","C",9287,0],[195,"F","I",9261,0],[195,"F","L",9415,0],[195,"F","S",9994,0],[195,"F","V",9339,0],[195,"F","Y",8608,0],[196,"H","D",9305,0],[196,"H","L",6485,0],[196,"H","N",6221,0],[196,"H","P",9887,0],[196,"H","Q",5897,0],[196,"H","R",4480,2],[196,"H","Y",4446,2],[197,"K","E",7305,0],[197,"K","M",8295,0],[197,"K","N",9229,0],[197,"K","Q",2661,1],[197,"K","R",864,1],[197,"K","T",7380,0],[198,"M","I",5749,0],[198,"M","K",9980,0],[198,"M","L",3647,2],[198,"M","R",9983,0],[198,"M","T",9749,0],[198,"M","V",2638,1],[199,"M","I",1966,1],[199,"M","K",2872,1],[199,"M","L",1265,1],[199,"M","R",3175,1],[199,"M","T",1944,1],[199,"M","V",637,1],[200,"F","C",9623,0],[200,"F","I",8279,0],[200,"F","L",9620,0],[200,"F","S",9989,0],[200,"F","V",8594,0],[200,"F","Y",9325,0],[201,"E","A",6537,0],[201,"E","D",4565,2],[201,"E","G",8338,0],[201,"E","K",8206,0],[201,"E","Q",3322,1],[201,"E","V",6210,0],[202,"T","A",8066,0],[202,"T","I",9943,0],[202,"T","N",7928,0],[202,"T","P",8073,0],[202,"T","S",7112,0],[203,"I","F",6631,0],[203,"I","L",1487,1],[203,"I","M",2549,1],[203,"I","N",8554,0],[203,"I","S",8370,0],[203,"I","T",6370,0],[203,"I","V",706,1],[204,"P","A",9930,0],[204,"P","L",9973,0],[204,"P","Q",9998,0],[204,"P","R",9997,0],[204,"P","S",9991,0],[204,"P","T",9991,0],[205,"M","I",8836,0],[205,"M","K",9704,0],[205,"M","L",3323,1],[205,"M","R",9562,0],[205,"M","T",7587,0],[205,"M","V",2764,1],[206,"F","C",9324,0],[206,"F","I",9069,0],[206,"F","L",9896,0],[206,"F","S",9875,0],[206,"F","V",9040,0],[206,"F","Y",5187,2],[207,"S","C",2647,1],[207,"S","G",1824,1],[207,"S","I",6627,0],[207,"S","N",4224,2],[207,"S","R",9912,0],[207,"S","T",951,1],[208,"G","A",1338,1],[208,"G","C",2390,1],[208,"G","D",9599,0],[208,"G","R",9563,0],[208,"G","S",1145,1],[208,"G","V",3400,2],[209,"G","A",5515,2],[209,"G","E",9928,0],[209,"G","R",9875,0],[209,"G","V",8514,0],[210,"T","A",2732,1],[210,"T","I",7265,0],[210,"T","N",3731,2],[210,"T","P",7425,0],[210,"T","S",2146,1],[211,"C","F",9673,0],[211,"C","G",9378,0],[211,"C","R",9997,0],[211,"C","S",9710,0],[211,"C","W",9978,0],[211,"C","Y",9962,0],[212,"N","D",6924,0],[212,"N","H",1783,1],[212,"N","I",2354,1],[212,"N","K",8875,0],[212,"N","S",884,1],[212,"N","T",1610,1],[212,"N","Y",1964,1],[213,"P","A",9142,0],[213,"P","H",9989,0],[213,"P","L",9457,0],[213,"P","R",9990,0],[213,"P","S",9940,0],[213,"P","T",9837,0],[214,"Q","E",3323,1],[214,"Q","H",1753,1],[214,"Q","K",5693,0],[214,"Q","L",1121,1],[214,"Q","P",9514,0],[214,"Q","R",5329,2],[215,"F","C",9515,0],[215,"F","I",9464,0],[215,"F","L",9934,0],[215,"F","S",9986,0],[215,"F","V",9163,0],[215,"F","Y",7257,0],[216,"V","A",5584,2],[216,"V","E",8900,0],[216,"V","G",8217,0],[216,"V","L",4046,2],[216,"V","M",2645,1],[217,"V","A",9776,0],[217,"V","D",9999,0],[217,"V","F",9820,0],[217,"V","G",9935,0],[217,"V","I",1430,1],[217,"V","L",8650,0],[218,"C","F",2079,1],[218,"C","G",5359,2],[218,"C","R",9357,0],[218,"C","S",3867,2],[218,"C","W",6760,0],[218,"C","Y",2191,1],[219,"Q","E",8379,0],[219,"Q","H",9776,0],[219,"Q","K",9751,0],[219,"Q","L",9457,0],[219,"Q","P",9937,0],[219,"Q","R",9668,0],[220,"L","I",6679,0],[220,"L","P",9781,0],[220,"L","Q",6520,0],[220,"L","R",8062,0],[220,"L","V",6321,0],[221,"K","E",9748,0],[221,"K","M",9608,0],[221,"K","N",9632,0],[221,"K","Q",8322,0],[221,"K","R",2331,1],[221,"K","T",9531,0],[222,"V","A",9882,0],[222,"V","E",9900,0],[222,"V","G",9457,0],[222,"V","L",9828,0],[222,"V","M",9650,0],[223,"K","E",9745,0],[223,"K","M",9221,0],[223,"K","N",9773,0],[223,"K","Q",7574,0],[223,"K","R",1510,1],[223,"K","T",9324,0],[224,"I","K",9974,0],[224,"I","L",4735,2],[224,"I","M",7655,0],[224,"I","R",9950,0],[224,"I","T",9936,0],[224,"I","V",5191,2],[225,"Y","C",1987,1],[225,"Y","D",9528,0],[225,"Y","F",598,1],[225,"Y","H",1649,1],[225,"Y","N",6744,0],[225,"Y","S",6678,0],[226,"S","A",1051,1],[226,"S","C",1122,1],[226,"S","F",4836,2],[226,"S","P",7935,0],[226,"S","T",664,1],[226,"S","Y",5022,2],[227,"S","A",1764,1],[227,"S","C",1669,1],[227,"S","F",8012,0],[227,"S","P",9218,0],[227,"S","T",2314,1],[227,"S","Y",7776,0],[228,"N","D",3363,1],[228,"N","H",1111,1],[228,"N","I",956,1],[228,"N","K",5010,2],[228,"N","S",519,1],[228,"N","T",521,1],[228,"N","Y",1692,1],[229,"S","A",534,1],[229,"S","L",985,1],[229,"S","P",772,1],[229,"S","T",635,1],[230,"G","A",789,1],[230,"G","E",5958,0],[230,"G","R",7042,0],[230,"G","V",851,1],[231,"P","A",554,1],[231,"P","H",1325,1],[231,"P","L",722,1],[231,"P","R",4703,2],[231,"P","S",781,1],[231,"P","T",623,1],[232,"T","A",684,1],[232,"T","I",1720,1],[232,"T","K",7231,0],[232,"T","P",1128,1],[232,"T","R",6878,0],[232,"T","S",937,1],[233,"R","G",7655,0],[233,"R","L",7519,0],[233,"R","P",8843,0],[233,"R","Q",3841,2],[234,"R","G",9548,0],[234,"R","L",9636,0],[234,"R","P",9787,0],[234,"R","Q",8238,0],[234,"R","W",9305,0],[235,"E","A",5094,2],[235,"E","D",1407,1],[235,"E","G",3359,1],[235,"E","K",8062,0],[235,"E","Q",5387,2],[235,"E","V",6927,0],[236,"D","A",4989,2],[236,"D","E",1285,1],[236,"D","G",4719,2],[236,"D","H",7972,0],[236,"D","N",2994,1],[236,"D","V",6170,0],[236,"D","Y",7169,0],[237,"K","E",8081,0],[237,"K","M",8406,0],[237,"K","N",7953,0],[237,"K","Q",4548,2],[237,"K","R",929,1],[237,"K","T",6445,0],[238,"F","C",986,1],[238,"F","I",1278,1],[238,"F","L",4190,2],[238,"F","S",2067,1],[238,"F","V",1114,1],[238,"F","Y",715,1],[239,"M","I",4463,2],[239,"M","K",8143,0],[239,"M","L",1432,1],[239,"M","R",8123,0],[239,"M","T",5284,2],[239,"M","V",1415,1],[240,"Y","C",702,1],[240,"Y","D",3275,1],[240,"Y","F",503,1],[240,"Y","H",1265,1],[240,"Y","N",1382,1],[240,"Y","S",1459,1],[241,"F","C",7936,0],[241,"F","I",8042,0],[241,"F","L",9601,0],[241,"F","S",9871,0],[241,"F","V",7925,0],[241,"F","Y",5935,0],[242,"E","A",2461,1],[242,"E","D",893,1],[242,"E","G",4172,2],[242,"E","K",5230,2],[242,"E","Q",2220,1],[242,"E","V",2664,1],[243,"F","C",9665,0],[243,"F","I",8751,0],[243,"F","L",9636,0],[243,"F","S",9965,0],[243,"F","V",9240,0],[243,"F","Y",8319,0],[244,"P","A",2274,1],[244,"P","H",5262,2],[244,"P","L",3742,2],[244,"P","R",6722,0],[244,"P","S",2791,1],[244,"P","T",3228,1],[245,"Q","E",4741,2],[245,"Q","H",8174,0],[245,"Q","K",7294,0],[245,"Q","L",4587,2],[245,"Q","P",6441,0],[245,"Q","R",7478,0],[246,"P","A",4046,2],[246,"P","L",9408,0],[246,"P","Q",9567,0],[246,"P","R",9779,0],[246,"P","S",8344,0],[246,"P","T",9024,0],[247,"L","F",9313,0],[247,"L","I",3853,2],[247,"L","S",9951,0],[247,"L","V",4520,2],[248,"P","A",8989,0],[248,"P","H",9958,0],[248,"P","L",9270,0],[248,"P","R",9946,0],[248,"P","S",9912,0],[248,"P","T",9834,0],[249,"V","A",9830,0],[249,"V","E",9998,0],[249,"V","G",9946,0],[249,"V","L",8504,0],[249,"V","M",9761,0],[250,"C","F",9363,0],[250,"C","G",8975,0],[250,"C","R",9808,0],[250,"C","S",9320,0],[250,"C","W",9907,0],[250,"C","Y",9842,0],[251,"G","A",9776,0],[251,"G","C",9960,0],[251,"G","D",9983,0],[251,"G","R",9986,0],[251,"G","S",9608,0],[251,"G","V",9996,0],[252,"D","A",9997,0],[252,"D","E",9983,0],[252,"D","G",9997,0],[252,"D","H",9999,0],[252,"D","N",9950,0],[252,"D","V",9998,0],[252,"D","Y",9997,0],[253,"I","F",9643,0],[253,"I","L",7986,0],[253,"I","M",8217,0],[253,"I","N",9990,0],[253,"I","S",9978,0],[253,"I","T",9892,0],[253,"I","V",2426,1],[254,"K","E",9982,0],[254,"K","I",9967,0],[254,"K","N",9993,0],[254,"K","Q",9640,0],[254,"K","R",3071,1],[254,"K","T",9954,0],[255,"V","A",9681,0],[255,"V","E",9995,0],[255,"V","G",9788,0],[255,"V","I",2120,1],[255,"V","L",9136,0],[256,"E","A",9555,0],[256,"E","D",6779,0],[256,"E","G",9884,0],[256,"E","K",9942,0],[256,"E","Q",9133,0],[256,"E","V",9036,0],[257,"F","C",8475,0],[257,"F","I",9593,0],[257,"F","L",9959,0],[257,"F","S",9991,0],[257,"F","V",9029,0],[257,"F","Y",8286,0],[258,"F","C",8604,0],[258,"F","I",8636,0],[258,"F","L",9878,0],[258,"F","S",9505,0],[258,"F","V",8693,0],[258,"F","Y",2638,1],[259,"H","D",9864,0],[259,"H","L",9519,0],[259,"H","N",5924,0],[259,"H","P",9901,0],[259,"H","Q",9629,0],[259,"H","R",9948,0],[259,"H","Y",9029,0],[260,"K","E",9834,0],[260,"K","I",9629,0],[260,"K","N",9852,0],[260,"K","Q",7576,0],[260,"K","R",1080,1],[260,"K","T",9562,0],[261,"Q","E",3798,2],[261,"Q","H",3895,2],[261,"Q","K",5711,0],[261,"Q","L",2286,1],[261,"Q","P",731,1],[261,"Q","R",6282,0],[262,"N","D",6570,0],[262,"N","H",2367,1],[262,"N","I",4153,2],[262,"N","K",8689,0],[262,"N","S",878,1],[262,"N","T",1656,1],[262,"N","Y",3493,2],[263,"K","E",9591,0],[263,"K","M",7958,0],[263,"K","N",9392,0],[263,"K","Q",6119,0],[263,"K","R",950,1],[263,"K","T",8469,0],[264,"M","I",4797,2],[264,"M","K",8653,0],[264,"M","L",1667,1],[264,"M","R",8671,0],[264,"M","T",7286,0],[264,"M","V",1395,1],[265,"L","I",2471,1],[265,"L","P",7259,0],[265,"L","Q",4133,2],[265,"L","R",7507,0],[265,"L","V",1947,1],[266,"K","E",9565,0],[266,"K","I",9469,0],[266,"K","N",9690,0],[266,"K","Q",5779,0],[266,"K","R",989,1],[266,"K","T",9146,0],[267,"K","E",9408,0],[267,"K","M",9466,0],[267,"K","N",9680,0],[267,"K","Q",7495,0],[267,"K","R",1235,1],[267,"K","T",9233,0],[268,"D","A",8999,0],[268,"D","E",1834,1],[268,"D","G",8999,0],[268,"D","H",9613,0],[268,"D","N",8337,0],[268,"D","V",8310,0],[268,"D","Y",8660,0],[269,"K","E",9908,0],[269,"K","I",9786,0],[269,"K","N",9944,0],[269,"K","Q",9431,0],[269,"K","R",1863,1],[269,"K","T",9700,0],[270,"M","I",9502,0],[270,"M","K",9985,0],[270,"M","L",5896,0],[270,"M","R",9992,0],[270,"M","T",9976,0],[270,"M","V",7836,0],[271,"F","C",9654,0],[271,"F","I",9988,0],[271,"F","L",9992,0],[271,"F","S",9993,0],[271,"F","V",9971,0],[271,"F","Y",9627,0],[272,"H","D",9973,0],[272,"H","L",9214,0],[272,"H","N",9267,0],[272,"H","P",9964,0],[272,"H","Q",9402,0],[272,"H","R",9865,0],[272,"H","Y",8990,0],[273,"F","C",8966,0],[273,"F","I",9496,0],[273,"F","L",9945,0],[273,"F","S",9984,0],[273,"F","V",9209,0],[273,"F","Y",9348,0],[274,"W","C",9942,0],[274,"W","G",9932,0],[274,"W","L",9965,0],[274,"W","R",9998,0],[274,"W","S",9914,0],[275,"V","A",9586,0],[275,"V","E",9981,0],[275,"V","G",9700,0],[275,"V","I",1311,1],[275,"V","L",6942,0],[276,"N","D",9987,0],[276,"N","H",9520,0],[276,"N","I",9997,0],[276,"N","K",9998,0],[276,"N","S",9416,0],[276,"N","T",9968,0],[276,"N","Y",9975,0],[277,"T","A",9908,0],[277,"T","I",9993,0],[277,"T","K",9995,0],[277,"T","P",9957,0],[277,"T","R",9989,0],[277,"T","S",9539,0],[278,"F","C",9466,0],[278,"F","I",9965,0],[278,"F","L",9991,0],[278,"F","S",9894,0],[278,"F","V",9896,0],[278,"F","Y",3370,1],[279,"F","C",9925,0],[279,"F","I",9973,0],[279,"F","L",9989,0],[279,"F","S",9990,0],[279,"F","V",9947,0],[279,"F","Y",9334,0],[280,"I","K",9990,0],[280,"I","L",5795,0],[280,"I","M",8317,0],[280,"I","R",9980,0],[280,"I","T",9926,0],[280,"I","V",2652,1],[281,"P","A",2663,1],[281,"P","L",4746,2],[281,"P","Q",4214,2],[281,"P","R",4455,2],[281,"P","S",4117,2],[281,"P","T",3598,2],[282,"G","A",1369,1],[282,"G","E",4900,2],[282,"G","R",6642,0],[282,"G","V",2503,1],[283,"P","A",922,1],[283,"P","L",1096,1],[283,"P","Q",1407,1],[283,"P","R",1979,1],[283,"P","S",1346,1],[283,"P","T",1110,1],[284,"E","A",1870,1],[284,"E","D",798,1],[284,"E","G",1596,1],[284,"E","K",2399,1],[284,"E","Q",1805,1],[284,"E","V",2361,1],[285,"E","A",1755,1],[285,"E","D",750,1],[285,"E","G",1420,1],[285,"E","K",2493,1],[285,"E","Q",1869,1],[285,"E","V",1956,1],[286,"T","A",611,1],[286,"T","I",797,1],[286,"T","N",542,1],[286,"T","P",701,1],[286,"T","S",612,1],[287,"S","A",572,1],[287,"S","L",657,1],[287,"S","P",710,1],[287,"S","T",584,1],[288,"E","A",1442,1],[288,"E","D",633,1],[288,"E","G",988,1],[288,"E","K",1750,1],[288,"E","Q",1285,1],[288,"E","V",1718,1],[289,"K","E",1398,1],[289,"K","I",2550,1],[289,"K","N",2582,1],[289,"K","Q",1110,1],[289,"K","R",716,1],[289,"K","T",1318,1],[290,"V","A",1042,1],[290,"V","E",1680,1],[290,"V","G",1050,1],[290,"V","I",677,1],[290,"V","L",967,1],[291,"E","A",2686,1],[291,"E","D",1509,1],[291,"E","G",2354,1],[291,"E","K",3493,2],[291,"E","Q",2204,1],[291,"E","V",3277,1],[292,"N","D",7653,0],[292,"N","H",8512,0],[292,"N","I",8974,0],[292,"N","K",9645,0],[292,"N","S",6372,0],[292,"N","T",8089,0],[292,"N","Y",8117,0],[293,"G","A",6657,0],[293,"G","E",9669,0],[293,"G","R",9627,0],[293,"G","V",9224,0],[294,"S","C",761,1],[294,"S","G",698,1],[294,"S","I",1025,1],[294,"S","N",998,1],[294,"S","R",4506,2],[294,"S","T",651,1],[295,"L","I",662,1],[295,"L","P",1176,1],[295,"L","Q",1098,1],[295,"L","R",1517,1],[295,"L","V",621,1],[296,"C","F",724,1],[296,"C","G",651,1],[296,"C","R",1130,1],[296,"C","S",785,1],[296,"C","W",1405,1],[296,"C","Y",864,1],[297,"D","A",1194,1],[297,"D","E",768,1],[297,"D","G",1025,1],[297,"D","H",1512,1],[297,"D","N",793,1],[297,"D","V",1337,1],[297,"D","Y",1552,1],[298,"Q","E",664,1],[298,"Q","H",951,1],[298,"Q","K",796,1],[298,"Q","L",993,1],[298,"Q","P",773,1],[298,"Q","R",911,1],[299,"E","A",1494,1],[299,"E","D",568,1],[299,"E","G",1131,1],[299,"E","K",2034,1],[299,"E","Q",1363,1],[299,"E","V",1809,1],[300,"I","F",785,1],[300,"I","L",623,1],[300,"I","M",535,1],[300,"I","N",884,1],[300,"I","S",874,1],[300,"I","T",638,1],[300,"I","V",624,1],[301,"D","A",1765,1],[301,"D","E",1158,1],[301,"D","G",1418,1],[301,"D","H",2607,1],[301,"D","N",1110,1],[301,"D","V",2449,1],[301,"D","Y",2598,1],[302,"S","C",834,1],[302,"S","G",542,1],[302,"S","I",1298,1],[302,"S","N",729,1],[302,"S","R",3604,2],[302,"S","T",650,1],[303,"I","F",801,1],[303,"I","L",718,1],[303,"I","M",886,1],[303,"I","N",1369,1],[303,"I","S",1328,1],[303,"I","T",1527,1],[303,"I","V",631,1],[304,"C","F",747,1],[304,"C","G",746,1],[304,"C","R",1563,1],[304,"C","S",891,1],[304,"C","W",1835,1],[304,"C","Y",909,1],[305,"S","C",804,1],[305,"S","G",692,1],[305,"S","I",1227,1],[305,"S","N",814,1],[305,"S","R",3859,2],[305,"S","T",627,1],[306,"I","K",1182,1],[306,"I","L",611,1],[306,"I","M",587,1],[306,"I","R",1011,1],[306,"I","T",565,1],[306,"I","V",555,1],[307,"E","A",1479,1],[307,"E","D",688,1],[307,"E","G",1088,1],[307,"E","K",1855,1],[307,"E","Q",1172,1],[307,"E","V",1981,1],[308,"R","C",1585,1],[308,"R","G",1028,1],[308,"R","H",1007,1],[308,"R","L",1620,1],[308,"R","P",2129,1],[308,"R","S",2219,1],[309,"A","E",1328,1],[309,"A","G",674,1],[309,"A","P",843,1],[309,"A","S",684,1],[309,"A","T",615,1],[309,"A","V",775,1],[310,"D","A",1301,1],[310,"D","E",748,1],[310,"D","G",1076,1],[310,"D","H",2307,1],[310,"D","N",918,1],[310,"D","V",1551,1],[310,"D","Y",2244,1],[311,"N","D",798,1],[311,"N","H",780,1],[311,"N","I",1037,1],[311,"N","K",1535,1],[311,"N","S",595,1],[311,"N","T",646,1],[311,"N","Y",1126,1],[312,"D","A",1938,1],[312,"D","E",885,1],[312,"D","G",1434,1],[312,"D","H",2766,1],[312,"D","N",1068,1],[312,"D","V",2249,1],[312,"D","Y",2638,1],[313,"K","E",1481,1],[313,"K","M",3357,1],[313,"K","N",3520,2],[313,"K","Q",1198,1],[313,"K","R",664,1],[313,"K","T",1975,1],[314,"E","A",2470,1],[314,"E","D",514,1],[314,"E","G",1916,1],[314,"E","K",3882,2],[314,"E","Q",2466,1],[314,"E","V",3623,2],[315,"Y","C",1964,1],[315,"Y","D",4941,2],[315,"Y","F",809,1],[315,"Y","H",3043,1],[315,"Y","N",2333,1],[315,"Y","S",4000,2],[316,"L","I",2274,1],[316,"L","P",9872,0],[316,"L","Q",3919,2],[316,"L","R",4548,2],[316,"L","V",1956,1],[317,"V","A",4239,2],[317,"V","E",6244,0],[317,"V","G",5799,0],[317,"V","I",620,1],[317,"V","L",2209,1],[318,"L","F",5070,2],[318,"L","H",9398,0],[318,"L","I",3176,1],[318,"L","P",9990,0],[318,"L","R",9392,0],[318,"L","V",3505,2],[319,"T","A",1173,1],[319,"T","I",1621,1],[319,"T","N",2234,1],[319,"T","P",6565,0],[319,"T","S",1302,1],[320,"L","F",6444,0],[320,"L","I",4335,2],[320,"L","S",9992,0],[320,"L","V",6022,0],[321,"T","A",1033,1],[321,"T","I",3628,2],[321,"T","K",3274,1],[321,"T","P",1820,1],[321,"T","R",2905,1],[321,"T","S",771,1],[322,"K","E",9995,0],[322,"K","I",9992,0],[322,"K","N",9998,0],[322,"K","Q",9977,0],[322,"K","R",7020,0],[322,"K","T",9985,0],[323,"N","D",2989,1],[323,"N","H",1791,1],[323,"N","I",2582,1],[323,"N","K",6613,0],[323,"N","S",871,1],[323,"N","T",1145,1],[323,"N","Y",2335,1],[324,"D","A",8227,0],[324,"D","E",6128,0],[324,"D","G",9203,0],[324,"D","H",9007,0],[324,"D","N",6598,0],[324,"D","V",9412,0],[324,"D","Y",8765,0],[325,"L","F",9982,0],[325,"L","H",9999,0],[325,"L","I",4209,2],[325,"L","P",9999,0],[325,"L","R",9993,0],[325,"L","V",6687,0],[326,"D","A",9997,0],[326,"D","E",9991,0],[326,"D","G",9996,0],[326,"D","H",9999,0],[326,"D","N",9995,0],[326,"D","V",9998,0],[326,"D","Y",9996,0],[327,"K","E",9908,0],[327,"K","I",9841,0],[327,"K","N",9925,0],[327,"K","Q",9529,0],[327,"K","R",2632,1],[327,"K","T",9753,0],[328,"A","E",9997,0],[328,"A","G",9270,0],[328,"A","P",9985,0],[328,"A","S",9031,0],[328,"A","T",9966,0],[328,"A","V",9897,0],[329,"N","D",9828,0],[329,"N","H",6146,0],[329,"N","I",9140,0],[329,"N","K",9967,0],[329,"N","S",4224,2],[329,"N","T",8747,0],[329,"N","Y",6604,0],[330,"K","E",9994,0],[330,"K","I",9996,0],[330,"K","N",9996,0],[330,"K","Q",9981,0],[330,"K","R",6726,0],[330,"K","T",9978,0],[331,"D","A",9993,0],[331,"D","E",9964,0],[331,"D","G",9983,0],[331,"D","H",9997,0],[331,"D","N",9962,0],[331,"D","V",9994,0],[331,"D","Y",9987,0],[332,"K","E",9738,0],[332,"K","I",9449,0],[332,"K","N",9826,0],[332,"K","Q",8742,0],[332,"K","R",2026,1],[332,"K","T",8959,0],[333,"A","D",9848,0],[333,"A","G",5069,2],[333,"A","P",9405,0],[333,"A","S",2749,1],[333,"A","T",4912,2],[333,"A","V",7274,0],[334,"N","D",9788,0],[334,"N","H",5614,2],[334,"N","I",9931,0],[334,"N","K",9976,0],[334,"N","S",5419,2],[334,"N","T",9605,0],[334,"N","Y",8430,0],[335,"R","G",9734,0],[335,"R","L",9659,0],[335,"R","P",9975,0],[335,"R","Q",8154,0],[336,"Y","C",1442,1],[336,"Y","D",8387,0],[336,"Y","F",853,1],[336,"Y","H",4371,2],[336,"Y","N",1512,1],[336,"Y","S",3327,1],[337,"F","C",9987,0],[337,"F","I",9966,0],[337,"F","L",9993,0],[337,"F","S",9998,0],[337,"F","V",9965,0],[337,"F","Y",6988,0],[338,"S","A",7027,0],[338,"S","C",8515,0],[338,"S","F",9955,0],[338,"S","P",9499,0],[338,"S","T",9096,0],[338,"S","Y",9904,0],[339,"P","A",7826,0],[339,"P","L",9670,0],[339,"P","Q",9498,0],[339,"P","R",9649,0],[339,"P","S",9238,0],[339,"P","T",9473,0],[340,"N","D",8534,0],[340,"N","H",6352,0],[340,"N","I",9396,0],[340,"N","K",9865,0],[340,"N","S",2989,1],[340,"N","T",7671,0],[340,"N","Y",7353,0],[341,"F","C",9953,0],[341,"F","I",9961,0],[341,"F","L",9971,0],[341,"F","S",9996,0],[341,"F","V",9931,0],[341,"F","Y",9667,0],[342,"K","E",9056,0],[342,"K","M",8179,0],[342,"K","N",9712,0],[342,"K","Q",4523,2],[342,"K","R",830,1],[342,"K","T",7821,0],[343,"V","A",9869,0],[343,"V","E",9993,0],[343,"V","G",9759,0],[343,"V","L",9282,0],[343,"V","M",9810,0],[344,"K","E",7952,0],[344,"K","M",6503,0],[344,"K","N",9249,0],[344,"K","Q",3319,1],[344,"K","R",1203,1],[344,"K","T",4813,2],[345,"L","M",4086,2],[345,"L","P",9998,0],[345,"L","Q",9985,0],[345,"L","R",9987,0],[345,"L","V",3720,2],[346,"Y","C",3058,1],[346,"Y","D",9766,0],[346,"Y","F",478,1],[346,"Y","H",5340,2],[346,"Y","N",8571,0],[346,"Y","S",8174,0],[347,"F","C",9926,0],[347,"F","I",9892,0],[347,"F","L",9978,0],[347,"F","S",9997,0],[347,"F","V",9812,0],[347,"F","Y",9429,0],[348,"T","A",3785,2],[348,"T","I",9276,0],[348,"T","K",8417,0],[348,"T","P",9746,0],[348,"T","R",7682,0],[348,"T","S",1523,1],[349,"K","E",5654,0],[349,"K","I",9177,0],[349,"K","N",8952,0],[349,"K","Q",3297,1],[349,"K","R",943,1],[349,"K","T",6838,0],[350,"T","A",1433,1],[350,"T","I",6242,0],[350,"T","K",8071,0],[350,"T","P",1559,1],[350,"T","R",7474,0],[350,"T","S",3376,1],[351,"V","A",2023,1],[351,"V","E",4185,2],[351,"V","G",2179,1],[351,"V","I",931,1],[351,"V","L",2224,1],[352,"E","A",3335,1],[352,"E","D",1098,1],[352,"E","G",2923,1],[352,"E","K",5118,2],[352,"E","Q",3321,1],[352,"E","V",4565,2],[353,"E","A",3154,1],[353,"E","D",932,1],[353,"E","G",2428,1],[353,"E","K",5082,2],[353,"E","Q",3242,1],[353,"E","V",3428,2],[354,"P","A",547,1],[354,"P","L",828,1],[354,"P","Q",1124,1],[354,"P","R",2094,1],[354,"P","S",711,1],[354,"P","T",604,1],[355,"S","A",600,1],[355,"S","L",822,1],[355,"S","P",1008,1],[355,"S","T",628,1],[356,"N","D",1558,1],[356,"N","H",917,1],[356,"N","I",901,1],[356,"N","K",2859,1],[356,"N","S",665,1],[356,"N","T",771,1],[356,"N","Y",1267,1],[357,"P","A",515,1],[357,"P","L",744,1],[357,"P","Q",1058,1],[357,"P","R",2001,1],[357,"P","S",700,1],[357,"P","T",568,1],[358,"E","A",2664,1],[358,"E","D",867,1],[358,"E","G",2422,1],[358,"E","K",3892,2],[358,"E","Q",2769,1],[358,"E","V",3347,1],[359,"A","D",2997,1],[359,"A","G",1001,1],[359,"A","P",1435,1],[359,"A","S",828,1],[359,"A","T",762,1],[359,"A","V",1013,1],[360,"S","C",1032,1],[360,"S","G",909,1],[360,"S","I",2382,1],[360,"S","N",2075,1],[360,"S","R",8631,0],[360,"S","T",844,1],[361,"S","C",867,1],[361,"S","G",779,1],[361,"S","I",1680,1],[361,"S","N",1320,1],[361,"S","R",7934,0],[361,"S","T",629,1],[362,"S","A",782,1],[362,"S","L",1218,1],[362,"S","P",1580,1],[362,"S","T",744,1],[363,"T","A",577,1],[363,"T","I",2087,1],[363,"T","N",1231,1],[363,"T","P",807,1],[363,"T","S",802,1],[364,"S","A",1116,1],[364,"S","C",1975,1],[364,"S","F",5724,0],[364,"S","P",3284,1],[364,"S","T",1251,1],[364,"S","Y",6096,0],[365,"V","A",4304,2],[365,"V","E",7393,0],[365,"V","G",4467,2],[365,"V","I",799,1],[365,"V","L",2306,1],[366,"T","A",2882,1],[366,"T","I",6856,0],[366,"T","K",8459,0],[366,"T","P",3424,2],[366,"T","R",8207,0],[366,"T","S",3472,2],[367,"P","A",4153,2],[367,"P","L",7389,0],[367,"P","Q",8277,0],[367,"P","R",8886,0],[367,"P","S",6661,0],[367,"P","T",6118,0],[368,"D","A",7919,0],[368,"D","E",5960,0],[368,"D","G",8045,0],[368,"D","H",9353,0],[368,"D","N",6529,0],[368,"D","V",8183,0],[368,"D","Y",8810,0],[369,"V","A",3701,2],[369,"V","D",7045,0],[369,"V","F",3290,1],[369,"V","G",3957,2],[369,"V","I",897,1],[369,"V","L",3096,1],[370,"S","C",3671,2],[370,"S","G",2541,1],[370,"S","I",7942,0],[370,"S","N",6548,0],[370,"S","R",9831,0],[370,"S","T",2190,1],[371,"D","A",8978,0],[371,"D","E",5678,0],[371,"D","G",8277,0],[371,"D","H",9566,0],[371,"D","N",7023,0],[371,"D","V",9169,0],[371,"D","Y",9143,0],[372,"N","D",4879,2],[372,"N","H",3078,1],[372,"N","I",3511,2],[372,"N","K",8688,0],[372,"N","S",1074,1],[372,"N","T",1823,1],[372,"N","Y",4272,2],[373,"E","A",9047,0],[373,"E","D",5507,2],[373,"E","G",8833,0],[373,"E","K",9490,0],[373,"E","Q",8543,0],[373,"E","V",9152,0],[374,"P","A",3783,2],[374,"P","H",7935,0],[374,"P","L",5823,0],[374,"P","R",8224,0],[374,"P","S",6428,0],[374,"P","T",5301,2],[375,"D","A",7852,0],[375,"D","E",3927,2],[375,"D","G",7452,0],[375,"D","H",9149,0],[375,"D","N",5748,0],[375,"D","V",8106,0],[375,"D","Y",8236,0],[376,"H","D",4672,2],[376,"H","L",2718,1],[376,"H","N",1661,1],[376,"H","P",2580,1],[376,"H","Q",4152,2],[376,"H","R",5115,2],[376,"H","Y",2538,1],[377,"Y","C",4996,2],[377,"Y","D",7314,0],[377,"Y","F",2334,1],[377,"Y","H",8254,0],[377,"Y","N",6327,0],[377,"Y","S",6043,0],[378,"R","G",6755,0],[378,"R","I",7995,0],[378,"R","K",3439,2],[378,"R","S",8505,0],[378,"R","T",8025,0],[379,"Y","C",5423,2],[379,"Y","D",7116,0],[379,"Y","F",2155,1],[379,"Y","H",8338,0],[379,"Y","N",6158,0],[379,"Y","S",6653,0],[380,"S","A",3252,1],[380,"S","C",4671,2],[380,"S","F",9356,0],[380,"S","P",8328,0],[380,"S","T",3408,2],[380,"S","Y",8901,0],[381,"D","A",9796,0],[381,"D","E",8730,0],[381,"D","G",9716,0],[381,"D","H",9901,0],[381,"D","N",9158,0],[381,"D","V",9869,0],[381,"D","Y",9779,0],[382,"T","A",5350,2],[382,"T","I",9104,0],[382,"T","N",6621,0],[382,"T","P",7129,0],[382,"T","S",5596,2],[383,"T","A",5332,2],[383,"T","I",9653,0],[383,"T","N",8070,0],[383,"T","P",7317,0],[383,"T","S",5275,2],[384,"D","A",9732,0],[384,"D","E",8963,0],[384,"D","G",9644,0],[384,"D","H",9916,0],[384,"D","N",9203,0],[384,"D","V",9792,0],[384,"D","Y",9659,0],[385,"S","A",3407,2],[385,"S","C",5696,0],[385,"S","F",9336,0],[385,"S","P",9299,0],[385,"S","T",3019,1],[385,"S","Y",8904,0],[386,"D","A",9343,0],[386,"D","E",7345,0],[386,"D","G",9572,0],[386,"D","H",9698,0],[386,"D","N",8536,0],[386,"D","V",9161,0],[386,"D","Y",8979,0],[387,"P","A",3471,2],[387,"P","L",5457,2],[387,"P","Q",6680,0],[387,"P","R",7630,0],[387,"P","S",5884,0],[387,"P","T",4010,2],[388,"E","A",8773,0],[388,"E","D",4786,2],[388,"E","G",7832,0],[388,"E","K",9323,0],[388,"E","Q",8338,0],[388,"E","V",9144,0],[389,"N","D",3893,2],[389,"N","H",3613,2],[389,"N","I",4219,2],[389,"N","K",8193,0],[389,"N","S",2139,1],[389,"N","T",2773,1],[389,"N","Y",3523,2],[390,"E","A",6095,0],[390,"E","D",1883,1],[390,"E","G",5375,2],[390,"E","K",7261,0],[390,"E","Q",5109,2],[390,"E","V",6136,0],[391,"P","A",845,1],[391,"P","H",1814,1],[391,"P","L",1161,1],[391,"P","R",2945,1],[391,"P","S",1240,1],[391,"P","T",981,1],[392,"F","C",2029,1],[392,"F","I",1988,1],[392,"F","L",6490,0],[392,"F","S",2274,1],[392,"F","V",1725,1],[392,"F","Y",1415,1],[393,"D","A",3045,1],[393,"D","E",873,1],[393,"D","G",2810,1],[393,"D","H",4696,2],[393,"D","N",2081,1],[393,"D","V",3291,1],[393,"D","Y",3999,2],[394,"E","A",3805,2],[394,"E","D",720,1],[394,"E","G",3008,1],[394,"E","K",4860,2],[394,"E","Q",3616,2],[394,"E","V",4742,2],[395,"D","A",2545,1],[395,"D","E",684,1],[395,"D","G",2079,1],[395,"D","H",4135,2],[395,"D","N",1479,1],[395,"D","V",2582,1],[395,"D","Y",3321,1],[396,"Q","E",867,1],[396,"Q","H",901,1],[396,"Q","K",1369,1],[396,"Q","L",1005,1],[396,"Q","P",998,1],[396,"Q","R",1573,1],[397,"H","D",2159,1],[397,"H","L",1000,1],[397,"H","N",795,1],[397,"H","P",1095,1],[397,"H","Q",1252,1],[397,"H","R",1956,1],[397,"H","Y",1255,1],[398,"T","A",705,1],[398,"T","I",1578,1],[398,"T","K",3448,2],[398,"T","P",945,1],[398,"T","R",3171,1],[398,"T","S",747,1],[399,"Q","E",1241,1],[399,"Q","H",2000,1],[399,"Q","K",2163,1],[399,"Q","L",1508,1],[399,"Q","P",1374,1],[399,"Q","R",2639,1],[400,"I","F",4564,2],[400,"I","L",3330,1],[400,"I","M",2996,1],[400,"I","N",7676,0],[400,"I","S",8750,0],[400,"I","T",8934,0],[400,"I","V",2415,1],[401,"T","A",3369,1],[401,"T","I",7813,0],[401,"T","K",6988,0],[401,"T","P",5625,2],[401,"T","R",6654,0],[401,"T","S",3182,1],[402,"K","E",6275,0],[402,"K","I",8879,0],[402,"K","N",8055,0],[402,"K","Q",4598,2],[402,"K","R",1388,1],[402,"K","T",6219,0],[403,"V","A",8037,0],[403,"V","D",8804,0],[403,"V","F",5989,0],[403,"V","G",6341,0],[403,"V","I",2221,1],[403,"V","L",6521,0]];
+const CLS=["likely_pathogenic","likely_benign","ambiguous"];</script>
+<script>
+const AAS = ["A","R","N","D","C","Q","E","G","H","I","L","K","M","F","P","S","T","W","Y","V"];
+const AA_NAMES = {A:"Alanine",R:"Arginine",N:"Asparagine",D:"Aspartate",C:"Cysteine",Q:"Glutamine",E:"Glutamate",G:"Glycine",H:"Histidine",I:"Isoleucine",L:"Leucine",K:"Lysine",M:"Methionine",F:"Phenylalanine",P:"Proline",S:"Serine",T:"Threonine",W:"Tryptophan",Y:"Tyrosine",V:"Valine"};
+
+/* ---- Benchmarks: paper's reported numbers ---- */
+const BENCH = [
+  {name:"ClinVar answer key", sub:"18,924 known typos, harmful vs harmless",
+   am:0.940, other:0.911, otherName:"EVE (prev. best)",
+   tip:"The fair exam: 9,462 known-harmful and 9,462 known-harmless typos that the model never trained on. AlphaMissense ranks a harmful typo above a harmless one 94% of the time — vs 91% for the previous best method that also avoided training on this data."},
+  {name:"Same exam, per gene", sub:"612 genes, scored within each gene",
+   am:0.950, other:0.921, otherName:"EVE",
+   tip:"A harder, more clinical version: within a single gene, can it tell that patient's harmful typo apart from harmless ones in the same gene? Yes — and this is the skill a doctor actually needs."},
+  {name:"Sick kids vs healthy controls", sub:"de novo typos, DDD cohort",
+   am:0.809, other:0.797, otherName:"PrimateAI",
+   tip:"Real-world check: typos that appeared brand-new in children with developmental disorders vs typos in healthy kids. Essentially tied with the specialist method here — the one benchmark where it doesn't clearly win."},
+  {name:"Cancer hotspots", sub:"recurrent tumor mutations",
+   am:0.907, other:0.885, otherName:"VARITY",
+   tip:"Spots in the genome where tumors keep mutating — usually because the mutation helps the cancer. The model flags these well, which matters for oncology."},
+  {name:"Lab experiments (MAVE)", sub:"1.5M lab-measured typos, 72 proteins",
+   am:0.514, other:null, otherName:"next-best (GEMME)",
+   tip:"Not a database — actual lab work: scientists built 1.5 million mutated proteins and measured what broke. AlphaMissense's predictions correlated with the measurements (Spearman 0.51) better than all 13 competing methods, winning on 62 of 72 proteins. Agreement with physical reality, not just curated labels."},
+];
+const benchEl = document.getElementById("bench");
+BENCH.forEach(b=>{
+  const row = document.createElement("div");
+  row.className = "bench-row";
+  row.innerHTML =
+    '<div class="bench-name">'+b.name+'<small>'+b.sub+'</small></div>'+
+    '<div class="bars">'+
+      '<div class="bar-line"><span class="bar-label">AlphaMissense</span>'+
+      '<div class="bar-track"><div class="bar-fill fill-am" style="width:'+(b.am*100)+'%">'+b.am.toFixed(3)+'</div></div></div>'+
+      (b.other!=null
+        ? '<div class="bar-line"><span class="bar-label">'+b.otherName+'</span>'+
+          '<div class="bar-track"><div class="bar-fill fill-other" style="width:'+(b.other*100)+'%">'+b.other.toFixed(3)+'</div></div></div>'
+        : '<div class="bar-line"><span class="bar-label">'+b.otherName+'</span>'+
+          '<div class="bar-track"><div class="bar-fill fill-other" style="width:88%">best of 13 rivals</div></div></div>')+
+    '</div>'+
+    '<div class="tip" style="grid-column:1/-1">'+b.tip+'</div>';
+  row.addEventListener("click",()=>row.classList.toggle("open"));
+  benchEl.appendChild(row);
+});
+
+/* ---- Variant data (real slice: PTEN) ---- */
+let DATA = null;
+const sel = document.getElementById("alt");
+AAS.forEach(a=>{ const o=document.createElement("option"); o.value=a; o.text=a+" — "+AA_NAMES[a]; sel.appendChild(o); });
+sel.value = "Q"; // default demo: R130Q, a well-known PTEN catalytic-site mutation
+
+function clsColor(cls){
+  if(cls==="likely_pathogenic") return "#b3362b";
+  if(cls==="likely_benign") return "#1d5fb8";
+  return "#b7791f";
+}
+function clsText(cls){
+  if(cls==="likely_pathogenic") return "likely pathogenic";
+  if(cls==="likely_benign") return "likely benign";
+  return "uncertain";
+}
+function plainSentence(r){
+  const base = "PTEN position "+r[0]+": swapping "+AA_NAMES[r[1]]+" → "+AA_NAMES[r[2]]+
+    " scores "+(r[3]/10000).toFixed(4)+" — "+clsText(CLS[r[4]])+". ";
+  if(CLS[r[4]]==="likely_pathogenic") return base+"In plain terms: the model thinks this typo probably breaks the protein. Worth a closer look if you saw it in a patient.";
+  if(CLS[r[4]]==="likely_benign") return base+"In plain terms: the model thinks the protein shrugs this one off.";
+  return base+"In plain terms: the model isn't confident — this is one for the mystery pile.";
+}
+
+Promise.resolve(PTEN_DATA).then(rows=>{
+  DATA = rows;
+  const byPos = {};
+  rows.forEach(r=>{ (byPos[r[0]]=byPos[r[0]]||[]).push(r[3]/10000); });
+  const map = document.getElementById("dangerMap");
+  Object.keys(byPos).sort((a,b)=>a-b).forEach(p=>{
+    const avg = byPos[p].reduce((s,x)=>s+x,0)/byPos[p].length;
+    const s = document.createElement("span");
+    s.title = "Position "+p+" — avg score "+avg.toFixed(2);
+    s.style.background = avg>0.6 ? "#b3362b" : (avg>0.4 ? "#b7791f" : "#1d5fb8");
+    s.style.opacity = 0.35 + 0.65*Math.abs(avg-0.5)*2;
+    s.addEventListener("click",()=>{ document.getElementById("pos").value=p; doLookup(); });
+    map.appendChild(s);
+  });
+  const bins = new Array(20).fill(0);
+  rows.forEach(r=>{ bins[Math.min(19,Math.floor(r[3]/10000*20))]++; });
+  const mx = Math.max(...bins);
+  const hist = document.getElementById("hist");
+  bins.forEach((c,i)=>{
+    const d = document.createElement("div");
+    d.style.height = (c/mx*100)+"%";
+    d.title = (i/20).toFixed(2)+"–"+((i+1)/20).toFixed(2)+": "+c+" typos";
+    hist.appendChild(d);
+  });
+  doLookup();
+}).catch(()=>{
+  document.getElementById("lookupResult").innerHTML =
+    "<p class='hint'>Variant data is still loading — refresh in a moment.</p>";
+});
+
+function doLookup(){
+  if(!DATA) return;
+  const p = parseInt(document.getElementById("pos").value,10);
+  const a = sel.value;
+  const r = DATA.find(x=>x[0]===p && x[2]===a);
+  const box = document.getElementById("lookupResult");
+  if(!r){ box.innerHTML = "<p class='hint'>No data for that position/swap (position must be 1–403, and the swap must differ from the reference).</p>"; return; }
+  box.innerHTML = '<div class="card" style="border-left:5px solid '+clsColor(r.cls)+'">'+
+    "<p style='margin:0'>"+plainSentence(r)+"</p></div>";
+}
+document.getElementById("go").addEventListener("click",doLookup);
+</script>
+</body>
+</html>
