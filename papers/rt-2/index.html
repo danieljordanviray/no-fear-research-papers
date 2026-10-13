@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="No Fear Research Papers: RT-2, translated">
+<meta property="og:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. The web-trained brain that learned to move a robot arm.">
+<meta property="og:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-rt2.jpg">
+<meta property="og:url" content="https://danieljordanviray.github.io/no-fear-research-papers/papers/rt-2/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="No Fear Research Papers: RT-2, translated">
+<meta name="twitter:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. The web-trained brain that learned to move a robot arm.">
+<meta name="twitter:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-rt2.jpg">
+<title>No Fear Research Papers: RT-2, translated</title>
+<style>
+  :root{
+    --ink:#1d2430; --muted:#5b6572; --line:#e4e8ee; --bg:#f7f9fb;
+    --card:#ffffff; --accent:#0b6e4f; --accent-soft:#e3f2ea;
+    --paper:#fbf7ef; --paper-line:#e8ddc4;
+    --bad:#b3362b; --blue:#1d5fb8; --blue-soft:#e8f0fd;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65;font-size:17px}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+  header.hero{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:28px 30px;margin-bottom:26px}
+  .kicker{display:inline-block;background:var(--accent-soft);color:var(--accent);
+    font-weight:700;font-size:13px;letter-spacing:.4px;text-transform:uppercase;
+    padding:4px 12px;border-radius:999px;margin-bottom:12px}
+  h1{font-size:30px;line-height:1.25;margin:6px 0 10px}
+  h2{font-size:22px;margin:38px 0 6px;padding-top:8px;border-top:2px solid var(--line)}
+  .paper-meta{color:var(--muted);font-size:15px}
+  .paper-meta a{color:var(--blue)}
+  .backlink{margin:0 0 14px;font-size:15px}
+  .backlink a{color:var(--muted);text-decoration:none}
+  .backlink a:hover{text-decoration:underline}
+  .howto{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 20px;margin:18px 0;font-size:16px;color:var(--muted)}
+  .howto b{color:var(--ink)}
+  .pitch{background:var(--accent-soft);border:1px solid #bfe3cf;border-radius:12px;
+    padding:20px 22px;margin:18px 0;font-size:18px}
+  .pair{margin:22px 0}
+  .pair-tag{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:1px;
+    text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .pair-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);
+    border-radius:14px;overflow:hidden}
+  .orig{background:var(--paper);border-right:1px solid var(--paper-line);padding:22px 24px}
+  .orig h3,.trans h3{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;
+    margin:0 0 12px;color:var(--muted)}
+  .orig blockquote{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:18.5px;
+    line-height:1.6;color:#3a3226}
+  .orig blockquote::before{content:"\201C"}
+  .orig blockquote::after{content:"\201D"}
+  .orig .cite{margin-top:12px;font-size:13.5px;color:var(--muted)}
+  .trans{background:var(--card);padding:22px 24px}
+  .trans p{margin:8px 0;font-size:16.5px}
+  .trans p:first-of-type{margin-top:0}
+  .dataslide{border:2px solid var(--ink);border-radius:14px;background:var(--card);
+    margin:26px 0;overflow:hidden}
+  .dataslide-head{background:var(--ink);color:#fff;padding:10px 22px;font-size:13px;
+    font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+  .dataslide-body{padding:20px 22px}
+  .dataslide-cap{font-size:15.5px;color:var(--muted);margin:0 0 12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:20px 22px;margin:16px 0}
+  .hint{font-size:14px;color:var(--muted)}
+  .loop-steps{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+  .loop-steps button{flex:1;min-width:130px;background:#fff;color:var(--ink);
+    border:1px solid var(--line);border-radius:8px;padding:10px 8px;
+    font-size:14.5px;font-weight:700;cursor:pointer}
+  .loop-steps button.hot{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:16px 0 4px}
+  .stat-grid div{background:#f4f6f8;border:1px solid var(--line);border-radius:10px;
+    padding:12px 14px;text-align:center}
+  .stat-grid b{display:block;font-size:22px;color:var(--accent)}
+  .stat-grid span{font-size:13px;color:var(--muted)}
+  .gloss{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  .gloss div{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:12px 16px;font-size:15.5px}
+  .gloss b{color:var(--accent)}
+  .verdict{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0}
+  .verdict div{border-radius:10px;padding:14px 16px;font-size:15px}
+  .v-read{background:var(--accent-soft);border:1px solid #bfe3cf}
+  .v-skim{background:var(--blue-soft);border:1px solid #bcd4f5}
+  .v-skip{background:#f1f2f4;border:1px solid var(--line)}
+  .verdict b{display:block;margin-bottom:4px}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:13.5px}
+  @media(max-width:760px){
+    .pair-grid{grid-template-columns:1fr}
+    .orig{border-right:none;border-bottom:1px solid var(--paper-line)}
+    .verdict{grid-template-columns:1fr}
+    .gloss{grid-template-columns:1fr}
+    .stat-grid{grid-template-columns:1fr}
+  }
+
+  .fx-row{display:flex;gap:12px;align-items:flex-start;margin:10px 0;padding:12px 14px;
+    border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff}
+  .fx-row:hover{border-color:var(--accent)}
+  .fx-row.hot{border-color:var(--accent);background:var(--accent-soft)}
+  .fx-row .fx-tag{flex:none;font-weight:800;font-size:12.5px;text-transform:uppercase;
+    letter-spacing:.6px;color:var(--accent);width:170px;padding-top:2px}
+  .fx-row .fx-txt{font-size:15.5px}
+  @media(max-width:760px){ .fx-row{flex-direction:column;gap:4px} .fx-row .fx-tag{width:auto} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="backlink"><a href="../../">&larr; No Fear Research Papers</a></p>
+
+<header class="hero">
+  <span class="kicker">No Fear Research Papers</span>
+  <h1>RT-2, translated</h1>
+  <p class="paper-meta">
+    Brohan et al., arXiv:2307.15818, 2023 (Conference on Robot Learning) ·
+    <a href="https://arxiv.org/abs/2307.15818">arxiv.org/abs/2307.15818</a><br>
+    From Google DeepMind — "Vision-Language-Action Models Transfer Web Knowledge to Robotic Control."
+  </p>
+</header>
+
+<div class="howto">
+  <b>How to read this page:</b> on the left, the paper's own words — short excerpts, exactly as written.
+  On the right, the same idea in everyday English. Data slides appear where the paper makes a claim,
+  so you can try the robot's surprise exam yourself.
+</div>
+
+<h2>The whole paper in 60 seconds</h2>
+<div class="pitch">
+  Robots used to be trained the slow way: show the arm thousands of examples of the exact task, and it
+  still fails the moment an object changes. Meanwhile, vision-language models trained on the internet
+  learned an enormous amount about the world — what things are, what they're for, what "tired" implies.
+  <b>RT-2</b> asks: what if one model did both? They fine-tuned a web-trained vision-language model on
+  robot data too, expressing the robot's <b>actions as text tokens</b> — so the same model that answers
+  questions in words also answers in movements. The result, across 6,000 evaluation trials: the robot
+  handled objects it had never seen in training and obeyed commands requiring actual reasoning — like
+  picking a rock when asked for an improvised hammer.
+</div>
+
+<h2>The translation</h2>
+
+<div class="pair">
+  <span class="pair-tag">1 · The bet — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>vision-language models trained on Internet-scale data can be incorporated directly into end-to-end robotic control</blockquote>
+      <p class="cite">Brohan et al., 2023</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>The old pipeline was modular: one system to see, one to plan, one to move — each trained separately,
+      each brittle. The bet here is end-to-end: take a giant model that already "knows" the visual world
+      from the web, and teach it to drive the arm directly.</p>
+      <p>"Internet-scale" is the load-bearing phrase. The robot's own training data is tiny; the web's is
+      not. RT-2's trick is making the web's knowledge usable at the robot's fingertips.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">2 · The trick — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>we express the actions as text tokens</blockquote>
+      <p class="cite">Brohan et al., 2023</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>How do you teach a language model to move an arm? Make movement a dialect of language. A robot
+      action (move x/y/z, rotate, open/close gripper) is written as a short string of numbers — tokens,
+      exactly like words — and mixed into the training data alongside captions and question-answering.</p>
+      <p>Then they <b>co-fine-tune</b>: web tasks and robot trajectories in the same training run, so the
+      model doesn't forget the world while learning the arm. One vocabulary for seeing, saying, and doing —
+      the transformer doesn't care which it's producing.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">3 · The payoff — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>significantly improved generalization to novel objects</blockquote>
+      <p class="cite">Brohan et al., 2023</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>The exam wasn't the training tasks — it was the <b>unseen</b> ones: new objects, new backgrounds,
+      new instructions. RT-2 followed commands that never appeared in its robot data, because the concepts
+      ("extinct animal," "the number 3," "someone who is tired") existed in its web education.</p>
+      <p>This is the paper's real claim: generalization as a transfer effect. The robot reasons with borrowed
+      knowledge — rudimentary, but real. Try the exam questions below.</p>
+    </div>
+  </div>
+</div>
+
+<div class="dataslide">
+  <div class="dataslide-head">Data slide · the surprise exam</div>
+  <div class="dataslide-body">
+    <p class="dataslide-cap">Commands from the paper's evaluation (6,000 trials) that required knowledge from web training, not robot training. Click each — what did the robot have to figure out?</p>
+    <div id="fxRows"></div>
+    <div id="fxDetail"></div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">4 · The glimmer — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>figuring out which object to pick up for use as an improvised hammer (a rock)</blockquote>
+      <p class="cite">Brohan et al., 2023 — on chain-of-thought reasoning in RT-2</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>With chain-of-thought enabled, RT-2 could do multi-step semantic reasoning out loud before moving:
+      "the user is tired → they need energy → the energy drink" — then grasp the can. Or: no hammer on the
+      table → a rock is hard, heavy, graspable → pick the rock.</p>
+      <p>Nobody programmed "rock = hammer." That equivalence lives in the web data — in a million captions,
+      articles, and answers. The paper's deepest suggestion: robots can inherit human common sense the same
+      way language models did, by reading.</p>
+    </div>
+  </div>
+</div>
+
+<h2>Key terms, in one line each</h2>
+<div class="gloss">
+  <div><b>VLA model</b> — vision-language-action: one model taking images + instructions in, robot actions out.</div>
+  <div><b>Co-fine-tuning</b> — training simultaneously on web vision-language tasks and robot trajectories, so neither skill erases the other.</div>
+  <div><b>Action tokens</b> — robot movements encoded as text-like tokens ("move +3, −1, close gripper") in the model's vocabulary.</div>
+  <div><b>Generalization</b> — handling objects, scenes, and instructions absent from the robot training data.</div>
+  <div><b>Chain of thought</b> — the model verbalizes a reasoning step before acting, enabling multi-stage semantic choices.</div>
+  <div><b>Emergent capability</b> — a skill nobody explicitly trained, appearing as a side effect of scale and transfer.</div>
+</div>
+
+<h2>Fine print (what the translation shouldn't hide)</h2>
+<div class="card">
+  <p style="margin-top:0">"Generalization" here means tabletop grasping of household objects in lab
+  settings — a narrow physical world, carefully arranged. The flagship model was a 55-billion-parameter
+  giant run in the cloud, not on the robot; latency and cost were substantial. And inherited web knowledge
+  cuts both ways: the robot also inherits the web's errors and biases. RT-2 is a proof that transfer works,
+  not a product.</p>
+</div>
+
+<h2>Should you read the full paper?</h2>
+<div class="verdict">
+  <div class="v-read"><b>Read it if…</b>you follow where AI meets the physical world — this is the VLA founding paper, and its recipe (actions as tokens) now underlies most robot foundation models.</div>
+  <div class="v-skim"><b>Skim is enough if…</b>you need the transfer story: web knowledge in, robot generalization out.</div>
+  <div class="v-skip"><b>Skip it if…</b>you're only after language models — the Attention translation covers the root idea.</div>
+</div>
+
+<footer>
+  Built from Brohan et al., arXiv:2307.15818, 2023.
+  Brief excerpts quoted for commentary; full text at the publisher link above.
+</footer>
+
+</div>
+<script>
+/* ---------- Data slide: the surprise exam ---------- */
+const FX = [
+  {tag:"Symbol understanding", txt:"“Pick up the extinct animal”",
+   note:"The table holds toy animals. Nothing in the robot training data labels any object as 'extinct' — but web training knows dinosaurs are. RT-2 grasps the toy dinosaur (paper, emergent-capabilities evaluation)."},
+  {tag:"Reasoning: superlatives", txt:"“Pick up the smallest object”",
+   note:"Commands like smallest/largest/closest require comparing objects against each other — a relation, not a name. RT-2 handled such instructions it had never seen in robot data (paper, Abstract)."},
+  {tag:"Numbers & icons", txt:"“Place the cup on the number 3”",
+   note:"Instructions pointing at printed numbers or icons — appearing only in web-scale vision-language data, not in robot trajectories — were interpreted correctly (paper, Abstract)."},
+  {tag:"Chain of thought", txt:"“Get a drink for someone who is tired”",
+   note:"With chain-of-thought, RT-2 first reasons ('tired \u2192 needs energy \u2192 energy drink'), then grasps the energy drink — multi-stage semantic reasoning before moving a muscle (paper, Abstract)."}
+];
+const fxEl = document.getElementById("fxRows");
+FX.forEach((s,i)=>{
+  const r = document.createElement("div");
+  r.className = "fx-row"+(i===0?" hot":"");
+  r.innerHTML = '<span class="fx-tag">'+s.tag+'</span><span class="fx-txt">'+s.txt+'</span>';
+  r.addEventListener("click", ()=>{
+    document.querySelectorAll(".fx-row").forEach(x=>x.classList.remove("hot"));
+    r.classList.add("hot");
+    document.getElementById("fxDetail").innerHTML =
+      '<div class="card"><p style="margin:0">'+s.note+'</p></div>';
+  });
+  fxEl.appendChild(r);
+});
+document.getElementById("fxDetail").innerHTML =
+  '<div class="card"><p style="margin:0">'+FX[0].note+'</p></div>';
+</script>
+</body>
+</html>
