@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="No Fear Research Papers: ESM3, translated">
+<meta property="og:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. A language model that simulates 500 million years of evolution.">
+<meta property="og:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-esm3.jpg">
+<meta property="og:url" content="https://danieljordanviray.github.io/no-fear-research-papers/papers/esm3/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="No Fear Research Papers: ESM3, translated">
+<meta name="twitter:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. A language model that simulates 500 million years of evolution.">
+<meta name="twitter:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-esm3.jpg">
+<title>No Fear Research Papers: ESM3, translated</title>
+<style>
+  :root{
+    --ink:#1d2430; --muted:#5b6572; --line:#e4e8ee; --bg:#f7f9fb;
+    --card:#ffffff; --accent:#0b6e4f; --accent-soft:#e3f2ea;
+    --paper:#fbf7ef; --paper-line:#e8ddc4;
+    --bad:#b3362b; --blue:#1d5fb8; --blue-soft:#e8f0fd;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65;font-size:17px}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+  header.hero{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:28px 30px;margin-bottom:26px}
+  .kicker{display:inline-block;background:var(--accent-soft);color:var(--accent);
+    font-weight:700;font-size:13px;letter-spacing:.4px;text-transform:uppercase;
+    padding:4px 12px;border-radius:999px;margin-bottom:12px}
+  h1{font-size:30px;line-height:1.25;margin:6px 0 10px}
+  h2{font-size:22px;margin:38px 0 6px;padding-top:8px;border-top:2px solid var(--line)}
+  .paper-meta{color:var(--muted);font-size:15px}
+  .paper-meta a{color:var(--blue)}
+  .backlink{margin:0 0 14px;font-size:15px}
+  .backlink a{color:var(--muted);text-decoration:none}
+  .backlink a:hover{text-decoration:underline}
+  .howto{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 20px;margin:18px 0;font-size:16px;color:var(--muted)}
+  .howto b{color:var(--ink)}
+  .pitch{background:var(--accent-soft);border:1px solid #bfe3cf;border-radius:12px;
+    padding:20px 22px;margin:18px 0;font-size:18px}
+  .pair{margin:22px 0}
+  .pair-tag{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:1px;
+    text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .pair-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);
+    border-radius:14px;overflow:hidden}
+  .orig{background:var(--paper);border-right:1px solid var(--paper-line);padding:22px 24px}
+  .orig h3,.trans h3{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;
+    margin:0 0 12px;color:var(--muted)}
+  .orig blockquote{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:18.5px;
+    line-height:1.6;color:#3a3226}
+  .orig blockquote::before{content:"\201C"}
+  .orig blockquote::after{content:"\201D"}
+  .orig .cite{margin-top:12px;font-size:13.5px;color:var(--muted)}
+  .trans{background:var(--card);padding:22px 24px}
+  .trans p{margin:8px 0;font-size:16.5px}
+  .trans p:first-of-type{margin-top:0}
+  .dataslide{border:2px solid var(--ink);border-radius:14px;background:var(--card);
+    margin:26px 0;overflow:hidden}
+  .dataslide-head{background:var(--ink);color:#fff;padding:10px 22px;font-size:13px;
+    font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+  .dataslide-body{padding:20px 22px}
+  .dataslide-cap{font-size:15.5px;color:var(--muted);margin:0 0 12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:20px 22px;margin:16px 0}
+  .hint{font-size:14px;color:var(--muted)}
+  input[type=range]{width:100%;margin:14px 0 6px}
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:12px 0}
+  .stat-grid div{background:#f4f6f8;border:1px solid var(--line);border-radius:10px;
+    padding:12px 14px;text-align:center}
+  .stat-grid b{display:block;font-size:24px;color:var(--accent)}
+  .stat-grid span{font-size:13.5px;color:var(--muted)}
+  #resStrip{display:flex;flex-wrap:wrap;gap:3px;margin:14px 0}
+  .res{width:14px;height:14px;border-radius:3px;background:var(--accent);opacity:.85}
+  .res.diff{background:var(--bad)}
+  .preset-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+  .preset{border:1px solid var(--line);background:#fff;border-radius:999px;
+    padding:6px 14px;font-size:14px;cursor:pointer}
+  .preset:hover{border-color:var(--accent)}
+  .preset.hot{border-color:var(--accent);background:var(--accent-soft);font-weight:700}
+  .gloss{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  .gloss div{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:12px 16px;font-size:15.5px}
+  .gloss b{color:var(--accent)}
+  .verdict{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0}
+  .verdict div{border-radius:10px;padding:14px 16px;font-size:15px}
+  .v-read{background:var(--accent-soft);border:1px solid #bfe3cf}
+  .v-skim{background:var(--blue-soft);border:1px solid #bcd4f5}
+  .v-skip{background:#f1f2f4;border:1px solid var(--line)}
+  .verdict b{display:block;margin-bottom:4px}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:13.5px}
+  @media(max-width:760px){
+    .pair-grid{grid-template-columns:1fr}
+    .orig{border-right:none;border-bottom:1px solid var(--paper-line)}
+    .verdict{grid-template-columns:1fr}
+    .gloss{grid-template-columns:1fr}
+    .stat-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="backlink"><a href="../../">← No Fear Research Papers</a></p>
+
+<header class="hero">
+  <span class="kicker">No Fear Research Papers</span>
+  <h1>ESM3, translated</h1>
+  <p class="paper-meta">
+    Hayes et al., <em>Science</em> 387, 2025 ·
+    <a href="https://www.science.org/doi/10.1126/science.ads0018">science.org/doi/10.1126/science.ads0018</a><br>
+    From EvolutionaryScale — "Simulating 500 million years of evolution with a language model."
+  </p>
+</header>
+
+<div class="howto">
+  <b>How to read this page:</b> on the left, the paper's own words — short excerpts, exactly as written.
+  On the right, the same idea in everyday English. Data slides appear where the paper makes a claim,
+  so you can feel the numbers instead of taking its word for it.
+</div>
+
+<h2>The whole paper in 60 seconds</h2>
+<div class="pitch">
+  Proteins are written in a 20-letter language, and evolution has been writing sentences for over 3 billion
+  years. <b>ESM3</b> is a language model — a transformer, like the one from the Attention paper — trained on
+  <b>2.78 billion protein sequences</b> plus their 3D shapes and their jobs, until it learned the grammar of
+  what makes a protein work. Because it understands sequence, structure, <em>and</em> function as three dialects
+  of one language, you can prompt it with any mix: "here's a partial shape, here's the job — finish the
+  protein." The headline proof: they asked it for a glowing protein (GFP), then built its answer in a real lab.
+  <b>It glowed</b> — despite sharing only <b>58%</b> of its letters with any known fluorescent protein, a gap
+  the authors estimate nature would need ~500 million years of evolution to produce.
+</div>
+
+<h2>The translation</h2>
+
+<div class="pair">
+  <span class="pair-tag">1 · The idea — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>language models trained at scale on evolutionary data can generate functional proteins that are far away from known proteins</blockquote>
+      <p class="cite">Hayes et al., <em>Science</em> 2025</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Treat evolution as an author and proteins as its sentences. Train a big enough language model on the
+      whole library — billions of sentences — and it learns the grammar: which letter patterns fold, which
+      ones glow, which ones catalyze.</p>
+      <p>Then it can <b>write new sentences</b>: working proteins that don't exist in nature and aren't close
+      copies of anything that does.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">2 · The model — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>reasons over the sequence, structure, and function of proteins</blockquote>
+      <p class="cite">Hayes et al., <em>Science</em> 2025</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Older protein models read only the letters. ESM3 reads three tracks at once — the <b>sequence</b>
+      (letters), the <b>structure</b> (3D shape), and the <b>function</b> (job description) — all converted
+      into tokens in one shared vocabulary.</p>
+      <p>That means prompts can mix dialects: give it half a shape and a keyword like "fluorescence," and it
+      completes the rest. The flagship model has 98 billion parameters, trained on 771 billion tokens.</p>
+    </div>
+  </div>
+</div>
+
+<div class="dataslide">
+  <div class="dataslide-head">Data slide · how far is 58%?</div>
+  <div class="dataslide-body">
+    <p class="dataslide-cap">"58% sequence identity" is the paper's headline number. Each square below is one amino acid of a GFP-sized protein (238 letters). Green = same letter as the natural protein, red = different. Drag the slider — or jump to the paper's two landmarks — and count what "far away" really looks like.</p>
+    <input type="range" id="idSlider" min="30" max="100" value="58">
+    <div class="stat-grid">
+      <div><b id="idPct">58%</b><span>letters identical</span></div>
+      <div><b id="idDiff">100</b><span>letters different (of 238)</span></div>
+      <div><b id="idYrs">~500M yrs</b><span>of evolution, by the authors' estimate</span></div>
+    </div>
+    <div id="resStrip"></div>
+    <div class="preset-row">
+      <button class="preset" data-p="100">An exact copy · 100%</button>
+      <button class="preset" data-p="90">A close cousin · 90%</button>
+      <button class="preset hot" data-p="58">esmGFP vs nearest natural glowing protein · 58%</button>
+      <button class="preset" data-p="36">esmGFP vs the original jellyfish GFP · ~36%</button>
+    </div>
+    <p class="hint">Remarkably, proteins with only ~58% identical letters usually still fold the same way — which is exactly why the model's answer could work. Divergence estimates from the paper; residue strip is illustrative.</p>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">3 · The result — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>we found a bright fluorescent protein at a far distance (58% sequence identity) from known fluorescent proteins</blockquote>
+      <p class="cite">Hayes et al., <em>Science</em> 2025</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>The test was deliberately hard: invent a <b>new</b> green fluorescent protein — the workhorse
+      glow-in-the-dark protein from jellyfish, used in labs everywhere. They prompted ESM3 (with a
+      step-by-step "chain of thought"), synthesized its designs in a real lab, and screened for glow.</p>
+      <p>One design, <b>esmGFP</b>, glowed bright green — while differing at roughly 100 of its 238 letter
+      positions from the closest glowing protein nature ever made. Not a tweak of an existing protein:
+      a genuinely distant relative, written from scratch.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">4 · The payoff — from the Conclusions</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>More than three billion years of evolution have produced an image of biology encoded into the space of natural proteins</blockquote>
+      <p class="cite">Hayes et al., <em>Science</em> 2025</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Evolution explores protein space one random step at a time, over geological time. A trained model
+      can <b>jump</b> — the authors estimate esmGFP sits where ~500 million years of ordinary evolution
+      would land.</p>
+      <p>The promise: proteins to order. Enzymes that digest plastic, binders that neutralize a virus,
+      industrial catalysts — designed by prompting, instead of prospecting through nature or shuffling
+      mutations for years in a lab.</p>
+    </div>
+  </div>
+</div>
+
+<h2>Key terms, in one line each</h2>
+<div class="gloss">
+  <div><b>Sequence identity</b> — the share of letter positions that match between two proteins, as a percentage.</div>
+  <div><b>GFP</b> — green fluorescent protein: nature's glow-in-the-dark protein, a lab workhorse since the 1990s.</div>
+  <div><b>Multimodal</b> — one model reading several kinds of input at once — here: letters, shapes, and functions.</div>
+  <div><b>Tokens</b> — the chunks a language model reads and writes; ESM3 tokenizes shape and function too, not just letters.</div>
+  <div><b>Chain of thought</b> — prompting the model to generate step by step, which improved the GFP designs.</div>
+  <div><b>esmGFP</b> — the paper's trophy: a bright, lab-verified fluorescent protein designed by the model.</div>
+</div>
+
+<h2>Fine print (what the translation shouldn't hide)</h2>
+<div class="card">
+  <p style="margin-top:0">The "500 million years" figure is the authors' <b>estimate</b>, inferred from how fast
+  natural fluorescent proteins diverge — evocative, not a stopwatch reading. One glowing protein is a proof of
+  concept, not a drug pipeline: most generated proteins still fail, and every design needs lab validation.
+  The flagship 98B model is available via API; the openly released version is much smaller. And capability
+  cuts both ways — the release was deliberately staged with safety reviews.</p>
+</div>
+
+<h2>Should you read the full paper?</h2>
+<div class="verdict">
+  <div class="v-read"><b>Read it if…</b>you want the frontier of the bio-AI lane — this plus AlphaFold 3 is the current state of the art, and the GFP generation story is genuinely fun.</div>
+  <div class="v-skim"><b>Skim is enough if…</b>you need the concept: one model, three dialects, distant-but-working proteins — the 58% slide above is the heart of it.</div>
+  <div class="v-skip"><b>Skip it if…</b>you're focused on methods you'll use this year; ESM3 is a capability landmark more than a tool for your day job.</div>
+</div>
+
+<footer>
+  Built from Hayes et al., <em>Science</em> 387, 2025.
+  Brief excerpts quoted for commentary; full text at the publisher link above.
+</footer>
+
+</div>
+<script>
+/* ---------- Data slide: identity explorer ---------- */
+const LEN = 238;
+const strip = document.getElementById("resStrip");
+// seeded shuffle so differing positions look scattered, stable across loads
+let seed = 7;
+function rnd(){ seed = (seed*1664525 + 1013904223) >>> 0; return seed/4294967296; }
+const order = Array.from({length: LEN}, (_,i)=>i);
+for(let i=LEN-1;i>0;i--){ const j = Math.floor(rnd()*(i+1)); [order[i],order[j]]=[order[j],order[i]]; }
+const cells = [];
+for(let i=0;i<LEN;i++){
+  const c = document.createElement("div");
+  c.className = "res";
+  strip.appendChild(c); cells.push(c);
+}
+const slider = document.getElementById("idSlider");
+function drawId(){
+  const pct = +slider.value;
+  const nDiff = Math.round(LEN * (100-pct)/100);
+  const diffSet = new Set(order.slice(0, nDiff));
+  cells.forEach((c,i)=> c.classList.toggle("diff", diffSet.has(i)));
+  document.getElementById("idPct").textContent = pct+"%";
+  document.getElementById("idDiff").textContent = nDiff;
+  document.getElementById("idYrs").textContent =
+    pct >= 95 ? "a few mutations" : pct >= 80 ? "close family" :
+    pct >= 58 ? "~500M yrs" : pct >= 45 ? ">500M yrs" : "a different era";
+  document.querySelectorAll(".preset").forEach(b=>
+    b.classList.toggle("hot", +b.dataset.p === pct));
+}
+slider.addEventListener("input", drawId);
+document.querySelectorAll(".preset").forEach(b=>
+  b.addEventListener("click", ()=>{ slider.value = b.dataset.p; drawId(); }));
+drawId();
+</script>
+</body>
+</html>
