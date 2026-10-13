@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="No Fear Research Papers: Prediction Markets, translated">
+<meta property="og:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. Why betting markets out-forecast polls and experts.">
+<meta property="og:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-prediction-markets.jpg">
+<meta property="og:url" content="https://danieljordanviray.github.io/no-fear-research-papers/papers/prediction-markets/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="No Fear Research Papers: Prediction Markets, translated">
+<meta name="twitter:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. Why betting markets out-forecast polls and experts.">
+<meta name="twitter:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-prediction-markets.jpg">
+<title>No Fear Research Papers: Prediction Markets, translated</title>
+<style>
+  :root{
+    --ink:#1d2430; --muted:#5b6572; --line:#e4e8ee; --bg:#f7f9fb;
+    --card:#ffffff; --accent:#0b6e4f; --accent-soft:#e3f2ea;
+    --paper:#fbf7ef; --paper-line:#e8ddc4;
+    --bad:#b3362b; --blue:#1d5fb8; --blue-soft:#e8f0fd;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65;font-size:17px}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+  header.hero{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:28px 30px;margin-bottom:26px}
+  .kicker{display:inline-block;background:var(--accent-soft);color:var(--accent);
+    font-weight:700;font-size:13px;letter-spacing:.4px;text-transform:uppercase;
+    padding:4px 12px;border-radius:999px;margin-bottom:12px}
+  h1{font-size:30px;line-height:1.25;margin:6px 0 10px}
+  h2{font-size:22px;margin:38px 0 6px;padding-top:8px;border-top:2px solid var(--line)}
+  .paper-meta{color:var(--muted);font-size:15px}
+  .paper-meta a{color:var(--blue)}
+  .backlink{margin:0 0 14px;font-size:15px}
+  .backlink a{color:var(--muted);text-decoration:none}
+  .backlink a:hover{text-decoration:underline}
+  .howto{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 20px;margin:18px 0;font-size:16px;color:var(--muted)}
+  .howto b{color:var(--ink)}
+  .pitch{background:var(--accent-soft);border:1px solid #bfe3cf;border-radius:12px;
+    padding:20px 22px;margin:18px 0;font-size:18px}
+  .pair{margin:22px 0}
+  .pair-tag{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:1px;
+    text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .pair-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);
+    border-radius:14px;overflow:hidden}
+  .orig{background:var(--paper);border-right:1px solid var(--paper-line);padding:22px 24px}
+  .orig h3,.trans h3{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;
+    margin:0 0 12px;color:var(--muted)}
+  .orig blockquote{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:18.5px;
+    line-height:1.6;color:#3a3226}
+  .orig blockquote::before{content:"\201C"}
+  .orig blockquote::after{content:"\201D"}
+  .orig .cite{margin-top:12px;font-size:13.5px;color:var(--muted)}
+  .trans{background:var(--card);padding:22px 24px}
+  .trans p{margin:8px 0;font-size:16.5px}
+  .trans p:first-of-type{margin-top:0}
+  .dataslide{border:2px solid var(--ink);border-radius:14px;background:var(--card);
+    margin:26px 0;overflow:hidden}
+  .dataslide-head{background:var(--ink);color:#fff;padding:10px 22px;font-size:13px;
+    font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+  .dataslide-body{padding:20px 22px}
+  .dataslide-cap{font-size:15.5px;color:var(--muted);margin:0 0 12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:20px 22px;margin:16px 0}
+  .hint{font-size:14px;color:var(--muted)}
+  input[type=range]{width:100%;margin:14px 0 6px}
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:12px 0}
+  .stat-grid div{background:#f4f6f8;border:1px solid var(--line);border-radius:10px;
+    padding:12px 14px;text-align:center}
+  .stat-grid b{display:block;font-size:24px;color:var(--accent)}
+  .stat-grid span{font-size:13.5px;color:var(--muted)}
+  .ev-row{display:flex;gap:12px;align-items:flex-start;margin:10px 0;padding:12px 14px;
+    border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff}
+  .ev-row:hover{border-color:var(--accent)}
+  .ev-row.hot{border-color:var(--accent);background:var(--accent-soft)}
+  .ev-row .ev-tag{flex:none;font-weight:800;font-size:12.5px;text-transform:uppercase;
+    letter-spacing:.6px;color:var(--accent);width:150px;padding-top:2px}
+  .ev-row .ev-txt{font-size:15.5px}
+  .gloss{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  .gloss div{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:12px 16px;font-size:15.5px}
+  .gloss b{color:var(--accent)}
+  .verdict{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0}
+  .verdict div{border-radius:10px;padding:14px 16px;font-size:15px}
+  .v-read{background:var(--accent-soft);border:1px solid #bfe3cf}
+  .v-skim{background:var(--blue-soft);border:1px solid #bcd4f5}
+  .v-skip{background:#f1f2f4;border:1px solid var(--line)}
+  .verdict b{display:block;margin-bottom:4px}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:13.5px}
+  @media(max-width:760px){
+    .pair-grid{grid-template-columns:1fr}
+    .orig{border-right:none;border-bottom:1px solid var(--paper-line)}
+    .verdict{grid-template-columns:1fr}
+    .gloss{grid-template-columns:1fr}
+    .stat-grid{grid-template-columns:1fr}
+    .ev-row{flex-direction:column;gap:4px}
+    .ev-row .ev-tag{width:auto}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="backlink"><a href="../../">← No Fear Research Papers</a></p>
+
+<header class="hero">
+  <span class="kicker">No Fear Research Papers</span>
+  <h1>Prediction markets, translated</h1>
+  <p class="paper-meta">
+    Wolfers &amp; Zitzewitz, <em>Journal of Economic Perspectives</em> 18 (2): 107–126, 2004 ·
+    <a href="https://www.aeaweb.org/articles?id=10.1257/0895330041371321">aeaweb.org — full citation &amp; abstract</a><br>
+    The founding explainer of prediction markets — the intellectual ancestor of Kalshi and Polymarket.
+  </p>
+</header>
+
+<div class="howto">
+  <b>How to read this page:</b> on the left, the paper's own words — short excerpts, exactly as written.
+  On the right, the same idea in everyday English. Data slides appear where the paper makes a claim,
+  so you can watch the crowd's wisdom assemble itself.
+</div>
+
+<h2>The whole paper in 60 seconds</h2>
+<div class="pitch">
+  What if the best forecaster of an election isn't a pollster or a pundit, but a <b>price</b>? A prediction
+  market is a betting market where contracts pay off based on future events — "pays $1 if she wins." The
+  price is then a probability with money behind it. Wolfers &amp; Zitzewitz surveyed the evidence in 2004 and
+  found a pattern: across elections, movie box offices, football, and even corporate sales forecasts,
+  <b>market prices beat the polls, the experts, and the official forecasts</b> — because trading forces
+  thousands of scattered scraps of knowledge into a single number, and being wrong costs money. This is the
+  paper that gave the idea its academic spine, twenty years before Kalshi and Polymarket made it mainstream.
+</div>
+
+<h2>The translation</h2>
+
+<div class="pair">
+  <span class="pair-tag">1 · The idea — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>markets can be used to aggregate disperse information into efficient forecasts of uncertain future events</blockquote>
+      <p class="cite">Wolfers &amp; Zitzewitz, <em>J. Econ. Perspectives</em> 2004</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Nobody knows the whole picture — but thousands of people each know a <b>piece</b>: a local organizer
+      senses turnout, a studio employee hears test-screening buzz, a sales rep knows her region is soft.</p>
+      <p>A market is a machine for pooling those pieces. People with information bet; prices move until they
+      reflect everything the crowd collectively knows. The price <em>is</em> the forecast — updated
+      continuously, with real money punishing sloppy thinking.</p>
+    </div>
+  </div>
+</div>
+
+<div class="dataslide">
+  <div class="dataslide-head">Data slide · why pooling works — try it</div>
+  <div class="dataslide-body">
+    <p class="dataslide-cap">Suppose a candidate's true vote share is 52%. Each forecaster gets a noisy private peek at it (typically off by ~8 points). One forecaster is a coin flip — but average many independent peeks and the noise cancels. Drag to add forecasters:</p>
+    <input type="range" id="nSlider" min="1" max="400" value="9">
+    <div class="stat-grid">
+      <div><b id="nCount">9</b><span>forecasters pooled</span></div>
+      <div><b id="nCrowd">—</b><span>crowd's average error (points)</span></div>
+      <div><b id="nSolo">—</b><span>typical solo forecaster's error</span></div>
+    </div>
+    <p class="hint">Simulated with independent noisy signals — the same statistical reason polls-of-polls and ensemble models work. Markets add one more ingredient: traders weight their own "peek" with money, so the pooled number leans toward the people who actually know something.</p>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">2 · The instrument — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>yield insight into the market's expectations about probabilities, means and medians</blockquote>
+      <p class="cite">Wolfers &amp; Zitzewitz, <em>J. Econ. Perspectives</em> 2004 — on carefully designed contracts</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p><b>Contract design is question design.</b> A winner-take-all contract ("$1 if she wins") priced at
+      $0.63 reads as a 63% probability. A vote-share contract priced at $0.52 reads as an expected 52% of
+      the vote. Different contract shapes extract different statistics — probabilities, averages, medians —
+      from the same crowd.</p>
+      <p>You can even ask conditional questions — "her vote share <em>if</em> she's the nominee" — creating
+      "decision markets" meant to inform actual choices.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">3 · The evidence — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>they outperform most moderately sophisticated benchmarks</blockquote>
+      <p class="cite">Wolfers &amp; Zitzewitz, <em>J. Econ. Perspectives</em> 2004</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Not a theory — a track record. The Iowa Electronic Markets (a university-run election market, max
+      bet $500) forecast US presidential vote shares with an average error of <b>1.6 percentage points</b>,
+      against <b>1.9</b> for the Gallup Poll across 13 candidacies — and over longer horizons the market's
+      edge grows, because polls bounce around with the news cycle while prices stay anchored.</p>
+      <p>And elections were just the start — click the other domains on the slide below.</p>
+    </div>
+  </div>
+</div>
+
+<div class="dataslide">
+  <div class="dataslide-head">Data slide · the track record, domain by domain</div>
+  <div class="dataslide-body">
+    <p class="dataslide-cap">Evidence the paper surveys. Click each domain:</p>
+    <div id="evRows"></div>
+    <div id="evDetail"></div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">4 · The limit — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>we still have the usual problem of disentangling correlation from causation</blockquote>
+      <p class="cite">Wolfers &amp; Zitzewitz, <em>J. Econ. Perspectives</em> 2004</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>The paper's own example: in 2004, a decision market said Democrats would win the biggest vote share
+      in the world where <b>John Edwards</b> was the nominee. But that world is one where Edwards surged for
+      a reason — great campaigning, a message catching fire. Forcing the nomination doesn't import the surge.</p>
+      <p>A market answers "what do things look like <em>if</em> X happens?" — not "what happens if we
+      <em>make</em> X happen?" Correlation versus causation: the same wall every observational method hits,
+      honestly flagged by the authors themselves.</p>
+    </div>
+  </div>
+</div>
+
+<h2>Key terms, in one line each</h2>
+<div class="gloss">
+  <div><b>Contract</b> — a bet with defined payoffs: e.g., $1 if an event happens, $0 if it doesn't; its price reads as a probability.</div>
+  <div><b>IEM</b> — the Iowa Electronic Markets: the University of Iowa's research market (since 1988, capped at $500 per trader).</div>
+  <div><b>Aggregation</b> — pooling many people's partial information into one number — here, via prices.</div>
+  <div><b>Decision market</b> — a conditional market ("outcome if we choose X") built to advise a decision, not just forecast.</div>
+  <div><b>Favorite–longshot bias</b> — the known quirk: markets slightly overprice longshots and underprice favorites.</div>
+  <div><b>Manipulation</b> — trying to move prices for optics; the evidence says it fails — wrong prices are profit opportunities for everyone else.</div>
+</div>
+
+<h2>Fine print (what the translation shouldn't hide)</h2>
+<div class="card">
+  <p style="margin-top:0">The IEM's traders were self-selected and unrepresentative — the miracle is that prices
+  still worked. Markets need liquidity and well-posed questions; thin markets wobble, and ambiguous
+  resolution ("who won?") can break them. And a great forecast is not a decision rule — see the
+  correlation caveat above. The authors wrote before the modern era; the 2004-vintage evidence was mostly
+  small-stakes markets.</p>
+</div>
+
+<h2>Should you read the full paper?</h2>
+<div class="verdict">
+  <div class="v-read"><b>Read it if…</b>you model or trade prediction markets — this is the theory of your instrument, written by two of its builders, and it's genuinely readable.</div>
+  <div class="v-skim"><b>Skim is enough if…</b>you want the core: prices aggregate information, beat benchmarks, and can't escape correlation ≠ causation.</div>
+  <div class="v-skip"><b>Skip it if…</b>you'll never touch forecasting or markets — though the aggregation logic quietly underlies ensembles and polls-of-polls everywhere.</div>
+</div>
+
+<footer>
+  Built from Wolfers &amp; Zitzewitz, <em>Journal of Economic Perspectives</em> 18 (2), 2004.
+  Brief excerpts quoted for commentary; full text at the publisher link above.
+</footer>
+
+</div>
+<script>
+/* ---------- Data slide 1: aggregation simulator ---------- */
+let seed = 99;
+function rnd(){ seed = (seed*1664525 + 1013904223) >>> 0; return seed/4294967296; }
+function gauss(){ let u=0,v=0; while(!u) u=rnd(); while(!v) v=rnd();
+  return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); }
+const TRUTH = 52, signals = [];
+for(let i=0;i<400;i++) signals.push(TRUTH + gauss()*8);
+const soloErr = signals.reduce((a,s)=>a+Math.abs(s-TRUTH),0)/signals.length;
+const nSlider = document.getElementById("nSlider");
+function updAgg(){
+  const n = +nSlider.value;
+  const avg = signals.slice(0,n).reduce((a,s)=>a+s,0)/n;
+  document.getElementById("nCount").textContent = n;
+  document.getElementById("nCrowd").textContent = Math.abs(avg-TRUTH).toFixed(1)+" pts";
+  document.getElementById("nSolo").textContent = soloErr.toFixed(1)+" pts";
+}
+nSlider.addEventListener("input", updAgg);
+updAgg();
+
+/* ---------- Data slide 2: track record rows ---------- */
+const EV = [
+  {tag:"Elections", txt:"Iowa Electronic Markets vs Gallup Poll",
+   note:"Across 13 candidacies (1988–2004): the market's average absolute error on vote share was 1.6 percentage points vs the Gallup Poll's 1.9 — and the market's advantage is larger further from election day, when polls are most volatile (paper, citing Berg, Nelson & Rietz)."},
+  {tag:"Movies", txt:"Hollywood Stock Exchange vs experts",
+   note:"The (play-money) Hollywood Stock Exchange forecast box-office returns and Oscar winners more accurately than expert opinions (paper, citing Pennock et al.)."},
+  {tag:"Sports", txt:"NFL markets vs 2,000 self-professed experts",
+   note:"Both real- and play-money markets produced more accurate forecasts of NFL game winners than all but a handful of roughly 2,000 experts (paper, citing Servan-Schreiber et al.)."},
+  {tag:"Inside firms", txt:"HP's internal market vs HP's official forecasts",
+   note:"Hewlett-Packard ran an internal sales-forecast market (Chen & Plott, 2002): it beat the company's own official forecasts. At another firm, an internal market correctly predicted a software project would miss its deadline while the official planning tools said it would ship (Ortner, 1998)."}
+];
+const evEl = document.getElementById("evRows");
+EV.forEach((s,i)=>{
+  const r = document.createElement("div");
+  r.className = "ev-row"+(i===0?" hot":"");
+  r.innerHTML = '<span class="ev-tag">'+s.tag+'</span><span class="ev-txt">'+s.txt+'</span>';
+  r.addEventListener("click", ()=>{
+    document.querySelectorAll(".ev-row").forEach(x=>x.classList.remove("hot"));
+    r.classList.add("hot");
+    document.getElementById("evDetail").innerHTML =
+      '<div class="card"><p style="margin:0">'+s.note+'</p></div>';
+  });
+  evEl.appendChild(r);
+});
+document.getElementById("evDetail").innerHTML =
+  '<div class="card"><p style="margin:0">'+EV[0].note+'</p></div>';
+</script>
+</body>
+</html>
