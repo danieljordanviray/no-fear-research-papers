@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="No Fear Research Papers: Quantum error correction, translated">
+<meta property="og:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. Google's Willow chip and the first below-threshold quantum error correction.">
+<meta property="og:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-willow.jpg">
+<meta property="og:url" content="https://danieljordanviray.github.io/no-fear-research-papers/papers/willow-quantum-error-correction/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="No Fear Research Papers: Quantum error correction, translated">
+<meta name="twitter:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. Google's Willow chip and the first below-threshold quantum error correction.">
+<meta name="twitter:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-willow.jpg">
+<title>No Fear Research Papers: Quantum error correction, translated — demo</title>
+<style>
+  :root{
+    --ink:#1d2430; --muted:#5b6572; --line:#e4e8ee; --bg:#f7f9fb;
+    --card:#ffffff; --accent:#0b6e4f; --accent-soft:#e3f2ea;
+    --paper:#fbf7ef; --paper-line:#e8ddc4;
+    --bad:#b3362b; --blue:#1d5fb8; --blue-soft:#e8f0fd;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65;font-size:17px}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+  header.hero{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:28px 30px;margin-bottom:26px}
+  .kicker{display:inline-block;background:var(--accent-soft);color:var(--accent);
+    font-weight:700;font-size:13px;letter-spacing:.4px;text-transform:uppercase;
+    padding:4px 12px;border-radius:999px;margin-bottom:12px}
+  h1{font-size:30px;line-height:1.25;margin:6px 0 10px}
+  h2{font-size:22px;margin:38px 0 6px;padding-top:8px;border-top:2px solid var(--line)}
+  .paper-meta{color:var(--muted);font-size:15px}
+  .paper-meta a{color:var(--blue)}
+  .backlink{margin:0 0 14px;font-size:15px}
+  .backlink a{color:var(--muted);text-decoration:none}
+  .backlink a:hover{text-decoration:underline}
+  .howto{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 20px;margin:18px 0;font-size:16px;color:var(--muted)}
+  .howto b{color:var(--ink)}
+  .pitch{background:var(--accent-soft);border:1px solid #bfe3cf;border-radius:12px;
+    padding:20px 22px;margin:18px 0;font-size:18px}
+  .pair{margin:22px 0}
+  .pair-tag{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:1px;
+    text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .pair-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);
+    border-radius:14px;overflow:hidden}
+  .orig{background:var(--paper);border-right:1px solid var(--paper-line);padding:22px 24px}
+  .orig h3,.trans h3{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;
+    margin:0 0 12px;color:var(--muted)}
+  .orig blockquote{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:18.5px;
+    line-height:1.6;color:#3a3226}
+  .orig blockquote::before{content:"\201C"}
+  .orig blockquote::after{content:"\201D"}
+  .orig .cite{margin-top:12px;font-size:13.5px;color:var(--muted)}
+  .trans{background:var(--card);padding:22px 24px}
+  .trans p{margin:8px 0;font-size:16.5px}
+  .trans p:first-of-type{margin-top:0}
+  .dataslide{border:2px solid var(--ink);border-radius:14px;background:var(--card);
+    margin:26px 0;overflow:hidden}
+  .dataslide-head{background:var(--ink);color:#fff;padding:10px 22px;font-size:13px;
+    font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+  .dataslide-body{padding:20px 22px}
+  .dataslide-cap{font-size:15.5px;color:var(--muted);margin:0 0 12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:20px 22px;margin:16px 0}
+  .hint{font-size:14px;color:var(--muted)}
+  input[type=range]{width:100%;margin:14px 0 6px}
+  .lam-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:12px 0}
+  .lam-stats div{background:#f4f6f8;border:1px solid var(--line);border-radius:10px;
+    padding:12px 14px;text-align:center}
+  .lam-stats b{display:block;font-size:24px;color:var(--accent)}
+  .lam-stats span{font-size:13.5px;color:var(--muted)}
+  .life-row{display:flex;align-items:center;gap:12px;margin:10px 0}
+  .life-row .who{width:250px;flex:none;font-weight:700;font-size:15px}
+  .life-row .bar{flex:1;height:24px;background:#eef1f4;border-radius:6px;position:relative}
+  .life-row .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:var(--accent)}
+  .life-row .num{width:90px;flex:none;text-align:right;font-weight:800;font-size:16px}
+  .gloss{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  .gloss div{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:12px 16px;font-size:15.5px}
+  .gloss b{color:var(--accent)}
+  .verdict{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0}
+  .verdict div{border-radius:10px;padding:14px 16px;font-size:15px}
+  .v-read{background:var(--accent-soft);border:1px solid #bfe3cf}
+  .v-skim{background:var(--blue-soft);border:1px solid #bcd4f5}
+  .v-skip{background:#f1f2f4;border:1px solid var(--line)}
+  .verdict b{display:block;margin-bottom:4px}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:13.5px}
+  @media(max-width:760px){
+    .pair-grid{grid-template-columns:1fr}
+    .orig{border-right:none;border-bottom:1px solid var(--paper-line)}
+    .verdict{grid-template-columns:1fr}
+    .gloss{grid-template-columns:1fr}
+    .lam-stats{grid-template-columns:1fr}
+    .life-row .who{width:160px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="backlink"><a href="../../">← No Fear Research Papers</a></p>
+
+<header class="hero">
+  <span class="kicker">No Fear Research Papers · demo</span>
+  <h1>Quantum error correction, translated</h1>
+  <p class="paper-meta">
+    Google Quantum AI and Collaborators, <em>Nature</em> 638: 920–926, 2025 ·
+    <a href="https://www.nature.com/articles/s41586-024-08449-y">nature.com/articles/s41586-024-08449-y</a><br>
+    The Willow chip paper — the first demonstration of quantum error correction below the threshold.
+  </p>
+</header>
+
+<div class="howto">
+  <b>How to read this page:</b> on the left, the paper's own words — short excerpts, exactly as written.
+  On the right, the same idea in everyday English. Data slides appear where the paper makes a claim,
+  so you can run its key equation yourself instead of taking its word for it.
+</div>
+
+<h2>The whole paper in 60 seconds</h2>
+<div class="pitch">
+  Quantum computers are comically fragile: their bits (<b>qubits</b>) get scrambled by the slightest heat or
+  stray field — roughly one error per thousand operations, while real applications need closer to one per
+  ten billion. For thirty years, theory said there's a fix: spread one <b>logical qubit</b> across many
+  physical ones, and <em>if</em> your hardware errors sit below a critical <b>threshold</b>, making the code
+  bigger suppresses errors <b>exponentially</b>. Nobody had ever actually crossed that line. Google's
+  <b>Willow</b> chip did: grids of physical qubits acting as single logical qubits whose memory lasted
+  <b>2.4× longer than the best physical qubit inside them</b> — and every step up in size cut the error
+  rate by a factor of ~2.1, exactly as the theory promised. That's the moment quantum error correction
+  went from math to engineering.
+</div>
+
+<h2>The translation</h2>
+
+<div class="pair">
+  <span class="pair-tag">1 · The problem — from the Introduction</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>no quantum processor has definitively shown below-threshold performance</blockquote>
+      <p class="cite">Google Quantum AI, <em>Nature</em> 2025</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>A normal computer bit is rock-solid. A qubit is a soap bubble: heat, vibration, stray magnetism —
+      anything can pop it. Today's best qubits still make an error roughly every thousand operations,
+      and useful algorithms (simulating a new drug molecule, say) need errors rarer than one in ten billion.</p>
+      <p>Theorists had a rescue plan — error correction — but it only works if hardware errors are below a
+      "threshold." Until this paper, no machine had definitively gotten there.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">2 · The idea — from the Introduction</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>the logical error rate should be suppressed exponentially as we increase the number of physical qubits per logical qubit</blockquote>
+      <p class="cite">Google Quantum AI, <em>Nature</em> 2025</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Don't build one perfect qubit — build a <b>committee</b>. Spread a single logical qubit across a grid
+      of physical qubits (the <b>surface code</b>) that constantly cross-check each other, so a monitoring
+      program (the <b>decoder</b>) can spot and account for errors without looking at the data itself.</p>
+      <p>The magic claim: once hardware errors are below the threshold, a bigger committee doesn't get
+      noisier — it gets <b>exponentially more reliable</b>. Each step up in grid size (the "distance")
+      divides the error rate by a factor called <b>Λ</b> (lambda).</p>
+    </div>
+  </div>
+</div>
+
+<div class="dataslide">
+  <div class="dataslide-head">Data slide · run the paper's equation</div>
+  <div class="dataslide-body">
+    <p class="dataslide-cap">The paper measured Λ = 2.14: every time the code distance grows by 2, the logical error rate divides by ~2.14. Drag the distance and watch what that buys — and what it costs in physical qubits (2d² − 1 per logical qubit). Distances 3–7 are the paper's measured range; beyond that is projection from its equation.</p>
+    <input type="range" id="distSlider" min="3" max="21" step="2" value="7">
+    <div class="lam-stats">
+      <div><b id="lamD">7</b><span>code distance</span></div>
+      <div><b id="lamQ">97</b><span>physical qubits per logical qubit</span></div>
+      <div><b id="lamE">1.4 × 10⁻³</b><span>logical errors per cycle</span></div>
+    </div>
+    <p class="hint" id="lamNote">Distance 7 is what Willow actually ran: 49 data qubits + 48 checker qubits on the 105-qubit chip.</p>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">3 · The result — from the Results</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>preserving quantum information for more than twice as long as its best constituent physical qubit</blockquote>
+      <p class="cite">Google Quantum AI, <em>Nature</em> 2025 — on the distance-7 logical qubit</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>On the 105-qubit Willow chip, the distance-7 logical qubit — a committee of 97 qubits — remembered
+      its state for <b>291 microseconds</b>, versus 119 for the single best physical qubit in the machine
+      (85 for a typical one). The committee beat its best member by 2.4×.</p>
+      <p>And crucially, performance improved with size exactly as predicted: error rates fell by a factor
+      of Λ = 2.14 at each step (distance 3 → 5 → 7). They even kept it working while decoding errors
+      <b>in real time</b>, on a cycle of just 1.1 microseconds.</p>
+    </div>
+  </div>
+</div>
+
+<div class="dataslide">
+  <div class="dataslide-head">Data slide · beyond breakeven</div>
+  <div class="dataslide-body">
+    <p class="dataslide-cap">"Breakeven" means the error-corrected logical qubit outlives the best physical qubit you'd otherwise use. Willow's distance-7 memory, from the paper:</p>
+    <div class="life-row"><span class="who">Logical qubit (distance-7)</span><span class="bar"><i style="width:100%"></i></span><span class="num">291 µs</span></div>
+    <div class="life-row"><span class="who">Best physical qubit</span><span class="bar"><i style="width:41%;background:var(--blue)"></i></span><span class="num">119 µs</span></div>
+    <div class="life-row"><span class="who">Typical physical qubit</span><span class="bar"><i style="width:29%;background:var(--muted)"></i></span><span class="num">85 µs</span></div>
+    <p class="hint">Lifetimes as reported in the paper (median physical qubit 85 µs; best 119 µs; logical 291 µs — a factor of 2.4 ± 0.3 over the best).</p>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">4 · The payoff — from the Results</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>surpassed with a sufficiently large logical qubit</blockquote>
+      <p class="cite">Google Quantum AI, <em>Nature</em> 2025</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Below-threshold operation flips the engineering problem. Before: errors were a wall — bigger
+      machines just failed faster. Now: reliability is something you <b>buy with qubits</b>, at a known
+      exchange rate (Λ ≈ 2.14 per size step).</p>
+      <p>That's the on-ramp to fault-tolerant quantum computing — machines that could simulate molecules
+      for drug discovery, design new materials and catalysts, and tackle optimization problems classical
+      computers can't touch. Not this year, and not with 105 qubits — but the path is now an engineering
+      roadmap instead of a hope.</p>
+    </div>
+  </div>
+</div>
+
+<h2>Key terms, in one line each</h2>
+<div class="gloss">
+  <div><b>Qubit</b> — a quantum bit: can hold a blend of 0 and 1, and is destroyed by the slightest disturbance.</div>
+  <div><b>Logical qubit</b> — one reliable qubit built from many fragile physical ones acting as a committee.</div>
+  <div><b>Surface code</b> — the committee layout: data qubits on a grid, checker qubits constantly cross-examining them.</div>
+  <div><b>Code distance (d)</b> — the committee's size; bigger d catches more errors, at 2d² − 1 physical qubits each.</div>
+  <div><b>Threshold</b> — the hardware error rate below which growing the code helps instead of hurts.</div>
+  <div><b>Λ (lambda)</b> — the payoff factor: how much the error rate divides by each time distance grows by 2. Willow: 2.14.</div>
+</div>
+
+<h2>Fine print (what the translation shouldn't hide)</h2>
+<div class="card">
+  <p style="margin-top:0">This is a quantum <b>memory</b> result — storing a qubit reliably, the prerequisite
+  step; actually <em>computing</em> with many logical qubits is the next milestone. The paper also found a
+  spoiler: rare correlated error events (about once an hour, origin unknown) currently put a floor under
+  how low errors can go (~10⁻¹⁰ in their repetition codes) — the slider above assumes that floor gets fixed.
+  And note: Willow's famous "5 minutes vs 10²⁵ years" benchmark was a separate sampling demo from the same
+  chip launch, not a result in this paper.</p>
+</div>
+
+<h2>Should you read the full paper?</h2>
+<div class="verdict">
+  <div class="v-read"><b>Read it if…</b>you want the milestone firsthand — the error-budget detective work (hunting leakage and stray couplings) is a great read on experimental physics.</div>
+  <div class="v-skim"><b>Skim is enough if…</b>you need the takeaway: below threshold is real, Λ ≈ 2.14, breakeven passed — the slides above carry it.</div>
+  <div class="v-skip"><b>Skip it if…</b>you're waiting for useful quantum applications; this is foundations, not products.</div>
+</div>
+
+<footer>
+  Demo of the "No Fear Research Papers" concept · Built from Google Quantum AI and Collaborators, <em>Nature</em> 638, 2025.
+  Brief excerpts quoted for commentary; full text at the publisher link above.
+</footer>
+
+</div>
+<script>
+/* ---------- Data slide 1: Lambda explorer ---------- */
+const LAM = 2.14, E7 = 1.43e-3; // paper's measured values (neural-network decoder)
+const slider = document.getElementById("distSlider");
+function fmtE(e){
+  if(e >= 0.01) return e.toFixed(3);
+  const exp = Math.floor(Math.log10(e));
+  const mant = e / Math.pow(10, exp);
+  return mant.toFixed(1)+" × 10⁻"+Math.abs(exp);
+}
+function drawLam(){
+  const d = +slider.value;
+  const q = 2*d*d - 1;
+  const e = E7 * Math.pow(LAM, -(d-7)/2);
+  document.getElementById("lamD").textContent = d;
+  document.getElementById("lamQ").textContent = q.toLocaleString();
+  document.getElementById("lamE").textContent = fmtE(e);
+  const note = document.getElementById("lamNote");
+  if(d===3) note.textContent = "Distance 3: the smallest real code — 9 data qubits + 8 checkers. Willow ran nine of these at once to average the measurement.";
+  else if(d===5) note.textContent = "Distance 5: run on the smaller 72-qubit Willow with a real-time decoder — errors fixed as fast as they were made.";
+  else if(d===7) note.textContent = "Distance 7 is what Willow actually ran: 49 data qubits + 48 checker qubits on the 105-qubit chip.";
+  else note.textContent = "Projection from the paper's equation (not yet built). At distance "+d+", one logical qubit costs "+q.toLocaleString()+" physical qubits. A million-physical-qubit machine would hold roughly "+Math.max(1,Math.floor(1e6/q)).toLocaleString()+" of them at this error rate — before the correlated-error floor the paper found is fixed.";
+}
+slider.addEventListener("input", drawLam);
+drawLam();
+</script>
+</body>
+</html>
