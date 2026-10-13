@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="No Fear Research Papers: Generative AI at Work, translated">
+<meta property="og:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. 5,179 support agents, one AI assistant, and a surprising winner.">
+<meta property="og:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-genai-work.jpg">
+<meta property="og:url" content="https://danieljordanviray.github.io/no-fear-research-papers/papers/generative-ai-at-work/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="No Fear Research Papers: Generative AI at Work, translated">
+<meta name="twitter:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. 5,179 support agents, one AI assistant, and a surprising winner.">
+<meta name="twitter:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-genai-work.jpg">
+<title>No Fear Research Papers: Generative AI at Work, translated</title>
+<style>
+  :root{
+    --ink:#1d2430; --muted:#5b6572; --line:#e4e8ee; --bg:#f7f9fb;
+    --card:#ffffff; --accent:#0b6e4f; --accent-soft:#e3f2ea;
+    --paper:#fbf7ef; --paper-line:#e8ddc4;
+    --bad:#b3362b; --blue:#1d5fb8; --blue-soft:#e8f0fd;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65;font-size:17px}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+  header.hero{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:28px 30px;margin-bottom:26px}
+  .kicker{display:inline-block;background:var(--accent-soft);color:var(--accent);
+    font-weight:700;font-size:13px;letter-spacing:.4px;text-transform:uppercase;
+    padding:4px 12px;border-radius:999px;margin-bottom:12px}
+  h1{font-size:30px;line-height:1.25;margin:6px 0 10px}
+  h2{font-size:22px;margin:38px 0 6px;padding-top:8px;border-top:2px solid var(--line)}
+  .paper-meta{color:var(--muted);font-size:15px}
+  .paper-meta a{color:var(--blue)}
+  .backlink{margin:0 0 14px;font-size:15px}
+  .backlink a{color:var(--muted);text-decoration:none}
+  .backlink a:hover{text-decoration:underline}
+  .howto{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 20px;margin:18px 0;font-size:16px;color:var(--muted)}
+  .howto b{color:var(--ink)}
+  .pitch{background:var(--accent-soft);border:1px solid #bfe3cf;border-radius:12px;
+    padding:20px 22px;margin:18px 0;font-size:18px}
+  .pair{margin:22px 0}
+  .pair-tag{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:1px;
+    text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .pair-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);
+    border-radius:14px;overflow:hidden}
+  .orig{background:var(--paper);border-right:1px solid var(--paper-line);padding:22px 24px}
+  .orig h3,.trans h3{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;
+    margin:0 0 12px;color:var(--muted)}
+  .orig blockquote{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:18.5px;
+    line-height:1.6;color:#3a3226}
+  .orig blockquote::before{content:"\201C"}
+  .orig blockquote::after{content:"\201D"}
+  .orig .cite{margin-top:12px;font-size:13.5px;color:var(--muted)}
+  .trans{background:var(--card);padding:22px 24px}
+  .trans p{margin:8px 0;font-size:16.5px}
+  .trans p:first-of-type{margin-top:0}
+  .dataslide{border:2px solid var(--ink);border-radius:14px;background:var(--card);
+    margin:26px 0;overflow:hidden}
+  .dataslide-head{background:var(--ink);color:#fff;padding:10px 22px;font-size:13px;
+    font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+  .dataslide-body{padding:20px 22px}
+  .dataslide-cap{font-size:15.5px;color:var(--muted);margin:0 0 12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:20px 22px;margin:16px 0}
+  .hint{font-size:14px;color:var(--muted)}
+  .bar-row{display:flex;align-items:center;gap:12px;margin:12px 0}
+  .bar-row .who{width:210px;flex:none;font-weight:700;font-size:15px}
+  .bar-row .bar{flex:1;height:26px;background:#eef1f4;border-radius:6px;position:relative}
+  .bar-row .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:var(--accent)}
+  .bar-row.flat .bar i{background:#9aa7b4}
+  .bar-row .num{width:70px;flex:none;text-align:right;font-weight:800;font-size:17px}
+  .fx-row{display:flex;gap:12px;align-items:flex-start;margin:10px 0;padding:12px 14px;
+    border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff}
+  .fx-row:hover{border-color:var(--accent)}
+  .fx-row.hot{border-color:var(--accent);background:var(--accent-soft)}
+  .fx-row .fx-tag{flex:none;font-weight:800;font-size:12.5px;text-transform:uppercase;
+    letter-spacing:.6px;color:var(--accent);width:150px;padding-top:2px}
+  .fx-row .fx-txt{font-size:15.5px}
+  .gloss{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  .gloss div{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:12px 16px;font-size:15.5px}
+  .gloss b{color:var(--accent)}
+  .verdict{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0}
+  .verdict div{border-radius:10px;padding:14px 16px;font-size:15px}
+  .v-read{background:var(--accent-soft);border:1px solid #bfe3cf}
+  .v-skim{background:var(--blue-soft);border:1px solid #bcd4f5}
+  .v-skip{background:#f1f2f4;border:1px solid var(--line)}
+  .verdict b{display:block;margin-bottom:4px}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:13.5px}
+  @media(max-width:760px){
+    .pair-grid{grid-template-columns:1fr}
+    .orig{border-right:none;border-bottom:1px solid var(--paper-line)}
+    .verdict{grid-template-columns:1fr}
+    .gloss{grid-template-columns:1fr}
+    .fx-row{flex-direction:column;gap:4px}
+    .fx-row .fx-tag{width:auto}
+    .bar-row .who{width:130px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="backlink"><a href="../../">← No Fear Research Papers</a></p>
+
+<header class="hero">
+  <span class="kicker">No Fear Research Papers</span>
+  <h1>Generative AI at Work, translated</h1>
+  <p class="paper-meta">
+    Brynjolfsson, Li &amp; Raymond, <em>Quarterly Journal of Economics</em> 140 (2): 889–942, 2025 ·
+    <a href="https://www.nber.org/papers/w31161">nber.org — working paper &amp; abstract</a><br>
+    The first large field study of generative AI on real jobs.
+  </p>
+</header>
+
+<div class="howto">
+  <b>How to read this page:</b> on the left, the paper's own words — short excerpts, exactly as written.
+  On the right, the same idea in everyday English. Data slides appear where the paper makes a claim,
+  so you can see exactly who gained, and who didn't.
+</div>
+
+<h2>The whole paper in 60 seconds</h2>
+<div class="pitch">
+  A Fortune 500 software firm rolled out an AI assistant to its customer-support agents — a tool trained on
+  the company's own best support conversations, suggesting replies and links in real time. Because the
+  rollout was <b>staggered</b> across 5,179 agents, the researchers could measure its effect almost like an
+  experiment. Headline: agents with AI resolved <b>14% more issues per hour</b>. But the average hides the
+  story: <b>novices gained 34%</b>, while top performers gained almost nothing. The mechanism is the
+  beautiful part — the AI had absorbed the know-how of the firm's best agents and now whispered it to
+  everyone else. Customers were happier, agents quit less, and new hires climbed the learning curve faster.
+</div>
+
+<h2>The translation</h2>
+
+<div class="pair">
+  <span class="pair-tag">1 · The setup — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>the staggered introduction of a generative AI-based conversational assistant using data from 5,179 customer support agents</blockquote>
+      <p class="cite">Brynjolfsson, Li &amp; Raymond, <em>QJE</em> 2025</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Not a lab demo — a real deployment. Thousands of chat-support agents got the AI at <b>different
+      times</b> (a staggered rollout, for operational reasons), and that accident is what makes the study
+      credible: agents with the tool can be compared against similar agents not yet given it, before and
+      after — the workhorse design of modern causal inference.</p>
+      <p>The AI itself: trained on millions of past support chats, it suggests responses and documentation
+      as the conversation unfolds. The agent stays in charge and can edit or ignore.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">2 · The headline — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>Access to the tool increases productivity, as measured by issues resolved per hour, by 14% on average</blockquote>
+      <p class="cite">Brynjolfsson, Li &amp; Raymond, <em>QJE</em> 2025</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Fourteen percent more customer problems solved per hour, without a matching drop in quality —
+      resolution rates and customer satisfaction also held or improved. For a mature, heavily-optimized
+      operation, a double-digit productivity jump from a software rollout is enormous.</p>
+      <p>But "on average" is doing heavy lifting. Keep reading.</p>
+    </div>
+  </div>
+</div>
+
+<div class="dataslide">
+  <div class="dataslide-head">Data slide · who actually gained?</div>
+  <div class="dataslide-body">
+    <p class="dataslide-cap">Change in issues resolved per hour after getting the AI, by worker type (paper, abstract):</p>
+    <div class="bar-row"><span class="who">Novice &amp; low-skilled agents</span><span class="bar"><i style="width:100%"></i></span><span class="num">+34%</span></div>
+    <div class="bar-row"><span class="who">All agents (average)</span><span class="bar"><i style="width:41%"></i></span><span class="num">+14%</span></div>
+    <div class="bar-row flat"><span class="who">Experienced &amp; highly skilled</span><span class="bar"><i style="width:3%"></i></span><span class="num">~0%</span></div>
+    <p class="hint">Most technologies of the last forty years did the opposite — they amplified the already-skilled ("skill-biased technical change"). This one compressed the distribution from below.</p>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">3 · The mechanism — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>the AI model disseminates the best practices of more able workers</blockquote>
+      <p class="cite">Brynjolfsson, Li &amp; Raymond, <em>QJE</em> 2025</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Why would novices gain most? Because of what the model was trained on: the firm's archive of
+      <b>successful conversations</b> — disproportionately the work of its best agents. Their tacit
+      know-how (how to phrase a workaround, when to escalate, what to check first) got baked into the
+      suggestions every agent now sees.</p>
+      <p>In effect, the company bottled its top performers' judgment and distributed it at zero marginal
+      cost. Novices suddenly perform as if they've been trained by the best — because, through the model,
+      they have been.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">4 · The side effects — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>AI assistance improves customer sentiment, increases employee retention, and may lead to worker learning</blockquote>
+      <p class="cite">Brynjolfsson, Li &amp; Raymond, <em>QJE</em> 2025</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>The gains weren't squeezed out of people — the whole experience improved. Customers were politer
+      to agents (sentiment analysis of the chats), fewer customers demanded a manager, and agents —
+      especially newer ones — <b>quit less often</b>. And "learning": newer agents with AI climbed the
+      experience curve faster, suggesting they were absorbing skills, not just renting them.</p>
+      <p>Click through the effects on the slide:</p>
+    </div>
+  </div>
+</div>
+
+<div class="dataslide">
+  <div class="dataslide-head">Data slide · beyond the headline number</div>
+  <div class="dataslide-body">
+    <p class="dataslide-cap">The paper's secondary findings — click each:</p>
+    <div id="fxRows"></div>
+    <div id="fxDetail"></div>
+  </div>
+</div>
+
+<h2>Key terms, in one line each</h2>
+<div class="gloss">
+  <div><b>Staggered rollout</b> — introducing a treatment to different groups at different times; the timing gaps let researchers isolate cause from coincidence.</div>
+  <div><b>Experience curve</b> — the path of getting better with tenure; AI steepened it for new agents.</div>
+  <div><b>Skill-biased technical change</b> — the old pattern: new tech raises demand for skilled workers most. This study found the reverse gradient.</div>
+  <div><b>Tacit knowledge</b> — know-how experts can't easily write down; here it leaked into the training data and became transferable.</div>
+  <div><b>Productivity (here)</b> — issues resolved per hour, checked against quality and customer-satisfaction measures.</div>
+  <div><b>Attrition</b> — workers quitting; it fell, particularly among agents with the least tenure.</div>
+</div>
+
+<h2>Fine print (what the translation shouldn't hide)</h2>
+<div class="card">
+  <p style="margin-top:0">One firm, one job, one tool — customer support chat is unusually measurable and
+  unusually well-matched to what language models do. Whether the novice-boost generalizes to, say, surgery
+  or strategy is an open question. The top agents' slight dip on some quality measures deserves attention too:
+  if the best workers' output trains the model that then compresses their advantage, the long-run incentive
+  to become excellent is a real design problem. And productivity is not wages — who pockets the 14% is a
+  bargaining question, not a measurement.</p>
+</div>
+
+<h2>Should you read the full paper?</h2>
+<div class="verdict">
+  <div class="v-read"><b>Read it if…</b>you think about AI and work for a living — this is the reference field study, and its design (staggered rollout as natural experiment) is a template worth stealing.</div>
+  <div class="v-skim"><b>Skim is enough if…</b>you need the shape: +14% average, +34% novices, ~0 experts, mechanism = bottled best practice.</div>
+  <div class="v-skip"><b>Skip it if…</b>you're after frontier-model capabilities rather than workplace evidence — the Noy &amp; Zhang experiment (also on this site) is the quicker read.</div>
+</div>
+
+<footer>
+  Built from Brynjolfsson, Li &amp; Raymond, <em>Quarterly Journal of Economics</em> 140 (2), 2025.
+  Brief excerpts quoted for commentary; full text at the publisher link above.
+</footer>
+
+</div>
+<script>
+/* ---------- Data slide 2: secondary effects ---------- */
+const FX = [
+  {tag:"Customers", txt:"Sentiment improved; fewer escalations",
+   note:"Customers treated AI-assisted agents more positively (more polite language in chats), and requests to speak to a manager fell — the productivity gain didn't come at the customer's expense (paper, Results)."},
+  {tag:"Retention", txt:"Agents quit less — especially new ones",
+   note:"Employee attrition dropped substantially with AI access, with the largest reductions among newer agents — the group that usually churns fastest in support work (paper, Results)."},
+  {tag:"Learning", txt:"Novices climb the curve faster",
+   note:"Newer workers' productivity grew faster with AI than without — evidence they were internalizing the patterns the model suggested, not merely copying them (the authors call this 'suggestive evidence' of learning)."},
+  {tag:"Top agents", txt:"Little gain — and a question",
+   note:"For the most experienced and highly skilled agents the effect was minimal (abstract). They were already doing what the model suggests — indeed, the model largely learned it from people like them."}
+];
+const fxEl = document.getElementById("fxRows");
+FX.forEach((s,i)=>{
+  const r = document.createElement("div");
+  r.className = "fx-row"+(i===0?" hot":"");
+  r.innerHTML = '<span class="fx-tag">'+s.tag+'</span><span class="fx-txt">'+s.txt+'</span>';
+  r.addEventListener("click", ()=>{
+    document.querySelectorAll(".fx-row").forEach(x=>x.classList.remove("hot"));
+    r.classList.add("hot");
+    document.getElementById("fxDetail").innerHTML =
+      '<div class="card"><p style="margin:0">'+s.note+'</p></div>';
+  });
+  fxEl.appendChild(r);
+});
+document.getElementById("fxDetail").innerHTML =
+  '<div class="card"><p style="margin:0">'+FX[0].note+'</p></div>';
+</script>
+</body>
+</html>
