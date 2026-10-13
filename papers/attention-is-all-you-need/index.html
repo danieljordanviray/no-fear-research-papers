@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="No Fear Research Papers: Attention Is All You Need, translated">
+<meta property="og:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. The 2017 paper that launched modern AI.">
+<meta property="og:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-attention.jpg">
+<meta property="og:url" content="https://danieljordanviray.github.io/no-fear-research-papers/papers/attention-is-all-you-need/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="No Fear Research Papers: Attention Is All You Need, translated">
+<meta name="twitter:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. The 2017 paper that launched modern AI.">
+<meta name="twitter:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-attention.jpg">
+<title>No Fear Research Papers: Attention Is All You Need, translated — demo</title>
+<style>
+  :root{
+    --ink:#1d2430; --muted:#5b6572; --line:#e4e8ee; --bg:#f7f9fb;
+    --card:#ffffff; --accent:#0b6e4f; --accent-soft:#e3f2ea;
+    --paper:#fbf7ef; --paper-line:#e8ddc4;
+    --bad:#b3362b; --blue:#1d5fb8; --blue-soft:#e8f0fd;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65;font-size:17px}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+  header.hero{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:28px 30px;margin-bottom:26px}
+  .kicker{display:inline-block;background:var(--accent-soft);color:var(--accent);
+    font-weight:700;font-size:13px;letter-spacing:.4px;text-transform:uppercase;
+    padding:4px 12px;border-radius:999px;margin-bottom:12px}
+  h1{font-size:30px;line-height:1.25;margin:6px 0 10px}
+  h2{font-size:22px;margin:38px 0 6px;padding-top:8px;border-top:2px solid var(--line)}
+  .paper-meta{color:var(--muted);font-size:15px}
+  .paper-meta a{color:var(--blue)}
+  .backlink{margin:0 0 14px;font-size:15px}
+  .backlink a{color:var(--muted);text-decoration:none}
+  .backlink a:hover{text-decoration:underline}
+  .howto{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 20px;margin:18px 0;font-size:16px;color:var(--muted)}
+  .howto b{color:var(--ink)}
+  .pitch{background:var(--accent-soft);border:1px solid #bfe3cf;border-radius:12px;
+    padding:20px 22px;margin:18px 0;font-size:18px}
+  .pair{margin:22px 0}
+  .pair-tag{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:1px;
+    text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .pair-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);
+    border-radius:14px;overflow:hidden}
+  .orig{background:var(--paper);border-right:1px solid var(--paper-line);padding:22px 24px}
+  .orig h3,.trans h3{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;
+    margin:0 0 12px;color:var(--muted)}
+  .orig blockquote{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:18.5px;
+    line-height:1.6;color:#3a3226}
+  .orig blockquote::before{content:"\201C"}
+  .orig blockquote::after{content:"\201D"}
+  .orig .cite{margin-top:12px;font-size:13.5px;color:var(--muted)}
+  .trans{background:var(--card);padding:22px 24px}
+  .trans p{margin:8px 0;font-size:16.5px}
+  .trans p:first-of-type{margin-top:0}
+  .dataslide{border:2px solid var(--ink);border-radius:14px;background:var(--card);
+    margin:26px 0;overflow:hidden}
+  .dataslide-head{background:var(--ink);color:#fff;padding:10px 22px;font-size:13px;
+    font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+  .dataslide-body{padding:20px 22px}
+  .dataslide-cap{font-size:15.5px;color:var(--muted);margin:0 0 12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:20px 22px;margin:16px 0}
+  .hint{font-size:14px;color:var(--muted)}
+  .attn-grid{display:grid;gap:3px;margin:12px 0}
+  .attn-cell{aspect-ratio:1;border-radius:4px;cursor:pointer;border:2px solid transparent;
+    display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff}
+  .attn-cell.sel{border-color:var(--ink)}
+  .attn-word{font-size:13px;color:var(--muted);text-align:center;padding:2px;cursor:pointer}
+  .attn-word.sel{color:var(--ink);font-weight:800}
+  .score-row{display:flex;align-items:center;gap:12px;margin:10px 0;cursor:pointer;
+    padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}
+  .score-row:hover{border-color:var(--accent)}
+  .score-row .who{width:230px;flex:none;font-weight:700;font-size:15px}
+  .score-row .bar{flex:1;height:22px;background:#eef1f4;border-radius:6px;position:relative}
+  .score-row .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:var(--accent)}
+  .score-row .num{width:52px;flex:none;text-align:right;font-weight:800;font-size:17px}
+  .score-row.hot{border-color:var(--accent);background:var(--accent-soft)}
+  #scoreDetail{margin-top:10px}
+  .gloss{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  .gloss div{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:12px 16px;font-size:15.5px}
+  .gloss b{color:var(--accent)}
+  .verdict{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0}
+  .verdict div{border-radius:10px;padding:14px 16px;font-size:15px}
+  .v-read{background:var(--accent-soft);border:1px solid #bfe3cf}
+  .v-skim{background:var(--blue-soft);border:1px solid #bcd4f5}
+  .v-skip{background:#f1f2f4;border:1px solid var(--line)}
+  .verdict b{display:block;margin-bottom:4px}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:13.5px}
+  @media(max-width:760px){
+    .pair-grid{grid-template-columns:1fr}
+    .orig{border-right:none;border-bottom:1px solid var(--paper-line)}
+    .verdict{grid-template-columns:1fr}
+    .gloss{grid-template-columns:1fr}
+    .score-row .who{width:150px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="backlink"><a href="../../">← No Fear Research Papers</a></p>
+
+<header class="hero">
+  <span class="kicker">No Fear Research Papers · demo</span>
+  <h1>Attention Is All You Need, translated</h1>
+  <p class="paper-meta">
+    Vaswani et al., NeurIPS 2017 · arXiv:1706.03762 ·
+    <a href="https://arxiv.org/abs/1706.03762">arxiv.org/abs/1706.03762</a><br>
+    Eight researchers at Google. Arguably the most influential AI paper ever published.
+  </p>
+</header>
+
+<div class="howto">
+  <b>How to read this page:</b> on the left, the paper's own words — short excerpts, exactly as written.
+  On the right, the same idea in everyday English. Data slides appear where the paper makes a claim,
+  so you can see the mechanism work instead of taking its word for it.
+</div>
+
+<h2>The whole paper in 60 seconds</h2>
+<div class="pitch">
+  Before 2017, AI read language the way you read through a keyhole: one word at a time, in order,
+  struggling to remember what came twenty words earlier. Eight Google researchers asked: what if a
+  sentence could look at itself <b>all at once</b> — every word checking every other word to decide
+  what matters? That mechanism is called <b>attention</b>. Their model, the <b>Transformer</b>, threw out
+  the old one-word-at-a-time machinery entirely — and still translated better than anything before it,
+  training in days instead of weeks. Every modern AI you know — ChatGPT, Claude, Gemini — and the
+  architecture inside AlphaFold descends from this paper's blueprint.
+</div>
+
+<h2>The translation</h2>
+
+<div class="pair">
+  <span class="pair-tag">1 · The old way — from the Introduction</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>The dominant sequence transduction models are based on complex recurrent or convolutional neural networks</blockquote>
+      <p class="cite">Vaswani et al., 2017</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>In 2017, the standard AI for language worked like a person reading with a flashlight in a dark room:
+      <b>one word at a time, in strict order</b> ("recurrence"). Two problems: it's slow — you can't read word 20
+      until you've finished word 19, so training can't be parallelized — and it's forgetful: by the end of a long
+      sentence, the beginning has faded.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">2 · The bet — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>based solely on attention mechanisms, dispensing with recurrence and convolutions entirely</blockquote>
+      <p class="cite">Vaswani et al., 2017</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>The bet, which sounded reckless at the time: <b>delete the assembly line completely</b>.
+      No reading in order, no convolutions — just attention. Every word looks directly at every other
+      word in the sentence and decides how much each one matters to it. Distance stops mattering:
+      word 1 and word 40 are one hop apart.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">3 · How attention works — from the Method</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>mapping a query and a set of key-value pairs to an output</blockquote>
+      <p class="cite">Vaswani et al., 2017 — the paper's definition of an attention function</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Here's the whole trick. Every word produces three things: a <b>query</b> ("what am I looking for?"),
+      a <b>key</b> ("what do I offer?"), and a <b>value</b> ("what I actually contribute"). A word compares its
+      query against everyone's keys, and takes a weighted blend of the values of whoever matches.</p>
+      <p>So in <em>"the animal didn't cross the street because <b>it</b> was too tired,"</em> the word "it" learns to
+      grab "animal" — that's how the model knows what "it" refers to. And it does this with <b>8 heads at once</b> —
+      eight different kinds of relationships (who did it, what it refers to, what modifies what…) in parallel.</p>
+    </div>
+  </div>
+</div>
+
+<div class="dataslide">
+  <div class="dataslide-head">Data slide · see attention work</div>
+  <div class="dataslide-body">
+    <p class="dataslide-cap">Click any word (rows) to see how strongly it attends to every other word (columns). Darker = stronger attention. Try <b>it</b> — the model has to figure out what "it" means, and it looks at <b>animal</b>. Illustrative weights showing the mechanism the paper introduced.</p>
+    <div class="attn-grid" id="attnGrid"></div>
+    <div id="attnDetail"></div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">4 · The proof — from the Results</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>achieves 28.4 BLEU on the WMT 2014 English-to-German translation task</blockquote>
+      <p class="cite">Vaswani et al., 2017</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>BLEU is a translation-quality score (higher = better). The simpler, all-attention model didn't just
+      keep up — it <b>beat the best systems in the world by over 2 BLEU</b>, including ensembles (committees of
+      older models ganged together). On French it hit 41.8, a new single-model record.</p>
+      <p>And because every word is processed in parallel, it trained in <b>3.5 days on 8 GPUs</b> — a small
+      fraction of what the previous champions cost. Better <em>and</em> cheaper: that's why everyone switched.</p>
+    </div>
+  </div>
+</div>
+
+<div class="dataslide">
+  <div class="dataslide-head">Data slide · the scoreboard</div>
+  <div class="dataslide-body">
+    <p class="dataslide-cap">The paper's headline results (WMT 2014 machine translation). Click a row for what it means.</p>
+    <div id="scoreRows"></div>
+    <div id="scoreDetail"></div>
+  </div>
+</div>
+
+<h2>Key terms, in one line each</h2>
+<div class="gloss">
+  <div><b>Attention</b> — each word weighs how much every other word matters to it, and blends accordingly.</div>
+  <div><b>Query / Key / Value</b> — what a word looks for, what it advertises, and what it contributes.</div>
+  <div><b>Multi-head</b> — running attention 8 times in parallel, each head tracking a different relationship.</div>
+  <div><b>Positional encoding</b> — since nothing reads in order, each word gets a position "timestamp" added in.</div>
+  <div><b>Encoder / decoder</b> — the reader half that digests the input, and the writer half that produces the output.</div>
+  <div><b>BLEU</b> — a translation quality score comparing machine output to human reference translations.</div>
+</div>
+
+<h2>Fine print (what the translation shouldn't hide)</h2>
+<div class="card">
+  <p style="margin-top:0">The paper itself is about <b>translation</b> — the chatbot era came from scaling this
+  blueprint up enormously (GPT, 2018 onward). Attention also has a real cost: every word attending to every word
+  grows quadratically with length, which is why long context is expensive. And one elegance note: with no reading
+  order, the model gets word positions from added sine-wave patterns — the "positional encodings" above.</p>
+</div>
+
+<h2>Should you read the full paper?</h2>
+<div class="verdict">
+  <div class="v-read"><b>Read it if…</b>you want to understand modern AI at the root — it's short, unusually clearly written, and everything since is a footnote to it.</div>
+  <div class="v-skim"><b>Skim is enough if…</b>you mainly need the mechanism — the four translations above plus the attention slide carry the core idea.</div>
+  <div class="v-skip"><b>Skip it if…</b>you only use AI tools day-to-day; the blueprint matters less than what was built on it.</div>
+</div>
+
+<footer>
+  Demo of the "No Fear Research Papers" concept · Built from Vaswani et al., NeurIPS 2017 (arXiv:1706.03762).
+  Brief excerpts quoted for commentary; full text at the publisher link above.
+</footer>
+
+</div>
+<script>
+/* ---------- Data slide 1: attention grid (illustrative weights) ---------- */
+const TOKENS = ["The","animal","didn't","cross","the","street","because","it","was","too","tired"];
+const N = TOKENS.length;
+// base: self + neighbors; overrides for meaningful links
+const W = [];
+for(let i=0;i<N;i++){
+  const row = new Array(N).fill(0.02);
+  row[i] = 0.30;
+  if(i>0) row[i-1] += 0.08;
+  if(i<N-1) row[i+1] += 0.08;
+  W.push(row);
+}
+function setW(i,j,v){ W[i][j]=v; }
+// "it" (7) -> animal (1) strongly; also tired
+setW(7,1,0.62); setW(7,10,0.16); setW(7,0,0.02); setW(7,7,0.06);
+// "tired" (10) -> animal, it, too
+setW(10,1,0.30); setW(10,7,0.28); setW(10,9,0.16); setW(10,10,0.08);
+// "cross" (3) -> animal, street
+setW(3,1,0.26); setW(3,5,0.34); setW(3,3,0.12);
+// "street" (5) -> cross, the
+setW(5,3,0.30); setW(5,4,0.20);
+// "was" (8) -> it, tired
+setW(8,7,0.34); setW(8,10,0.24); setW(8,8,0.10);
+// normalize rows
+for(let i=0;i<N;i++){ const s=W[i].reduce((a,b)=>a+b,0); for(let j=0;j<N;j++) W[i][j]/=s; }
+
+const grid = document.getElementById("attnGrid");
+grid.style.gridTemplateColumns = "repeat("+N+", 1fr)";
+let selRow = 7;
+function drawAttn(){
+  grid.innerHTML = "";
+  for(let i=0;i<N;i++){
+    for(let j=0;j<N;j++){
+      const c = document.createElement("div");
+      c.className = "attn-cell"+(i===selRow?" sel":"");
+      const w = W[i][j];
+      c.style.background = "rgba(11,110,79,"+(0.08+w*0.92).toFixed(2)+")";
+      c.title = TOKENS[i]+" → "+TOKENS[j]+": "+w.toFixed(2);
+      c.addEventListener("click", ()=>{ selRow=i; drawAttn(); });
+      grid.appendChild(c);
+    }
+  }
+  // detail
+  const row = W[selRow].map((w,j)=>({w,j})).sort((a,b)=>b.w-a.w).slice(0,3);
+  const word = TOKENS[selRow];
+  let txt = "<b>"+word+"</b> pays most attention to: "+
+    row.map(r=>"<b>"+TOKENS[r.j]+"</b> ("+r.w.toFixed(2)+")").join(", ")+".";
+  if(selRow===7) txt += " That's the model resolving what <em>it</em> refers to — the animal, not the street.";
+  if(selRow===10) txt += " <em>Tired</em> describes the animal — via <em>it</em>.";
+  document.getElementById("attnDetail").innerHTML =
+    '<div class="card" style="margin-top:6px"><p style="margin:0">'+txt+'</p></div>';
+}
+drawAttn();
+
+/* ---------- Data slide 2: scoreboard ---------- */
+const SCORES = [
+  {who:"Transformer — English→German", num:28.4, max:45,
+   note:"The new record. Beat the best prior systems — including ensembles of older models — by over 2 BLEU."},
+  {who:"Best prior systems (incl. ensembles) — English→German", num:26.4, max:45,
+   note:"The ceiling the paper smashed. The abstract: improving over existing best results, including ensembles, by over 2 BLEU — so the prior best was at most ~26.4."},
+  {who:"Transformer — English→French", num:41.8, max:45,
+   note:"A new single-model state of the art — and it got there after just 3.5 days of training on 8 GPUs."}
+];
+const rowsEl = document.getElementById("scoreRows");
+SCORES.forEach((s,i)=>{
+  const r = document.createElement("div");
+  r.className = "score-row"+(i===0?" hot":"");
+  r.innerHTML = '<span class="who">'+s.who+'</span><span class="bar"><i style="width:'+
+    (s.num/s.max*100)+'%"></i></span><span class="num">'+s.num.toFixed(1)+'</span>';
+  r.addEventListener("click", ()=>{
+    document.querySelectorAll(".score-row").forEach(x=>x.classList.remove("hot"));
+    r.classList.add("hot");
+    document.getElementById("scoreDetail").innerHTML =
+      '<div class="card"><p style="margin:0">'+s.note+'</p></div>';
+  });
+  rowsEl.appendChild(r);
+});
+document.getElementById("scoreDetail").innerHTML =
+  '<div class="card"><p style="margin:0">'+SCORES[0].note+'</p></div>';
+</script>
+</body>
+</html>
