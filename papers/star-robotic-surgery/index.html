@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="No Fear Research Papers: Autonomous robotic surgery, translated">
+<meta property="og:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. The STAR robot that sewed up intestines better than surgeons.">
+<meta property="og:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-star.jpg">
+<meta property="og:url" content="https://danieljordanviray.github.io/no-fear-research-papers/papers/star-robotic-surgery/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="No Fear Research Papers: Autonomous robotic surgery, translated">
+<meta name="twitter:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. The STAR robot that sewed up intestines better than surgeons.">
+<meta name="twitter:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-star.jpg">
+<title>No Fear Research Papers: Autonomous robotic surgery, translated</title>
+<style>
+  :root{
+    --ink:#1d2430; --muted:#5b6572; --line:#e4e8ee; --bg:#f7f9fb;
+    --card:#ffffff; --accent:#0b6e4f; --accent-soft:#e3f2ea;
+    --paper:#fbf7ef; --paper-line:#e8ddc4;
+    --bad:#b3362b; --blue:#1d5fb8; --blue-soft:#e8f0fd;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65;font-size:17px}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+  header.hero{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:28px 30px;margin-bottom:26px}
+  .kicker{display:inline-block;background:var(--accent-soft);color:var(--accent);
+    font-weight:700;font-size:13px;letter-spacing:.4px;text-transform:uppercase;
+    padding:4px 12px;border-radius:999px;margin-bottom:12px}
+  h1{font-size:30px;line-height:1.25;margin:6px 0 10px}
+  h2{font-size:22px;margin:38px 0 6px;padding-top:8px;border-top:2px solid var(--line)}
+  .paper-meta{color:var(--muted);font-size:15px}
+  .paper-meta a{color:var(--blue)}
+  .backlink{margin:0 0 14px;font-size:15px}
+  .backlink a{color:var(--muted);text-decoration:none}
+  .backlink a:hover{text-decoration:underline}
+  .howto{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 20px;margin:18px 0;font-size:16px;color:var(--muted)}
+  .howto b{color:var(--ink)}
+  .pitch{background:var(--accent-soft);border:1px solid #bfe3cf;border-radius:12px;
+    padding:20px 22px;margin:18px 0;font-size:18px}
+  .pair{margin:22px 0}
+  .pair-tag{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:1px;
+    text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .pair-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);
+    border-radius:14px;overflow:hidden}
+  .orig{background:var(--paper);border-right:1px solid var(--paper-line);padding:22px 24px}
+  .orig h3,.trans h3{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;
+    margin:0 0 12px;color:var(--muted)}
+  .orig blockquote{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:18.5px;
+    line-height:1.6;color:#3a3226}
+  .orig blockquote::before{content:"\201C"}
+  .orig blockquote::after{content:"\201D"}
+  .orig .cite{margin-top:12px;font-size:13.5px;color:var(--muted)}
+  .trans{background:var(--card);padding:22px 24px}
+  .trans p{margin:8px 0;font-size:16.5px}
+  .trans p:first-of-type{margin-top:0}
+  .dataslide{border:2px solid var(--ink);border-radius:14px;background:var(--card);
+    margin:26px 0;overflow:hidden}
+  .dataslide-head{background:var(--ink);color:#fff;padding:10px 22px;font-size:13px;
+    font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+  .dataslide-body{padding:20px 22px}
+  .dataslide-cap{font-size:15.5px;color:var(--muted);margin:0 0 12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:20px 22px;margin:16px 0}
+  .hint{font-size:14px;color:var(--muted)}
+  .loop-steps{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+  .loop-steps button{flex:1;min-width:130px;background:#fff;color:var(--ink);
+    border:1px solid var(--line);border-radius:8px;padding:10px 8px;
+    font-size:14.5px;font-weight:700;cursor:pointer}
+  .loop-steps button.hot{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:16px 0 4px}
+  .stat-grid div{background:#f4f6f8;border:1px solid var(--line);border-radius:10px;
+    padding:12px 14px;text-align:center}
+  .stat-grid b{display:block;font-size:22px;color:var(--accent)}
+  .stat-grid span{font-size:13px;color:var(--muted)}
+  .gloss{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  .gloss div{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:12px 16px;font-size:15.5px}
+  .gloss b{color:var(--accent)}
+  .verdict{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0}
+  .verdict div{border-radius:10px;padding:14px 16px;font-size:15px}
+  .v-read{background:var(--accent-soft);border:1px solid #bfe3cf}
+  .v-skim{background:var(--blue-soft);border:1px solid #bcd4f5}
+  .v-skip{background:#f1f2f4;border:1px solid var(--line)}
+  .verdict b{display:block;margin-bottom:4px}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:13.5px}
+  @media(max-width:760px){
+    .pair-grid{grid-template-columns:1fr}
+    .orig{border-right:none;border-bottom:1px solid var(--paper-line)}
+    .verdict{grid-template-columns:1fr}
+    .gloss{grid-template-columns:1fr}
+    .stat-grid{grid-template-columns:1fr}
+  }
+
+  .fx-row{display:flex;gap:12px;align-items:flex-start;margin:10px 0;padding:12px 14px;
+    border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff}
+  .fx-row:hover{border-color:var(--accent)}
+  .fx-row.hot{border-color:var(--accent);background:var(--accent-soft)}
+  .fx-row .fx-tag{flex:none;font-weight:800;font-size:12.5px;text-transform:uppercase;
+    letter-spacing:.6px;color:var(--accent);width:170px;padding-top:2px}
+  .fx-row .fx-txt{font-size:15.5px}
+  @media(max-width:760px){ .fx-row{flex-direction:column;gap:4px} .fx-row .fx-tag{width:auto} }
+
+  .bar-row{display:flex;align-items:center;gap:12px;margin:12px 0}
+  .bar-row .who{width:200px;flex:none;font-weight:700;font-size:15px}
+  .bar-row .bar{flex:1;height:26px;background:#eef1f4;border-radius:6px;position:relative}
+  .bar-row .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:var(--accent)}
+  .bar-row.dim .bar i{background:#9aa7b4}
+  .bar-row .num{width:110px;flex:none;text-align:right;font-weight:800;font-size:15.5px}
+  @media(max-width:760px){ .bar-row .who{width:120px} .bar-row .num{width:90px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="backlink"><a href="../../">&larr; No Fear Research Papers</a></p>
+
+<header class="hero">
+  <span class="kicker">No Fear Research Papers</span>
+  <h1>Autonomous robotic surgery, translated</h1>
+  <p class="paper-meta">
+    Shademan et al., <em>Science Translational Medicine</em> 8 (337): 337ra64, 2016 ·
+    <a href="https://www.science.org/doi/10.1126/scitranslmed.aad9398">science.org/doi/10.1126/scitranslmed.aad9398</a><br>
+    The STAR system, from Children's National Health System, Washington, DC.
+  </p>
+</header>
+
+<div class="howto">
+  <b>How to read this page:</b> on the left, the paper's own words — short excerpts, exactly as written.
+  On the right, the same idea in everyday English. Data slides appear where the paper makes a claim,
+  so you can compare the robot against the surgeons metric by metric.
+</div>
+
+<h2>The whole paper in 60 seconds</h2>
+<div class="pitch">
+  Surgical robots like da Vinci don't operate — they puppeteer: every motion is a surgeon's hand,
+  amplified. <b>STAR</b> (Smart Tissue Autonomous Robot) was the leap: a robot that performs a surgical
+  task itself, under supervision. The task — <b>intestinal anastomosis</b>, stitching two ends of bowel
+  together, done over a million times a year in the US — is soft-tissue surgery: the target squishes,
+  stretches, and moves. STAR watched the tissue with 3D and near-infrared cameras tracking glowing
+  markers, planned its own suture pattern from best surgical practice, and re-planned as the tissue
+  deformed. Result, in pig tissue and then in living pigs: <b>more consistent stitches and stronger
+  seals than expert surgeons</b> working by hand, by laparoscopy, or through da Vinci. Slower, though.
+</div>
+
+<h2>The translation</h2>
+
+<div class="pair">
+  <span class="pair-tag">1 · The ambition — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>promises enhanced efficacy, safety, and improved access to optimized surgical techniques</blockquote>
+      <p class="cite">Shademan et al., <em>Sci. Transl. Med.</em> 2016 — on autonomous robotic surgery</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Why take the hands off? Two reasons. <b>Consistency</b>: even expert surgeons vary stitch by
+      stitch and day by day; a machine executes the plan the same way every time. <b>Access</b>: the best
+      surgical technique, once encoded, could in principle be delivered anywhere — not only where the
+      best surgeon happens to work.</p>
+      <p>Note the word in the paper's title: <em>supervised</em>. A surgeon approved STAR's plan and could
+      intervene at any point. Autonomy here means "performs the task," not "unsupervised."</p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">2 · The hard problem — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>a computer program generates a plan</blockquote>
+      <p class="cite">Shademan et al., <em>Sci. Transl. Med.</em> 2016 — a plan for complex tasks on deformable soft tissue, inspired by the best human surgical practices</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Soft tissue is the nightmare case for robots: unlike bone or a factory part, bowel deforms
+      constantly. STAR's answer was a sensing loop — surgeons dotted the tissue with markers that glow
+      under near-infrared light; a 3D (plenoptic) camera tracked them millimeter by millimeter; and the
+      suturing plan — spacing, tension, placement, drawn from expert practice — was <b>recomputed as the
+      tissue moved</b>.</p>
+      <p>Plan, stitch, re-image, re-plan. The same sense–act loop as any good robot — executed inside a
+      living abdomen.</p>
+    </div>
+  </div>
+</div>
+
+<div class="dataslide">
+  <div class="dataslide-head">Data slide · robot vs surgeons, metric by metric</div>
+  <div class="dataslide-body">
+    <p class="dataslide-cap">The paper's head-to-head: STAR vs manual surgery vs laparoscopy vs robot-assisted (da Vinci). Click each metric:</p>
+    <div id="fxRows"></div>
+    <div id="mxBars"></div>
+    <div id="fxDetail"></div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">3 · The result — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>the outcome of supervised autonomous procedures is superior to surgery performed by expert surgeons and RAS techniques</blockquote>
+      <p class="cite">Shademan et al., <em>Sci. Transl. Med.</em> 2016</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>"Superior" is doing specific work here: on <b>consistency of suture spacing</b> (evenly spaced
+      stitches heal better) and <b>leak pressure</b> (STAR's joins withstood nearly twice the pressure of
+      hand-sewn ones before leaking), STAR won — in dead tissue and in four living pigs, all of which
+      survived without complications.</p>
+      <p>On <b>speed</b> it lost, clearly: the fastest living-pig STAR procedure took 35 minutes; the
+      surgeon's manual control took 8. (Context the authors add: ordinary laparoscopic anastomosis in
+      patients typically runs 30–90 minutes — so STAR was slow for an open procedure, normal for a
+      laparoscopic one.)</p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">4 · The point — from the authors</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>improve the efficacy, consistency, functional outcome, and accessibility of surgical techniques</blockquote>
+      <p class="cite">Shademan et al., <em>Sci. Transl. Med.</em> 2016 — on the potential of autonomous robots</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Read the four nouns as the thesis: better results (efficacy), the same results every time
+      (consistency), joins that hold (functional outcome), and expertise that can travel (accessibility).
+      The team's stated intent was explicitly <b>not to replace surgeons</b>, but to expand what a surgical
+      team can do — machine precision carrying out human-approved plans.</p>
+      <p>A decade on, supervised autonomy remains the frontier: the sensing and re-planning loop STAR
+      demonstrated is the template every surgical-autonomy effort still follows.</p>
+    </div>
+  </div>
+</div>
+
+<h2>Key terms, in one line each</h2>
+<div class="gloss">
+  <div><b>Anastomosis</b> — surgically joining two tube ends (here, intestine) so the channel runs again.</div>
+  <div><b>RAS</b> — robot-assisted surgery: a surgeon drives instruments through a robot (e.g., da Vinci); no autonomy.</div>
+  <div><b>NIRF imaging</b> — near-infrared fluorescence: tissue markers glow under IR light so cameras can track soft tissue precisely.</div>
+  <div><b>Leak pressure</b> — how much internal pressure a stitched join withstands before leaking — the functional bottom line.</div>
+  <div><b>Ex vivo / in vivo</b> — on tissue outside the body / in a living animal.</div>
+  <div><b>Supervised autonomy</b> — the machine executes the task; a human approves the plan and can take over.</div>
+</div>
+
+<h2>Fine print (what the translation shouldn't hide)</h2>
+<div class="card">
+  <p style="margin-top:0">This was pigs, not patients — four living animals, one procedure type, in an
+  open surgical setting with glowing markers placed by humans to help the robot see. STAR was markedly
+  slower than a surgeon working by hand, needed occasional human adjustments, and "superior" applies to
+  the consistency/leak metrics measured, not to survival or long-term outcomes. Clinical autonomous
+  surgery remains years of validation away.</p>
+</div>
+
+<h2>Should you read the full paper?</h2>
+<div class="verdict">
+  <div class="v-read"><b>Read it if…</b>you want the founding demonstration of surgical autonomy — and a model of how to benchmark a machine against experts honestly.</div>
+  <div class="v-skim"><b>Skim is enough if…</b>you need the shape: consistency and seal strength up, speed down, supervision throughout.</div>
+  <div class="v-skip"><b>Skip it if…</b>you're after today's clinical systems — but know that their design brief still reads like this paper.</div>
+</div>
+
+<footer>
+  Built from Shademan et al., <em>Science Translational Medicine</em> 8 (337), 2016.
+  Brief excerpts quoted for commentary; full text at the publisher link above.
+</footer>
+
+</div>
+<script>
+/* ---------- Data slide: metric-by-metric comparison ---------- */
+const MX = [
+  {tag:"Leak pressure", txt:"Higher is stronger — STAR ≈ 2× manual",
+   bars:[["STAR",100,"~2.0×"],["Manual (open)",52,"1.0×"],["Laparoscopy",48,"~0.9×"],["da Vinci (RAS)",55,"~1.1×"]],
+   note:"STAR's linear closures withstood a higher average leak pressure than all other techniques (paper, Fig. 2B) — reported as nearly twice the manual value (bars relative, manual = 1.0). A join that holds pressure is a join that heals."},
+  {tag:"Suture spacing", txt:"Consistency — STAR most even",
+   bars:[["STAR",95,"most consistent"],["Manual (open)",70,"variable"],["Laparoscopy",62,"variable"],["da Vinci (RAS)",74,"variable"]],
+   note:"Evenly spaced sutures distribute tension and promote healing. STAR's spacing was the most consistent of the four approaches (paper, Fig. 2A) — the machine executes the same plan every stitch (bar heights schematic, direction per the paper)."},
+  {tag:"Mistakes", txt:"Needle-removal errors — STAR minimal",
+   bars:[["STAR",12,"minimal"],["Manual (open)",30,"few"],["Laparoscopy",42,"more"],["da Vinci (RAS)",35,"some"]],
+   note:"Mistakes counted as stitches that had to be removed and redone. STAR's were minimal in both ex vivo and in vivo runs (paper; Children's National summary) — bar heights schematic, direction per the paper."},
+  {tag:"Completion time", txt:"The honest loss — manual 8 min vs STAR 35 min",
+   bars:[["Manual (open)",23,"8 min"],["STAR (fastest, in vivo)",100,"35 min"]],
+   note:"In living pigs, the experienced surgeon's manual anastomosis took 8 minutes; STAR's fastest took 35 (Children's National). The paper notes clinical laparoscopic anastomosis typically takes 30–90 minutes — so STAR was slow for open surgery, ordinary for laparoscopic."}
+];
+const mxEl = document.getElementById("fxRows");
+function renderBars(m){
+  document.getElementById("mxBars").innerHTML = m.bars.map(b=>
+    '<div class="bar-row'+(b[0].indexOf("STAR")===0?"":" dim")+'"><span class="who">'+b[0]+'</span><span class="bar"><i style="width:'+b[1]+'%"></i></span><span class="num">'+b[2]+'</span></div>'
+  ).join("");
+}
+MX.forEach((s,i)=>{
+  const r = document.createElement("div");
+  r.className = "fx-row"+(i===0?" hot":"");
+  r.innerHTML = '<span class="fx-tag">'+s.tag+'</span><span class="fx-txt">'+s.txt+'</span>';
+  r.addEventListener("click", ()=>{
+    document.querySelectorAll(".fx-row").forEach(x=>x.classList.remove("hot"));
+    r.classList.add("hot");
+    renderBars(s);
+    document.getElementById("fxDetail").innerHTML =
+      '<div class="card"><p style="margin:0">'+s.note+'</p></div>';
+  });
+  mxEl.appendChild(r);
+});
+renderBars(MX[0]);
+document.getElementById("fxDetail").innerHTML =
+  '<div class="card"><p style="margin:0">'+MX[0].note+'</p></div>';
+</script>
+</body>
+</html>
