@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="No Fear Research Papers: The ChatGPT productivity experiment, translated">
+<meta property="og:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. 453 professionals, real writing tasks, one coin flip: ChatGPT or not.">
+<meta property="og:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-noy-zhang.jpg">
+<meta property="og:url" content="https://danieljordanviray.github.io/no-fear-research-papers/papers/chatgpt-productivity-experiment/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="No Fear Research Papers: The ChatGPT productivity experiment, translated">
+<meta name="twitter:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. 453 professionals, real writing tasks, one coin flip: ChatGPT or not.">
+<meta name="twitter:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-noy-zhang.jpg">
+<title>No Fear Research Papers: The ChatGPT productivity experiment, translated</title>
+<style>
+  :root{
+    --ink:#1d2430; --muted:#5b6572; --line:#e4e8ee; --bg:#f7f9fb;
+    --card:#ffffff; --accent:#0b6e4f; --accent-soft:#e3f2ea;
+    --paper:#fbf7ef; --paper-line:#e8ddc4;
+    --bad:#b3362b; --blue:#1d5fb8; --blue-soft:#e8f0fd;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65;font-size:17px}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+  header.hero{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:28px 30px;margin-bottom:26px}
+  .kicker{display:inline-block;background:var(--accent-soft);color:var(--accent);
+    font-weight:700;font-size:13px;letter-spacing:.4px;text-transform:uppercase;
+    padding:4px 12px;border-radius:999px;margin-bottom:12px}
+  h1{font-size:30px;line-height:1.25;margin:6px 0 10px}
+  h2{font-size:22px;margin:38px 0 6px;padding-top:8px;border-top:2px solid var(--line)}
+  .paper-meta{color:var(--muted);font-size:15px}
+  .paper-meta a{color:var(--blue)}
+  .backlink{margin:0 0 14px;font-size:15px}
+  .backlink a{color:var(--muted);text-decoration:none}
+  .backlink a:hover{text-decoration:underline}
+  .howto{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 20px;margin:18px 0;font-size:16px;color:var(--muted)}
+  .howto b{color:var(--ink)}
+  .pitch{background:var(--accent-soft);border:1px solid #bfe3cf;border-radius:12px;
+    padding:20px 22px;margin:18px 0;font-size:18px}
+  .pair{margin:22px 0}
+  .pair-tag{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:1px;
+    text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .pair-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);
+    border-radius:14px;overflow:hidden}
+  .orig{background:var(--paper);border-right:1px solid var(--paper-line);padding:22px 24px}
+  .orig h3,.trans h3{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;
+    margin:0 0 12px;color:var(--muted)}
+  .orig blockquote{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:18.5px;
+    line-height:1.6;color:#3a3226}
+  .orig blockquote::before{content:"\201C"}
+  .orig blockquote::after{content:"\201D"}
+  .orig .cite{margin-top:12px;font-size:13.5px;color:var(--muted)}
+  .trans{background:var(--card);padding:22px 24px}
+  .trans p{margin:8px 0;font-size:16.5px}
+  .trans p:first-of-type{margin-top:0}
+  .dataslide{border:2px solid var(--ink);border-radius:14px;background:var(--card);
+    margin:26px 0;overflow:hidden}
+  .dataslide-head{background:var(--ink);color:#fff;padding:10px 22px;font-size:13px;
+    font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+  .dataslide-body{padding:20px 22px}
+  .dataslide-cap{font-size:15.5px;color:var(--muted);margin:0 0 12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:20px 22px;margin:16px 0}
+  .hint{font-size:14px;color:var(--muted)}
+  .sim-toggle{display:flex;gap:8px;margin:12px 0}
+  .sim-toggle button{flex:1;background:#fff;color:var(--ink);border:1px solid var(--line);
+    border-radius:8px;padding:11px 10px;font-size:15.5px;font-weight:700;cursor:pointer}
+  .sim-toggle button.hot{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .bar-row{display:flex;align-items:center;gap:12px;margin:12px 0}
+  .bar-row .who{width:210px;flex:none;font-weight:700;font-size:15px}
+  .bar-row .bar{flex:1;height:26px;background:#eef1f4;border-radius:6px;position:relative}
+  .bar-row .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:var(--accent)}
+  .bar-row.dim .bar i{background:#9aa7b4}
+  .bar-row .num{width:90px;flex:none;text-align:right;font-weight:800;font-size:17px}
+  .gloss{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  .gloss div{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:12px 16px;font-size:15.5px}
+  .gloss b{color:var(--accent)}
+  .verdict{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0}
+  .verdict div{border-radius:10px;padding:14px 16px;font-size:15px}
+  .v-read{background:var(--accent-soft);border:1px solid #bfe3cf}
+  .v-skim{background:var(--blue-soft);border:1px solid #bcd4f5}
+  .v-skip{background:#f1f2f4;border:1px solid var(--line)}
+  .verdict b{display:block;margin-bottom:4px}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:13.5px}
+  @media(max-width:760px){
+    .pair-grid{grid-template-columns:1fr}
+    .orig{border-right:none;border-bottom:1px solid var(--paper-line)}
+    .verdict{grid-template-columns:1fr}
+    .gloss{grid-template-columns:1fr}
+    .bar-row .who{width:130px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="backlink"><a href="../../">← No Fear Research Papers</a></p>
+
+<header class="hero">
+  <span class="kicker">No Fear Research Papers</span>
+  <h1>The ChatGPT productivity experiment, translated</h1>
+  <p class="paper-meta">
+    Noy &amp; Zhang, <em>Science</em> 381 (6654): 187–192, 2023 ·
+    <a href="https://www.science.org/doi/10.1126/science.adh2586">science.org/doi/10.1126/science.adh2586</a><br>
+    A preregistered randomized experiment on generative AI and professional work.
+  </p>
+</header>
+
+<div class="howto">
+  <b>How to read this page:</b> on the left, the paper's own words — short excerpts, exactly as written.
+  On the right, the same idea in everyday English. Data slides appear where the paper makes a claim,
+  so you can flip between "with ChatGPT" and "without" and watch the numbers move.
+</div>
+
+<h2>The whole paper in 60 seconds</h2>
+<div class="pitch">
+  Months after ChatGPT launched, two researchers ran the cleanest possible test: recruit <b>453 working
+  professionals</b> — marketers, grant writers, consultants, data analysts, HR staff, managers — give them
+  realistic writing tasks from their own occupations, and <b>randomly assign half to use ChatGPT</b>.
+  The results were lopsided: the ChatGPT group finished <b>40% faster</b> with work graded <b>18%
+  better</b> — and the gap between strong and weak writers <b>shrank</b>, because the weakest gained the
+  most. Then the kicker: two weeks later, the exposed group was already using ChatGPT in their real jobs
+  at twice the rate of the control group. The experiment escaped the lab.
+</div>
+
+<h2>The translation</h2>
+
+<div class="pair">
+  <span class="pair-tag">1 · The setup — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>we assigned occupation-specific, incentivized writing tasks to 453 college-educated professionals and randomly exposed half of them to ChatGPT</blockquote>
+      <p class="cite">Noy &amp; Zhang, <em>Science</em> 2023</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Every design choice here is doing work. <b>Occupation-specific</b>: a grant writer wrote a grant
+      proposal, a marketer a press release — tasks people actually do. <b>Incentivized</b>: pay depended on
+      quality, so nobody coasted. <b>Randomly exposed</b>: a coin flip decided who got ChatGPT, so the two
+      groups were comparable — the gold-standard RCT design, preregistered in advance.</p>
+      <p>Each participant did a first task without AI (a baseline), then a second task where the treatment
+      group had ChatGPT. Graders didn't know who used what.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">2 · The result — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>The average time taken decreased by 40% and output quality rose by 18%</blockquote>
+      <p class="cite">Noy &amp; Zhang, <em>Science</em> 2023</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Usually speed and quality trade off — faster means sloppier. Here <b>both moved the right way</b>:
+      dramatically faster <em>and</em> noticeably better, as graded by blinded evaluators in the same
+      occupations.</p>
+      <p>How people used it mattered: the best workflow wasn't pasting the whole task into the chatbot —
+      it was drafting with AI, then editing. The productivity came from the human–AI loop, not the AI alone.</p>
+    </div>
+  </div>
+</div>
+
+<div class="dataslide">
+  <div class="dataslide-head">Data slide · flip the coin yourself</div>
+  <div class="dataslide-body">
+    <p class="dataslide-cap">The paper's headline effects, indexed so "without ChatGPT" = 100. Toggle the groups:</p>
+    <div class="sim-toggle">
+      <button id="btnCtrl">Without ChatGPT (control)</button>
+      <button id="btnTreat" class="hot">With ChatGPT (treatment)</button>
+    </div>
+    <div class="bar-row" id="rowTime"><span class="who">Time to finish</span><span class="bar"><i id="barTime"></i></span><span class="num" id="numTime"></span></div>
+    <div class="bar-row" id="rowQual"><span class="who">Output quality (graded)</span><span class="bar"><i id="barQual"></i></span><span class="num" id="numQual"></span></div>
+    <p class="hint" id="toggleNote">Treatment group: 40% less time, 18% higher quality — the paper's averages across all occupations and tasks.</p>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">3 · The equalizer — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>Inequality between workers decreased</blockquote>
+      <p class="cite">Noy &amp; Zhang, <em>Science</em> 2023</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Participants who were weak writers on the first (unaided) task gained enormously from ChatGPT;
+      strong writers gained a little. The floor rose toward the ceiling.</p>
+      <p>If that pattern sounds familiar, it's the same signature as the 5,179-agent call-center study
+      (translated elsewhere on this site): early evidence that generative AI <b>compresses</b> the skill
+      distribution from below rather than stretching it — the opposite of the last technology wave.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">4 · The escape — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>2 times as likely to report using it in their real job</blockquote>
+      <p class="cite">Noy &amp; Zhang, <em>Science</em> 2023 — two weeks after the experiment</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Most experiments end when the session ends. This one followed participants out the door: two weeks
+      later the ChatGPT-exposed group was using it at work at <b>double</b> the control group's rate;
+      two months later, still 1.6 times.</p>
+      <p>Exposure itself was an intervention — a few hours of forced hands-on use converted skeptics into
+      adopters. (The paper also notes excitement and anxiety about AI both rose temporarily — a very 2023
+      finding.)</p>
+    </div>
+  </div>
+</div>
+
+<h2>Key terms, in one line each</h2>
+<div class="gloss">
+  <div><b>Preregistered</b> — the hypotheses and analysis plan were filed publicly before data collection, so the results can't be cherry-picked after the fact.</div>
+  <div><b>Random assignment</b> — a coin flip, not self-selection, decided who got ChatGPT — that's what makes the comparison causal.</div>
+  <div><b>Incentivized tasks</b> — participants were paid more for better work, mimicking real stakes.</div>
+  <div><b>Blinded grading</b> — evaluators scored the writing without knowing whether AI was used.</div>
+  <div><b>Treatment / control</b> — the group that got ChatGPT vs the group that worked unaided.</div>
+  <div><b>Effect decay</b> — the adoption gap narrowed over two months (2× → 1.6×) as awareness spread to everyone.</div>
+</div>
+
+<h2>Fine print (what the translation shouldn't hide)</h2>
+<div class="card">
+  <p style="margin-top:0">The tasks were short, self-contained writing jobs — the kind of work LLMs are
+  best at — lasting tens of minutes, not weeks-long projects with stakeholders and ambiguity. The quality
+  grades were holistic ratings by fellow professionals, not downstream business outcomes. And the study ran
+  in early 2023 on the ChatGPT of that era; effects could shrink (as unaided baselines adapt) or grow
+  (as models improve). It establishes what AI did to <em>these</em> tasks, not a law of labor markets.</p>
+</div>
+
+<h2>Should you read the full paper?</h2>
+<div class="verdict">
+  <div class="v-read"><b>Read it if…</b>you cite AI-productivity claims — you should know the primary source. It's short, clean, and a model of experimental design communication.</div>
+  <div class="v-skim"><b>Skim is enough if…</b>you need the numbers: −40% time, +18% quality, weakest gain most, adoption persisted.</div>
+  <div class="v-skip"><b>Skip it if…</b>you want deployment-scale evidence instead of a lab experiment — read the 5,179-agent field study on this site.</div>
+</div>
+
+<footer>
+  Built from Noy &amp; Zhang, <em>Science</em> 381 (6654), 2023.
+  Brief excerpts quoted for commentary; full text at the publisher link above.
+</footer>
+
+</div>
+<script>
+/* ---------- Data slide: treatment/control toggle ---------- */
+const GROUPS = {
+  ctrl:  {time: 100, qual: 100, note: "Control group index: 100 / 100 by definition — the unaided professionals' pace and quality."},
+  treat: {time: 60,  qual: 118, note: "Treatment group: 40% less time, 18% higher quality — the paper's averages across all occupations and tasks."}
+};
+function showNZ(mode){
+  const g = GROUPS[mode];
+  document.getElementById("btnCtrl").classList.toggle("hot", mode==="ctrl");
+  document.getElementById("btnTreat").classList.toggle("hot", mode==="treat");
+  document.getElementById("barTime").style.width = (g.time/1.3)+"%";
+  document.getElementById("barQual").style.width = (g.qual/1.3)+"%";
+  document.getElementById("numTime").textContent = g.time;
+  document.getElementById("numQual").textContent = g.qual;
+  document.getElementById("rowTime").classList.toggle("dim", mode==="ctrl");
+  document.getElementById("rowQual").classList.toggle("dim", mode==="ctrl");
+  document.getElementById("toggleNote").textContent = g.note;
+}
+document.getElementById("btnCtrl").addEventListener("click", ()=>showNZ("ctrl"));
+document.getElementById("btnTreat").addEventListener("click", ()=>showNZ("treat"));
+showNZ("treat");
+</script>
+</body>
+</html>
