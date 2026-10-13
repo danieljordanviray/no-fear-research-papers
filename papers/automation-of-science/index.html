@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="No Fear Research Papers: The Automation of Science, translated">
+<meta property="og:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. Adam, the robot scientist that discovered new knowledge on its own.">
+<meta property="og:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-adam.jpg">
+<meta property="og:url" content="https://danieljordanviray.github.io/no-fear-research-papers/papers/automation-of-science/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="No Fear Research Papers: The Automation of Science, translated">
+<meta name="twitter:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. Adam, the robot scientist that discovered new knowledge on its own.">
+<meta name="twitter:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-adam.jpg">
+<title>No Fear Research Papers: The Automation of Science, translated</title>
+<style>
+  :root{
+    --ink:#1d2430; --muted:#5b6572; --line:#e4e8ee; --bg:#f7f9fb;
+    --card:#ffffff; --accent:#0b6e4f; --accent-soft:#e3f2ea;
+    --paper:#fbf7ef; --paper-line:#e8ddc4;
+    --bad:#b3362b; --blue:#1d5fb8; --blue-soft:#e8f0fd;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65;font-size:17px}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+  header.hero{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:28px 30px;margin-bottom:26px}
+  .kicker{display:inline-block;background:var(--accent-soft);color:var(--accent);
+    font-weight:700;font-size:13px;letter-spacing:.4px;text-transform:uppercase;
+    padding:4px 12px;border-radius:999px;margin-bottom:12px}
+  h1{font-size:30px;line-height:1.25;margin:6px 0 10px}
+  h2{font-size:22px;margin:38px 0 6px;padding-top:8px;border-top:2px solid var(--line)}
+  .paper-meta{color:var(--muted);font-size:15px}
+  .paper-meta a{color:var(--blue)}
+  .backlink{margin:0 0 14px;font-size:15px}
+  .backlink a{color:var(--muted);text-decoration:none}
+  .backlink a:hover{text-decoration:underline}
+  .howto{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 20px;margin:18px 0;font-size:16px;color:var(--muted)}
+  .howto b{color:var(--ink)}
+  .pitch{background:var(--accent-soft);border:1px solid #bfe3cf;border-radius:12px;
+    padding:20px 22px;margin:18px 0;font-size:18px}
+  .pair{margin:22px 0}
+  .pair-tag{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:1px;
+    text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .pair-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);
+    border-radius:14px;overflow:hidden}
+  .orig{background:var(--paper);border-right:1px solid var(--paper-line);padding:22px 24px}
+  .orig h3,.trans h3{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;
+    margin:0 0 12px;color:var(--muted)}
+  .orig blockquote{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:18.5px;
+    line-height:1.6;color:#3a3226}
+  .orig blockquote::before{content:"\201C"}
+  .orig blockquote::after{content:"\201D"}
+  .orig .cite{margin-top:12px;font-size:13.5px;color:var(--muted)}
+  .trans{background:var(--card);padding:22px 24px}
+  .trans p{margin:8px 0;font-size:16.5px}
+  .trans p:first-of-type{margin-top:0}
+  .dataslide{border:2px solid var(--ink);border-radius:14px;background:var(--card);
+    margin:26px 0;overflow:hidden}
+  .dataslide-head{background:var(--ink);color:#fff;padding:10px 22px;font-size:13px;
+    font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+  .dataslide-body{padding:20px 22px}
+  .dataslide-cap{font-size:15.5px;color:var(--muted);margin:0 0 12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:20px 22px;margin:16px 0}
+  .hint{font-size:14px;color:var(--muted)}
+  .loop-steps{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+  .loop-steps button{flex:1;min-width:130px;background:#fff;color:var(--ink);
+    border:1px solid var(--line);border-radius:8px;padding:10px 8px;
+    font-size:14.5px;font-weight:700;cursor:pointer}
+  .loop-steps button.hot{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:16px 0 4px}
+  .stat-grid div{background:#f4f6f8;border:1px solid var(--line);border-radius:10px;
+    padding:12px 14px;text-align:center}
+  .stat-grid b{display:block;font-size:22px;color:var(--accent)}
+  .stat-grid span{font-size:13px;color:var(--muted)}
+  .gloss{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  .gloss div{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:12px 16px;font-size:15.5px}
+  .gloss b{color:var(--accent)}
+  .verdict{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0}
+  .verdict div{border-radius:10px;padding:14px 16px;font-size:15px}
+  .v-read{background:var(--accent-soft);border:1px solid #bfe3cf}
+  .v-skim{background:var(--blue-soft);border:1px solid #bcd4f5}
+  .v-skip{background:#f1f2f4;border:1px solid var(--line)}
+  .verdict b{display:block;margin-bottom:4px}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:13.5px}
+  @media(max-width:760px){
+    .pair-grid{grid-template-columns:1fr}
+    .orig{border-right:none;border-bottom:1px solid var(--paper-line)}
+    .verdict{grid-template-columns:1fr}
+    .gloss{grid-template-columns:1fr}
+    .stat-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="backlink"><a href="../../">← No Fear Research Papers</a></p>
+
+<header class="hero">
+  <span class="kicker">No Fear Research Papers</span>
+  <h1>The Automation of Science, translated</h1>
+  <p class="paper-meta">
+    King et al., <em>Science</em> 324 (5923): 85–89, 2009 ·
+    <a href="https://www.science.org/doi/10.1126/science.1165620">science.org/doi/10.1126/science.1165620</a><br>
+    Meet Adam — the first "robot scientist," from Aberystwyth University and the University of Cambridge.
+  </p>
+</header>
+
+<div class="howto">
+  <b>How to read this page:</b> on the left, the paper's own words — short excerpts, exactly as written.
+  On the right, the same idea in everyday English. Data slides appear where the paper makes a claim,
+  so you can walk Adam's discovery loop yourself.
+</div>
+
+<h2>The whole paper in 60 seconds</h2>
+<div class="pitch">
+  In 2009 — years before "AI agents" were a phrase — a team in Wales built <b>Adam</b>: a laboratory robot
+  that didn't just run experiments, but <b>decided which experiments to run</b>. Given a logical map of yeast
+  metabolism with some gaps in it (enzymes whose genes nobody knew — "orphans"), Adam formed hypotheses
+  about which genes filled the gaps, picked the most informative tests, grew the yeast robotically,
+  interpreted the growth measurements, and looped — until it had produced <b>new, correct scientific
+  knowledge</b> that human scientists then verified by hand. It's widely credited as the first machine to
+  autonomously discover new science, and it's the direct ancestor of today's self-driving labs.
+</div>
+
+<h2>The translation</h2>
+
+<div class="pair">
+  <span class="pair-tag">1 · The claim — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>The basis of science is the hypothetico-deductive method</blockquote>
+      <p class="cite">King et al., <em>Science</em> 2009</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Science, at its core, is a loop: form a hypothesis, deduce what you'd observe if it were true, run
+      the experiment, check. The paper's opening move is to point out that this loop is <b>a procedure</b> —
+      and procedures can be automated.</p>
+      <p>Adam's target was concrete: in baker's yeast, some enzymes were known to exist (their chemistry was
+      observed) but the <b>genes encoding them were unknown</b>. Those are "orphan enzymes" — a well-posed
+      treasure hunt for a reasoning machine.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">2 · The machine — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>Adam has autonomously generated functional genomics hypotheses about the yeast Saccharomyces cerevisiae and experimentally tested these hypotheses by using laboratory automation</blockquote>
+      <p class="cite">King et al., <em>Science</em> 2009</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Unpack the three verbs. <b>Generated hypotheses</b>: Adam held a formal, logical model of yeast
+      metabolism; where the model had gaps, it used abductive reasoning ("what gene, if it existed, would
+      explain this chemistry?"). <b>Tested</b>: it grew yeast strains with specific genes deleted, with and
+      without specific nutrients, and measured growth. <b>Autonomously</b>: no human picked the experiments —
+      an active-learning rule chose the test that would distinguish the rival hypotheses most cheaply.</p>
+    </div>
+  </div>
+</div>
+
+<div class="dataslide">
+  <div class="dataslide-head">Data slide · walk Adam's loop</div>
+  <div class="dataslide-body">
+    <p class="dataslide-cap">The closed loop is the invention. Click each stage:</p>
+    <div class="loop-steps" id="loopSteps"></div>
+    <div id="loopDetail"></div>
+    <div class="stat-grid">
+      <div><b>6.6 million</b><span>biomass (growth) measurements Adam logged</span></div>
+      <div><b>10,000+</b><span>research units in its formal record of the work</span></div>
+      <div><b>3 genes</b><span>found for one long-orphaned enzyme (lysine pathway)</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">3 · The proof — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>We have confirmed Adam's conclusions through manual experiments</blockquote>
+      <p class="cite">King et al., <em>Science</em> 2009</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>The crucial sentence. A machine claiming discoveries is just a claim — so the team re-ran Adam's
+      conclusions <b>by hand</b>, with conventional methods, and they held up. Among them: a lysine-pathway
+      enzyme whose gene had eluded biologists turned out to be encoded by <b>three genes acting
+      redundantly</b> — a subtle answer a one-gene-one-enzyme mindset would have missed.</p>
+      <p>And because Adam recorded everything in a formal logical language — a tree of more than
+      10,000 research units linking the raw measurements to the conclusions — every step of the
+      discovery is auditable. Provenance as a feature, in 2009.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">4 · The legacy — from the field it started</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>advances the automation of both</blockquote>
+      <p class="cite">King et al., <em>Science</em> 2009 — both the method and the record-keeping of science</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Adam's descendants are everywhere now: its successor <b>Eve</b> (2015) hunted drug compounds and
+      flagged a toothpaste ingredient as a malaria-drug candidate; "self-driving labs" in chemistry and
+      materials run the same loop; and today's LLM research agents are, architecturally, Adam with a
+      language-model brain.</p>
+      <p>The deeper point the authors pressed: science's bottleneck wasn't intelligence, it was
+      <b>throughput and bookkeeping</b> — humans find detailed records "difficult and irksome," and for a
+      machine they're free.</p>
+    </div>
+  </div>
+</div>
+
+<h2>Key terms, in one line each</h2>
+<div class="gloss">
+  <div><b>Hypothetico-deductive method</b> — the classic science loop: hypothesize, predict, test, revise.</div>
+  <div><b>Orphan enzyme</b> — an enzyme proven to exist by its chemistry, whose gene is unknown.</div>
+  <div><b>Abduction</b> — reasoning backward to the best explanation: "what would make this observation make sense?"</div>
+  <div><b>Active learning</b> — choosing the next experiment for maximum information per unit cost, not by habit.</div>
+  <div><b>Auxotroph experiment</b> — growing a gene-deleted yeast strain with/without a nutrient to see what it can no longer make itself.</div>
+  <div><b>Closed loop</b> — results feed directly into the next decision, with no human in the cycle.</div>
+</div>
+
+<h2>Fine print (what the translation shouldn't hide)</h2>
+<div class="card">
+  <p style="margin-top:0">Adam reasoned inside a <b>hand-built, high-quality model</b> of one well-mapped
+  organism — give it a messy, poorly understood system and the logic engine starves. Its discoveries were
+  real but small-scale (gene assignments in yeast, not cures), and the hardware was bespoke and expensive.
+  The autonomy was also domain-shaped: Adam never chose its own *problem*. Picking worthwhile questions
+  remained — and largely remains — the human part.</p>
+</div>
+
+<h2>Should you read the full paper?</h2>
+<div class="verdict">
+  <div class="v-read"><b>Read it if…</b>you care about AI agents doing real work — this is the ancestral design document, and it's short.</div>
+  <div class="v-skim"><b>Skim is enough if…</b>you need the concept: close the loop, log everything, verify independently.</div>
+  <div class="v-skip"><b>Skip it if…</b>you want modern implementations — read about today's self-driving labs and come back for the history.</div>
+</div>
+
+<footer>
+  Built from King et al., <em>Science</em> 324 (5923), 2009.
+  Brief excerpts quoted for commentary; full text at the publisher link above.
+</footer>
+
+</div>
+<script>
+/* ---------- Data slide: Adam's loop stepper ---------- */
+const STEPS = [
+  {name:"1 · Background model", txt:"Adam starts from a formal map of yeast metabolism: thousands of known genes, enzymes, and reactions written in logic. The gaps in the map — orphan enzymes — are the questions."},
+  {name:"2 · Hypothesize", txt:"Using abductive logic, Adam asks: which gene, if it encoded this orphan enzyme, would explain the observed chemistry? Out comes a ranked set of candidate hypotheses."},
+  {name:"3 · Choose the test", txt:"Thousands of experiments are possible; most are wasteful. Active learning picks the strain-and-nutrient combination expected to separate the rival hypotheses most decisively per pound spent."},
+  {name:"4 · Run the robot", txt:"Liquid-handling robots and incubators execute the growth experiments: gene-deleted yeast, with and without specific nutrients, growth (biomass) measured automatically — millions of measurements, all logged."},
+  {name:"5 · Interpret & repeat", txt:"Growth or no-growth updates the odds on each hypothesis. If the answer isn't decisive, the loop turns again — new hypothesis ranking, new experiment — until one survives."}
+];
+const stepsEl = document.getElementById("loopSteps");
+STEPS.forEach((s,i)=>{
+  const b = document.createElement("button");
+  b.textContent = s.name;
+  if(i===0) b.classList.add("hot");
+  b.addEventListener("click", ()=>{
+    document.querySelectorAll(".loop-steps button").forEach(x=>x.classList.remove("hot"));
+    b.classList.add("hot");
+    document.getElementById("loopDetail").innerHTML =
+      '<div class="card"><p style="margin:0">'+s.txt+'</p></div>';
+  });
+  stepsEl.appendChild(b);
+});
+document.getElementById("loopDetail").innerHTML =
+  '<div class="card"><p style="margin:0">'+STEPS[0].txt+'</p></div>';
+</script>
+</body>
+</html>
