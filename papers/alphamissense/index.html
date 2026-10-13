@@ -12,7 +12,7 @@
 <meta name="twitter:title" content="No Fear Research Papers: AlphaMissense, translated">
 <meta name="twitter:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. In short: a spell-checker for DNA typos.">
 <meta name="twitter:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-image.jpg">
-<title>No Fear Research Papers: AlphaMissense, translated — demo</title>
+<title>No Fear Research Papers: AlphaMissense, translated</title>
 <style>
   :root{
     --ink:#1d2430; --muted:#5b6572; --line:#e4e8ee; --bg:#f7f9fb;
@@ -132,7 +132,7 @@
 <p style="margin:0 0 14px;font-size:15px"><a href="../../" style="color:var(--muted);text-decoration:none">← No Fear Research Papers</a></p>
 
 <header class="hero">
-  <span class="kicker">No Fear Research Papers · demo</span>
+  <span class="kicker">No Fear Research Papers</span>
   <h1>AlphaMissense, translated</h1>
   <p class="paper-meta">
     Cheng et al., <em>Science</em> 381 (6664), 2023 ·
@@ -298,7 +298,7 @@
 </div>
 
 <footer>
-  Demo of the "No Fear Research Papers" concept · Built from Cheng et al., <em>Science</em> 381 (6664), 2023.
+  Built from Cheng et al., <em>Science</em> 381 (6664), 2023.
   Brief excerpts quoted for commentary; full text at the publisher link above.
   Benchmark numbers are the paper's reported values. Variant scores come from DeepMind's public release
   (research use) and are predictions, not medical advice.
@@ -353,7 +353,7 @@ BENCH.forEach(b=>{
 let DATA = null;
 const sel = document.getElementById("alt");
 AAS.forEach(a=>{ const o=document.createElement("option"); o.value=a; o.text=a+" — "+AA_NAMES[a]; sel.appendChild(o); });
-sel.value = "Q"; // default demo: R130Q, a well-known PTEN catalytic-site mutation
+sel.value = "Q"; // default: R130Q, a well-known PTEN catalytic-site mutation
 
 function clsColor(cls){
   if(cls==="likely_pathogenic") return "#b3362b";
