@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="No Fear Research Papers: Target trial emulation, translated">
+<meta property="og:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. How to make health data honestly imitate a randomized trial.">
+<meta property="og:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-tte.jpg">
+<meta property="og:url" content="https://danieljordanviray.github.io/no-fear-research-papers/papers/target-trial-emulation/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="No Fear Research Papers: Target trial emulation, translated">
+<meta name="twitter:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. How to make health data honestly imitate a randomized trial.">
+<meta name="twitter:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-tte.jpg">
+<title>No Fear Research Papers: Target trial emulation, translated</title>
+<style>
+  :root{
+    --ink:#1d2430; --muted:#5b6572; --line:#e4e8ee; --bg:#f7f9fb;
+    --card:#ffffff; --accent:#0b6e4f; --accent-soft:#e3f2ea;
+    --paper:#fbf7ef; --paper-line:#e8ddc4;
+    --bad:#b3362b; --bad-soft:#fbe9e7; --blue:#1d5fb8; --blue-soft:#e8f0fd;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65;font-size:17px}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+  header.hero{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:28px 30px;margin-bottom:26px}
+  .kicker{display:inline-block;background:var(--accent-soft);color:var(--accent);
+    font-weight:700;font-size:13px;letter-spacing:.4px;text-transform:uppercase;
+    padding:4px 12px;border-radius:999px;margin-bottom:12px}
+  h1{font-size:30px;line-height:1.25;margin:6px 0 10px}
+  h2{font-size:22px;margin:38px 0 6px;padding-top:8px;border-top:2px solid var(--line)}
+  .paper-meta{color:var(--muted);font-size:15px}
+  .paper-meta a{color:var(--blue)}
+  .backlink{margin:0 0 14px;font-size:15px}
+  .backlink a{color:var(--muted);text-decoration:none}
+  .backlink a:hover{text-decoration:underline}
+  .howto{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 20px;margin:18px 0;font-size:16px;color:var(--muted)}
+  .howto b{color:var(--ink)}
+  .pitch{background:var(--accent-soft);border:1px solid #bfe3cf;border-radius:12px;
+    padding:20px 22px;margin:18px 0;font-size:18px}
+  .pair{margin:22px 0}
+  .pair-tag{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:1px;
+    text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .pair-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);
+    border-radius:14px;overflow:hidden}
+  .orig{background:var(--paper);border-right:1px solid var(--paper-line);padding:22px 24px}
+  .orig h3,.trans h3{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;
+    margin:0 0 12px;color:var(--muted)}
+  .orig blockquote{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:18.5px;
+    line-height:1.6;color:#3a3226}
+  .orig blockquote::before{content:"\201C"}
+  .orig blockquote::after{content:"\201D"}
+  .orig .cite{margin-top:12px;font-size:13.5px;color:var(--muted)}
+  .trans{background:var(--card);padding:22px 24px}
+  .trans p{margin:8px 0;font-size:16.5px}
+  .trans p:first-of-type{margin-top:0}
+  .dataslide{border:2px solid var(--ink);border-radius:14px;background:var(--card);
+    margin:26px 0;overflow:hidden}
+  .dataslide-head{background:var(--ink);color:#fff;padding:10px 22px;font-size:13px;
+    font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+  .dataslide-body{padding:20px 22px}
+  .dataslide-cap{font-size:15.5px;color:var(--muted);margin:0 0 12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:20px 22px;margin:16px 0}
+  .hint{font-size:14px;color:var(--muted)}
+  .proto-table{width:100%;border-collapse:collapse;font-size:15px;margin:8px 0}
+  .proto-table th,.proto-table td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+  .proto-table th{background:#f4f6f8;font-size:13px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
+  .sim-toggle{display:flex;gap:8px;margin:12px 0}
+  .sim-toggle button{flex:1;background:#fff;color:var(--ink);border:1px solid var(--line);
+    border-radius:8px;padding:11px 10px;font-size:15.5px;font-weight:700;cursor:pointer}
+  .sim-toggle button.hot{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .rate-row{display:flex;align-items:center;gap:12px;margin:10px 0}
+  .rate-row .who{width:230px;flex:none;font-weight:700;font-size:15px}
+  .rate-row .bar{flex:1;height:24px;background:#eef1f4;border-radius:6px;position:relative}
+  .rate-row .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:var(--accent)}
+  .rate-row.bad .bar i{background:var(--bad)}
+  .rate-row .num{width:120px;flex:none;text-align:right;font-weight:800;font-size:15.5px}
+  #simVerdict{margin-top:10px}
+  .gloss{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  .gloss div{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:12px 16px;font-size:15.5px}
+  .gloss b{color:var(--accent)}
+  .verdict{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0}
+  .verdict div{border-radius:10px;padding:14px 16px;font-size:15px}
+  .v-read{background:var(--accent-soft);border:1px solid #bfe3cf}
+  .v-skim{background:var(--blue-soft);border:1px solid #bcd4f5}
+  .v-skip{background:#f1f2f4;border:1px solid var(--line)}
+  .verdict b{display:block;margin-bottom:4px}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:13.5px}
+  @media(max-width:760px){
+    .pair-grid{grid-template-columns:1fr}
+    .orig{border-right:none;border-bottom:1px solid var(--paper-line)}
+    .verdict{grid-template-columns:1fr}
+    .gloss{grid-template-columns:1fr}
+    .rate-row .who{width:140px}
+    .rate-row .num{width:95px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="backlink"><a href="../../">← No Fear Research Papers</a></p>
+
+<header class="hero">
+  <span class="kicker">No Fear Research Papers</span>
+  <h1>Target trial emulation, translated</h1>
+  <p class="paper-meta">
+    Hernán &amp; Robins, <em>American Journal of Epidemiology</em> 183 (8): 758–764, 2016 ·
+    <a href="https://doi.org/10.1093/aje/kwv254">doi.org/10.1093/aje/kwv254</a><br>
+    The framework paper behind modern real-world evidence (RWE).
+  </p>
+</header>
+
+<div class="howto">
+  <b>How to read this page:</b> on the left, the paper's own words — short excerpts, exactly as written.
+  On the right, the same idea in everyday English. Data slides appear where the paper makes a claim —
+  including a simulation where you can watch a famous bias manufacture a fake drug benefit, then watch
+  the paper's fix delete it.
+</div>
+
+<h2>The whole paper in 60 seconds</h2>
+<div class="pitch">
+  Randomized trials are the gold standard for "does this treatment work?" — but often you can't run one:
+  too slow, too expensive, or unethical. So researchers mine health records instead, and keep fooling
+  themselves: observational studies swore hormone therapy protected women's hearts, until a real trial
+  found no such thing. Hernán &amp; Robins' fix is disarmingly simple: <b>before touching the data, write
+  down the trial you <em>would</em> run</b> — who gets in, what the strategies are, when the clock starts —
+  then emulate every piece of that protocol with the observational data. Specifying the "target trial"
+  forces start times and eligibility to line up, which quietly deletes the self-inflicted biases
+  (like <b>immortal time bias</b>) that made the records lie.
+</div>
+
+<h2>The translation</h2>
+
+<div class="pair">
+  <span class="pair-tag">1 · The problem — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>Causal inference from large observational databases (big data) can be viewed as an attempt to emulate a randomized experiment</blockquote>
+      <p class="cite">Hernán &amp; Robins, <em>Am J Epidemiol</em> 2016</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Every study that mines medical records to ask "did the drug help?" is secretly <b>pretending to be
+      a randomized trial</b> — one group "got" the treatment, another didn't, and we compare outcomes.
+      The pretending is usually sloppy: nobody wrote down the rules of the imaginary trial, so the groups
+      end up unfairly matched in hidden ways.</p>
+      <p>The paper's move: stop pretending accidentally. <b>Pretend on purpose, rigorously.</b></p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">2 · The idea — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>makes the target trial explicit</blockquote>
+      <p class="cite">Hernán &amp; Robins, <em>Am J Epidemiol</em> 2016 — on what their framework does</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Step one is not statistics — it's <b>writing a protocol</b>, exactly like a real trial's:
+      who is eligible, what the treatment strategies are, how assignment works, when follow-up starts
+      ("time zero"), what outcome counts, and how it will be analyzed.</p>
+      <p>If you can't state the trial, you don't have a well-posed question yet. Once the protocol exists,
+      each piece gets an observational stand-in — and the gaps become visible instead of silently
+      corrupting the answer.</p>
+    </div>
+  </div>
+</div>
+
+<div class="dataslide">
+  <div class="dataslide-head">Data slide · the protocol, piece by piece</div>
+  <div class="dataslide-body">
+    <p class="dataslide-cap">The paper's core device: every component of the hypothetical trial (its Table 1) must have an explicit emulation plan.</p>
+    <table class="proto-table">
+      <tr><th>The target trial specifies…</th><th>You emulate it by…</th></tr>
+      <tr><td><b>Eligibility criteria</b></td><td>Applying the same inclusion/exclusion rules to the records, at a defined moment</td></tr>
+      <tr><td><b>Treatment strategies</b></td><td>Defining exactly what "treated" means — which drug, dose, and duration, starting when</td></tr>
+      <tr><td><b>Assignment</b> (randomization)</td><td>Adjusting for baseline differences (confounders) so the groups start comparable</td></tr>
+      <tr><td><b>Time zero</b> (follow-up starts)</td><td>Aligning eligibility, treatment start, and the clock — the step that kills immortal time bias</td></tr>
+      <tr><td><b>Outcome</b></td><td>Defining the event and ascertaining it the same way in both groups</td></tr>
+      <tr><td><b>Causal contrast</b> (estimand)</td><td>Deciding the exact question: e.g. the effect of <em>starting</em> vs of <em>staying on</em> treatment</td></tr>
+      <tr><td><b>Analysis plan</b></td><td>Pre-specifying the analysis that mirrors the trial's, including for dropouts and switching</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">3 · Why the alignment matters — from the paper</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>the target experiment or target trial—that would answer the question of interest</blockquote>
+      <p class="cite">Hernán &amp; Robins, <em>Am J Epidemiol</em> 2016</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Here's the trap the protocol disarms. Patients start treatment <em>after</em> entering the data —
+      days or months later. To start a drug at month 6, you must <b>survive to month 6</b>. If an analysis
+      counts those first 6 months as "treated time," it hands the treatment group free, guaranteed-alive
+      months the control group never gets. The drug looks protective even if it's sugar pills.
+      That's <b>immortal time bias</b>.</p>
+      <p>A real trial can't have this bug — everyone's clock starts at randomization. Emulating the trial
+      (aligning time zero) removes the bug by construction.</p>
+    </div>
+  </div>
+</div>
+
+<div class="dataslide">
+  <div class="dataslide-head">Data slide · watch a fake benefit appear — then vanish</div>
+  <div class="dataslide-body">
+    <p class="dataslide-cap">A planted-truth simulation, run live in your browser: 120,000 imaginary patients, a treatment that <b>does nothing</b> (identical risk either way, by construction). Patients start treatment at a random month in the first year — and must survive to start it. Compare the two analyses:</p>
+    <div class="sim-toggle">
+      <button id="btnNaive" class="hot">Naive analysis (clock starts at month 0)</button>
+      <button id="btnEmul">Target trial emulation (clock starts at treatment start)</button>
+    </div>
+    <div class="rate-row" id="rowT"><span class="who">Treated</span><span class="bar"><i id="barT"></i></span><span class="num" id="numT"></span></div>
+    <div class="rate-row" id="rowC"><span class="who">Comparison</span><span class="bar"><i id="barC"></i></span><span class="num" id="numC"></span></div>
+    <div id="simVerdict"></div>
+    <p class="hint">Event rates per 100 person-years, computed from the simulation. Same patients, same data — only the study design changes.</p>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">4 · The payoff — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>helps avoid common methodologic pitfalls</blockquote>
+      <p class="cite">Hernán &amp; Robins, <em>Am J Epidemiol</em> 2016</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>The hormone-therapy reversal is the poster child: records said hormone therapy protected hearts;
+      the Women's Health Initiative trial said otherwise; and when Hernán's group re-analyzed the records
+      <em>as a trial</em> (2008), the fake protection largely evaporated — the discrepancy was design,
+      not biology.</p>
+      <p>Today this framework is the backbone of <b>real-world evidence</b>: how regulators and payers
+      decide what claims and EHR data can — and cannot — honestly say about whether treatments work.</p>
+    </div>
+  </div>
+</div>
+
+<h2>Key terms, in one line each</h2>
+<div class="gloss">
+  <div><b>Target trial</b> — the hypothetical randomized trial your observational study is emulating, protocol and all.</div>
+  <div><b>Time zero</b> — the moment eligibility, treatment assignment, and follow-up all start — aligned.</div>
+  <div><b>Immortal time bias</b> — follow-up time during which the outcome can't happen by design, falsely credited to treatment.</div>
+  <div><b>Confounding</b> — group differences (sicker patients get the drug) that masquerade as treatment effects.</div>
+  <div><b>Estimand</b> — the precisely defined effect you're estimating: of starting treatment, or of sticking with it?</div>
+  <div><b>RWE</b> — real-world evidence: causal conclusions drawn from routine data (claims, EHRs) instead of trials.</div>
+</div>
+
+<h2>Fine print (what the translation shouldn't hide)</h2>
+<div class="card">
+  <p style="margin-top:0">Emulation disciplines the <em>design</em>; it cannot manufacture data that were never
+  collected. If a key confounder (say, frailty) isn't in the records, no protocol can adjust for it — the
+  framework makes that gap explicit rather than hiding it, but the gap remains. It also demands rich,
+  well-timed data: vague treatment dates reintroduce exactly the misalignment the method exists to remove.</p>
+</div>
+
+<h2>Should you read the full paper?</h2>
+<div class="verdict">
+  <div class="v-read"><b>Read it if…</b>you work with observational health data at all — it's seven pages, and it will permanently change how you read (and design) RWE studies.</div>
+  <div class="v-skim"><b>Skim is enough if…</b>you just need the protocol checklist and the immortal-time intuition — the two data slides carry both.</div>
+  <div class="v-skip"><b>Skip it if…</b>your work is purely experimental (A/B tests) — though the "specify the trial first" discipline transfers surprisingly well.</div>
+</div>
+
+<footer>
+  Built from Hernán &amp; Robins, <em>American Journal of Epidemiology</em> 183 (8), 2016.
+  Brief excerpts quoted for commentary; full text at the publisher link above.
+</footer>
+
+</div>
+<script>
+/* ---------- Data slide: immortal time bias simulation (planted truth: no effect) ---------- */
+let seed = 1234567;
+function rnd(){ seed = (seed*1664525 + 1013904223) >>> 0; return seed/4294967296; }
+const H = 0.0085;          // monthly event hazard — IDENTICAL for everyone (treatment does nothing)
+const MONTHS = 24, NARM = 60000;
+function eventMonth(){
+  for(let m=0;m<MONTHS;m++){ if(rnd() < H) return m; }
+  return Infinity;         // no event during follow-up
+}
+// build the shared cohort: each patient may be an "initiator" with a start month 1..12
+const patients = [];
+for(let i=0;i<NARM*2;i++){
+  const initiator = i % 2 === 0;
+  const s = 1 + Math.floor(rnd()*12);        // would-be start month (also used as index month for controls)
+  const e = eventMonth();
+  patients.push({initiator, s, e});
+}
+function rate(events, personMonths){ return events / personMonths * 12 * 100; } // per 100 person-years
+// NAIVE: treated = initiators who survived to start; clock from month 0 for everyone
+let nT={e:0,pm:0}, nC={e:0,pm:0};
+patients.forEach(p=>{
+  const treated = p.initiator && p.e > p.s;
+  const g = treated ? nT : nC;
+  const end = p.e === Infinity ? MONTHS : p.e;
+  g.pm += end;
+  if(p.e !== Infinity) g.e += 1;
+});
+// EMULATED: time zero = start month (treated) or matched index month (controls); must survive to time zero
+let eT={e:0,pm:0}, eC={e:0,pm:0};
+patients.forEach(p=>{
+  if(p.e <= p.s) return;                     // had the event before time zero — not eligible at time zero
+  const g = p.initiator ? eT : eC;
+  const end = p.e === Infinity ? MONTHS : p.e;
+  g.pm += end - p.s;
+  if(p.e !== Infinity) g.e += 1;
+});
+const NAIVE = {t: rate(nT.e, nT.pm), c: rate(nC.e, nC.pm)};
+const EMUL = {t: rate(eT.e, eT.pm), c: rate(eC.e, eC.pm)};
+const MAXR = Math.max(NAIVE.t, NAIVE.c, EMUL.t, EMUL.c) * 1.15;
+function show(mode){
+  const d = mode === "naive" ? NAIVE : EMUL;
+  document.getElementById("btnNaive").classList.toggle("hot", mode==="naive");
+  document.getElementById("btnEmul").classList.toggle("hot", mode==="emul");
+  document.getElementById("barT").style.width = (d.t/MAXR*100)+"%";
+  document.getElementById("barC").style.width = (d.c/MAXR*100)+"%";
+  document.getElementById("numT").textContent = d.t.toFixed(2)+" / 100 py";
+  document.getElementById("numC").textContent = d.c.toFixed(2)+" / 100 py";
+  document.getElementById("rowT").classList.toggle("bad", mode==="naive");
+  const rr = d.t/d.c;
+  document.getElementById("simVerdict").innerHTML = mode==="naive"
+    ? '<div class="card" style="border-left:5px solid var(--bad)"><p style="margin:0"><b>A mirage.</b> The treated group shows a rate ratio of <b>'+rr.toFixed(2)+'</b> — an apparent ~'+Math.round((1-rr)*100)+'% lower event rate. But the treatment does nothing! The "benefit" is immortal time: treated patients had to survive to their start month, and the naive clock credits that guaranteed-alive time to the drug.</p></div>'
+    : '<div class="card" style="border-left:5px solid var(--accent)"><p style="margin:0"><b>The truth.</b> Align time zero — start everyone\'s clock at treatment start (or a matched index date) — and the rate ratio is <b>'+rr.toFixed(2)+'</b>: no effect, exactly as simulated. Same patients, same data; only the design changed.</p></div>';
+}
+document.getElementById("btnNaive").addEventListener("click", ()=>show("naive"));
+document.getElementById("btnEmul").addEventListener("click", ()=>show("emul"));
+show("naive");
+</script>
+</body>
+</html>
