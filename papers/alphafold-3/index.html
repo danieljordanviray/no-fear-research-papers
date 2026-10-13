@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="No Fear Research Papers: AlphaFold 3, translated">
+<meta property="og:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. AlphaFold learns to model the whole molecular scene.">
+<meta property="og:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-alphafold3.jpg">
+<meta property="og:url" content="https://danieljordanviray.github.io/no-fear-research-papers/papers/alphafold-3/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="No Fear Research Papers: AlphaFold 3, translated">
+<meta name="twitter:description" content="The paper's own words on the left, everyday English on the right — plus interactive data visuals. AlphaFold learns to model the whole molecular scene.">
+<meta name="twitter:image" content="https://danieljordanviray.github.io/no-fear-research-papers/og-alphafold3.jpg">
+<title>No Fear Research Papers: AlphaFold 3, translated</title>
+<style>
+  :root{
+    --ink:#1d2430; --muted:#5b6572; --line:#e4e8ee; --bg:#f7f9fb;
+    --card:#ffffff; --accent:#0b6e4f; --accent-soft:#e3f2ea;
+    --paper:#fbf7ef; --paper-line:#e8ddc4;
+    --bad:#b3362b; --blue:#1d5fb8; --blue-soft:#e8f0fd;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65;font-size:17px}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}
+  header.hero{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:28px 30px;margin-bottom:26px}
+  .kicker{display:inline-block;background:var(--accent-soft);color:var(--accent);
+    font-weight:700;font-size:13px;letter-spacing:.4px;text-transform:uppercase;
+    padding:4px 12px;border-radius:999px;margin-bottom:12px}
+  h1{font-size:30px;line-height:1.25;margin:6px 0 10px}
+  h2{font-size:22px;margin:38px 0 6px;padding-top:8px;border-top:2px solid var(--line)}
+  .paper-meta{color:var(--muted);font-size:15px}
+  .paper-meta a{color:var(--blue)}
+  .backlink{margin:0 0 14px;font-size:15px}
+  .backlink a{color:var(--muted);text-decoration:none}
+  .backlink a:hover{text-decoration:underline}
+  .howto{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 20px;margin:18px 0;font-size:16px;color:var(--muted)}
+  .howto b{color:var(--ink)}
+  .pitch{background:var(--accent-soft);border:1px solid #bfe3cf;border-radius:12px;
+    padding:20px 22px;margin:18px 0;font-size:18px}
+  .pair{margin:22px 0}
+  .pair-tag{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:1px;
+    text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .pair-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);
+    border-radius:14px;overflow:hidden}
+  .orig{background:var(--paper);border-right:1px solid var(--paper-line);padding:22px 24px}
+  .orig h3,.trans h3{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;
+    margin:0 0 12px;color:var(--muted)}
+  .orig blockquote{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:18.5px;
+    line-height:1.6;color:#3a3226}
+  .orig blockquote::before{content:"\201C"}
+  .orig blockquote::after{content:"\201D"}
+  .orig .cite{margin-top:12px;font-size:13.5px;color:var(--muted)}
+  .trans{background:var(--card);padding:22px 24px}
+  .trans p{margin:8px 0;font-size:16.5px}
+  .trans p:first-of-type{margin-top:0}
+  .dataslide{border:2px solid var(--ink);border-radius:14px;background:var(--card);
+    margin:26px 0;overflow:hidden}
+  .dataslide-head{background:var(--ink);color:#fff;padding:10px 22px;font-size:13px;
+    font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+  .dataslide-body{padding:20px 22px}
+  .dataslide-cap{font-size:15.5px;color:var(--muted);margin:0 0 12px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:20px 22px;margin:16px 0}
+  .hint{font-size:14px;color:var(--muted)}
+  input[type=range]{width:100%;margin:14px 0 6px}
+  #diffStage{position:relative;width:100%;height:300px;background:#0d1520;border-radius:10px;overflow:hidden}
+  .atom{position:absolute;border-radius:50%;transform:translate(-50%,-50%)}
+  .vs-row{display:flex;gap:12px;align-items:flex-start;margin:10px 0;padding:12px 14px;
+    border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff}
+  .vs-row:hover{border-color:var(--accent)}
+  .vs-row.hot{border-color:var(--accent);background:var(--accent-soft)}
+  .vs-row .vs-tag{flex:none;font-weight:800;font-size:12.5px;text-transform:uppercase;
+    letter-spacing:.6px;color:var(--accent);width:170px;padding-top:2px}
+  .vs-row .vs-txt{font-size:15.5px}
+  .gloss{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+  .gloss div{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:12px 16px;font-size:15.5px}
+  .gloss b{color:var(--accent)}
+  .verdict{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0}
+  .verdict div{border-radius:10px;padding:14px 16px;font-size:15px}
+  .v-read{background:var(--accent-soft);border:1px solid #bfe3cf}
+  .v-skim{background:var(--blue-soft);border:1px solid #bcd4f5}
+  .v-skip{background:#f1f2f4;border:1px solid var(--line)}
+  .verdict b{display:block;margin-bottom:4px}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:13.5px}
+  @media(max-width:760px){
+    .pair-grid{grid-template-columns:1fr}
+    .orig{border-right:none;border-bottom:1px solid var(--paper-line)}
+    .verdict{grid-template-columns:1fr}
+    .gloss{grid-template-columns:1fr}
+    .vs-row{flex-direction:column;gap:4px}
+    .vs-row .vs-tag{width:auto}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="backlink"><a href="../../">← No Fear Research Papers</a></p>
+
+<header class="hero">
+  <span class="kicker">No Fear Research Papers</span>
+  <h1>AlphaFold 3, translated</h1>
+  <p class="paper-meta">
+    Abramson et al., <em>Nature</em> 630: 493–500, 2024 ·
+    <a href="https://www.nature.com/articles/s41586-024-07487-w">nature.com/articles/s41586-024-07487-w</a><br>
+    From Google DeepMind &amp; Isomorphic Labs — the follow-up to the Nobel-winning AlphaFold 2.
+  </p>
+</header>
+
+<div class="howto">
+  <b>How to read this page:</b> on the left, the paper's own words — short excerpts, exactly as written.
+  On the right, the same idea in everyday English. Data slides appear where the paper makes a claim,
+  so you can see the method work instead of taking its word for it.
+</div>
+
+<h2>The whole paper in 60 seconds</h2>
+<div class="pitch">
+  AlphaFold 2 (2020) learned to fold proteins — predict a protein's 3D shape from its letters. But cells aren't
+  lone proteins: they're proteins hugging DNA, RNA, drug molecules, and metal ions. <b>AlphaFold 3</b> is the
+  upgrade that models <b>the whole scene at once</b> — any mix of proteins, nucleic acids, small molecules, and
+  ions — and beats the specialized tools built for each individual job. The engine changed too: instead of
+  assembling a structure piece by piece, AF3 starts from a cloud of random atom positions and <b>"denoises"</b>
+  it into the final structure — the same trick behind AI image generators. For drug discovery, that's the
+  dream input: show it a protein and a candidate drug, and it shows you how they'd fit together.
+</div>
+
+<h2>The translation</h2>
+
+<div class="pair">
+  <span class="pair-tag">1 · The gap — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>predicting the joint structure of complexes including proteins, nucleic acids, small molecules, ions and modified residues</blockquote>
+      <p class="cite">Abramson et al., <em>Nature</em> 2024</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>AlphaFold 2 was a soloist: one protein, folded alone. But biology happens in <b>complexes</b> —
+      a drug gripping its target protein, a protein reading a strand of DNA, an antibody latching onto a virus.</p>
+      <p>AlphaFold 3 predicts the whole group arrangement at once: proteins, DNA/RNA, small molecules
+      (most drugs), ions, and chemically modified building blocks — in a single model.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">2 · The new engine — from the Methods</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>random noise is sampled and then recurrently denoised</blockquote>
+      <p class="cite">Abramson et al., <em>Nature</em> 2024 — on the diffusion module</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>The structure engine is now <b>diffusion</b> — the same idea as AI image generators. Start with atoms
+      scattered at random positions, like static on a screen. Then, step by step, the network "denoises" the
+      cloud: at high noise it fixes the big picture (overall shape), at low noise it polishes the fine chemistry
+      (exact bond angles).</p>
+      <p>Because it works directly on raw atom coordinates, it doesn't care what kind of molecule it's building —
+      that's what makes the all-in-one trick possible.</p>
+    </div>
+  </div>
+</div>
+
+<div class="dataslide">
+  <div class="dataslide-head">Data slide · watch diffusion build a structure</div>
+  <div class="dataslide-body">
+    <p class="dataslide-cap">Drag the slider: random atom noise gradually denoises into a structured complex (a protein chain, a DNA strand, and a small drug molecule nestled in its pocket). Illustrative rendering of the paper's diffusion process.</p>
+    <div id="diffStage"></div>
+    <input type="range" id="diffSlider" min="0" max="100" value="0">
+    <p class="hint" id="diffNote">Step 0 of ~200 denoising steps: pure noise — atoms everywhere, no structure.</p>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">3 · The results — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>far greater accuracy for protein–ligand interactions compared with state-of-the-art docking tools</blockquote>
+      <p class="cite">Abramson et al., <em>Nature</em> 2024</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>They tested it on <b>PoseBusters</b> — 428 recently published protein–drug structures held back from
+      training — and AF3 placed drugs into their binding pockets far more accurately than the classic
+      docking software (Vina, Gold) the industry relied on.</p>
+      <p>Same story elsewhere: much better than nucleic-acid specialists at protein–DNA/RNA complexes, and
+      substantially better than its own predecessor (AlphaFold-Multimer) at antibody–antigen pairs.
+      One generalist beat the specialists at nearly every event.</p>
+    </div>
+  </div>
+</div>
+
+<div class="dataslide">
+  <div class="dataslide-head">Data slide · one model vs the specialists</div>
+  <div class="dataslide-body">
+    <p class="dataslide-cap">The paper's head-to-head results, in its own comparative terms. Click a row — including the honest flaw.</p>
+    <div id="vsRows"></div>
+    <div id="vsDetail"></div>
+  </div>
+</div>
+
+<div class="pair">
+  <span class="pair-tag">4 · The payoff — from the Abstract</span>
+  <div class="pair-grid">
+    <div class="orig">
+      <h3>The paper says</h3>
+      <blockquote>modelling across biomolecular space is possible within a single unified deep-learning framework</blockquote>
+      <p class="cite">Abramson et al., <em>Nature</em> 2024</p>
+    </div>
+    <div class="trans">
+      <h3>What it means</h3>
+      <p>Before: a drawer full of single-purpose tools, each mediocre. Now: <b>one framework for nearly every
+      structure question in molecular biology</b>.</p>
+      <p>The practical payoff is drug discovery — screen candidate molecules against a target protein on a
+      computer, see exactly how they'd bind, and only synthesize the promising ones. That's why the co-author
+      lab is Isomorphic, a drug-discovery company: this model is a design tool, not just a prediction trophy.</p>
+    </div>
+  </div>
+</div>
+
+<h2>Key terms, in one line each</h2>
+<div class="gloss">
+  <div><b>Ligand</b> — a small molecule (often a drug) that binds to a protein.</div>
+  <div><b>Docking</b> — the older software approach: physically simulating how a drug might fit into a protein pocket.</div>
+  <div><b>Diffusion</b> — generating a structure by gradually removing noise from random atom positions.</div>
+  <div><b>PoseBusters</b> — a benchmark of 428 recent protein–drug structures used to grade predictions honestly.</div>
+  <div><b>RMSD &lt; 2 Å</b> — the pass mark: predicted atom positions within 2 ångströms (atomic-scale) of the truth.</div>
+  <div><b>pLDDT</b> — the model's own confidence score per atom, so you know which parts to trust.</div>
+</div>
+
+<h2>Fine print (what the translation shouldn't hide)</h2>
+<div class="card">
+  <p style="margin-top:0">Diffusion models can <b>hallucinate</b>: in floppy, unstructured regions AF3 may invent
+  tidy-looking structure that isn't real (the team dampened this by training it partly on its predecessor's
+  outputs). It also occasionally gets molecular handedness wrong — a chirality violation in 4.4% of benchmark
+  cases. And a prediction, however confident, is still a hypothesis until an experiment confirms it. Access
+  launched through DeepMind's research server rather than as an open download.</p>
+</div>
+
+<h2>Should you read the full paper?</h2>
+<div class="verdict">
+  <div class="v-read"><b>Read it if…</b>you're in the bio-AI lane — this is the field's current center of gravity, and the architecture section explains the diffusion pivot clearly.</div>
+  <div class="v-skim"><b>Skim is enough if…</b>you need the capability map: one model, all molecule types, specialists beaten — the slides above carry it.</div>
+  <div class="v-skip"><b>Skip it if…</b>you don't work with molecular structures; the AlphaMissense translation covers the sibling you'll actually meet first.</div>
+</div>
+
+<footer>
+  Built from Abramson et al., <em>Nature</em> 630, 2024.
+  Brief excerpts quoted for commentary; full text at the publisher link above.
+</footer>
+
+</div>
+<script>
+/* ---------- Data slide 1: diffusion visualizer (illustrative, div-based) ---------- */
+const stage = document.getElementById("diffStage");
+// target structure (percent coords): protein chain (green), DNA strand (blue), ligand (gold)
+const targets = [];
+for(let i=0;i<110;i++){
+  const t = i/110, x = 12 + t*42, y = 50 + Math.sin(t*Math.PI*5)*15*Math.cos(t*Math.PI*0.7);
+  targets.push({x, y, c:"#35c48d", r:7});
+}
+for(let i=0;i<50;i++){
+  const t = i/50, x = 64 + t*22, y = 28 + Math.sin(t*Math.PI*3)*7;
+  targets.push({x, y, c:"#5b9bf5", r:6.5});
+  targets.push({x, y:y+9.5, c:"#5b9bf5", r:6.5});
+}
+for(let i=0;i<16;i++){
+  const a = i/16*Math.PI*2;
+  targets.push({x: 46+Math.cos(a)*2.1, y: 68+Math.sin(a)*4.2, c:"#f2b544", r:8});
+}
+let seed = 42;
+function rnd(){ seed = (seed*1664525 + 1013904223) >>> 0; return seed/4294967296; }
+const atoms = targets.map(p=>{
+  const el = document.createElement("div");
+  el.className = "atom";
+  el.style.width = el.style.height = p.r+"px";
+  el.style.background = p.c;
+  stage.appendChild(el);
+  return {el, sx: rnd()*100, sy: rnd()*100, jx: rnd()*2-1, jy: rnd()*2-1, tx: p.x, ty: p.y, c: p.c};
+});
+function drawDiff(t){
+  const k = t*t*(3-2*t);
+  const jitter = (1-t)*2.2;
+  atoms.forEach((a,i)=>{
+    const x = a.sx + (a.tx - a.sx)*k + a.jx*jitter*Math.sin(t*9+i);
+    const y = a.sy + (a.ty - a.sy)*k + a.jy*jitter*Math.cos(t*7+i);
+    a.el.style.left = x+"%";
+    a.el.style.top = y+"%";
+    a.el.style.opacity = 0.35 + 0.65*t;
+    if(t < 0.05) a.el.style.background = "#8fa3b8"; else a.el.style.background = a.c;
+  });
+}
+const notes = [
+  [0, "Step 0 of ~200 denoising steps: pure noise — atoms everywhere, no structure."],
+  [25, "Early steps: the large-scale shape emerges first — the model fixes global structure while it's still very noisy."],
+  [60, "Middle steps: chains separate, the drug molecule finds its pocket."],
+  [90, "Late steps: fine chemistry — bond angles and local detail get polished."],
+  [100, "Final structure: a protein, a DNA strand, and a bound ligand — predicted in one shot, from noise."]
+];
+const dslider = document.getElementById("diffSlider");
+function updDiff(){
+  const v = +dslider.value;
+  drawDiff(v/100);
+  let msg = notes[0][1];
+  notes.forEach(n=>{ if(v >= n[0]) msg = n[1]; });
+  document.getElementById("diffNote").textContent =
+    "Step "+Math.round(v*2)+" of ~200 denoising steps — "+msg.split(": ").slice(1).join(": ") || msg;
+  if(v===0) document.getElementById("diffNote").textContent = msg;
+}
+dslider.addEventListener("input", updDiff);
+updDiff();
+
+/* ---------- Data slide 2: vs the specialists ---------- */
+const VS = [
+  {tag:"Protein + drug", txt:"vs classic docking tools (Vina, Gold)",
+   note:"On PoseBusters (428 protein–ligand structures published after the training cutoff), AF3's accuracy was far greater than state-of-the-art docking tools (abstract) — the result that matters most for drug discovery."},
+  {tag:"Protein + DNA/RNA", txt:"vs nucleic-acid-specific predictors",
+   note:"Much higher accuracy than tools built only for nucleic-acid complexes (abstract) — one model handles the protein and the DNA/RNA together."},
+  {tag:"Antibody + antigen", txt:"vs AlphaFold-Multimer v2.3",
+   note:"Substantially higher antibody–antigen prediction accuracy than its own predecessor (abstract) — the hardest, most commercially valuable interface type."},
+  {tag:"The honest flaw", txt:"chirality violations: 4.4%",
+   note:"In the PoseBusters benchmark, 4.4% of AF3's outputs still had a chirality violation — a molecule built as its own mirror image (paper, Results). Diffusion gives it freedom; freedom occasionally breaks chemistry."}
+];
+const vsEl = document.getElementById("vsRows");
+VS.forEach((s,i)=>{
+  const r = document.createElement("div");
+  r.className = "vs-row"+(i===0?" hot":"");
+  r.innerHTML = '<span class="vs-tag">'+s.tag+'</span><span class="vs-txt">'+s.txt+'</span>';
+  r.addEventListener("click", ()=>{
+    document.querySelectorAll(".vs-row").forEach(x=>x.classList.remove("hot"));
+    r.classList.add("hot");
+    document.getElementById("vsDetail").innerHTML =
+      '<div class="card"><p style="margin:0">'+s.note+'</p></div>';
+  });
+  vsEl.appendChild(r);
+});
+document.getElementById("vsDetail").innerHTML =
+  '<div class="card"><p style="margin:0">'+VS[0].note+'</p></div>';
+</script>
+</body>
+</html>
